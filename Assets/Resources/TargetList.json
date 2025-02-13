@@ -1,0 +1,148 @@
+{
+    "TargetList": [
+        {
+            "Name": "LC1",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": 5.170000076293945,
+                "y": 1.0,
+                "z": 12.100000381469727
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "LC2",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": 6.03000020980835,
+                "y": 1.0,
+                "z": -8.539999961853028
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "VLC",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": -10.350000381469727,
+                "y": 1.0,
+                "z": -5.679999828338623
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "Entrance",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": -14.710000038146973,
+                "y": 1.0,
+                "z": -9.489999771118164
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "VlcLobby",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "QR",
+            "Position": {
+                "x": -12.020000457763672,
+                "y": 0.0,
+                "z": 1.9299999475479127
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "Lc1Hallway",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "QR",
+            "Position": {
+                "x": -10.989999771118164,
+                "y": 0.0,
+                "z": 12.960000038146973
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "Lc2Hallway",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "QR",
+            "Position": {
+                "x": -10.210000038146973,
+                "y": 0.0,
+                "z": -7.960000038146973
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "Stairs",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "QR",
+            "Position": {
+                "x": -17.399999618530275,
+                "y": 0.0,
+                "z": -0.029999999329447748
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 180.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "Entry",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "QR",
+            "Position": {
+                "x": -16.40999984741211,
+                "y": 0.0,
+                "z": -9.270000457763672
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 270.0,
+                "z": 0.0
+            }
+        }
+    ]
+}
