@@ -17,7 +17,15 @@ public class TargetHandler : MonoBehaviour
     [SerializeField]
     private Transform[] targetObjectsParentTransforms;
 
+    [SerializeField]
+    private LineRenderer lineRenderer; // ✅ Reference to LineRenderer
+
     private List<TargetFacade> currentTargetItems = new List<TargetFacade>();
+    private List<TargetFacade> qrTargetItems = new List<TargetFacade>(); // ✅ Store QR targets as TargetFacade
+
+    private Dictionary<Vector3, GameObject> targetPins = new Dictionary<Vector3, GameObject>(); // ✅ Store pins by position
+
+
 
     private void Start()
     {
@@ -25,12 +33,25 @@ public class TargetHandler : MonoBehaviour
         FillDropdownWithTargetItems();
     }
 
+
     private void GenerateTargetItems()
     {
+        
         IEnumerable<Target> targets = GenerateTargetDataFromSource();
         foreach (Target target in targets)
         {
-            currentTargetItems.Add(CreateTargetFacade(target));
+            if (target.Purpose == "QR")
+            {
+                // ✅ Create a TargetFacade for QR targets, but do not instantiate a prefab
+                TargetFacade qrTarget = CreateTargetFacadeWithoutInstantiation(target);
+                qrTargetItems.Add(qrTarget);
+            }
+            else
+            {
+
+                currentTargetItems.Add(CreateTargetFacade(target));
+
+            }
         }
     }
 
@@ -42,7 +63,7 @@ public class TargetHandler : MonoBehaviour
     private TargetFacade CreateTargetFacade(Target target)
     {
         GameObject targetObject = Instantiate(targetObjectPrefab, targetObjectsParentTransforms[target.Floor], false);
-        targetObject.SetActive(true);
+
         targetObject.name = target.Name;
         targetObject.transform.position = target.Position;
         targetObject.transform.rotation = Quaternion.Euler(target.Rotation);
@@ -53,8 +74,36 @@ public class TargetHandler : MonoBehaviour
         targetData.Floor = target.Floor;
         targetData.Building = target.Building;
         targetData.Purpose = target.Purpose;
+
+        targetObject.SetActive(false); // Start hidden
+        targetPins[target.Position] = targetObject; // Store the pin reference
         
         return targetData;
+    }
+
+    // ✅ New method: Store QR targets as TargetFacade without instantiating prefabs
+    private TargetFacade CreateTargetFacadeWithoutInstantiation(Target target)
+    {
+        // ✅ Create an empty GameObject for the QR target
+        GameObject qrTargetObject = new GameObject(target.Name);
+
+        // ✅ Add TargetFacade component (since we can't use "new")
+        TargetFacade qrTarget = qrTargetObject.AddComponent<TargetFacade>();
+
+        // ✅ Assign target data
+        qrTarget.Name = target.Name;
+        qrTarget.Floor = target.Floor;
+        qrTarget.Building = target.Building;
+        qrTarget.Purpose = target.Purpose;
+
+        // ✅ Set position and rotation
+        qrTarget.transform.position = target.Position;
+        qrTarget.transform.rotation = Quaternion.Euler(target.Rotation);
+
+        // ✅ Hide the QR target GameObject (so it doesn’t appear in the scene)
+        qrTargetObject.SetActive(false);
+
+        return qrTarget;
     }
 
     private void FillDropdownWithTargetItems()
@@ -73,7 +122,8 @@ public class TargetHandler : MonoBehaviour
 
     public void SetSelectedTargetPositionWithDropdown (int selectedValue)
     {
-        navigationController.targetPosition = GetCurrentlySelectedTarget(selectedValue);
+        Vector3 targetPos = GetCurrentlySelectedTarget(selectedValue);
+        navigationController.ActivateNavigation(targetPos);
     }
 
     private Vector3 GetCurrentlySelectedTarget(int selectedValue)
@@ -88,7 +138,33 @@ public class TargetHandler : MonoBehaviour
 
     public TargetFacade GetCurrentTargetByTargetText(string targetText)
     {
-        return currentTargetItems.Find(x =>
-           x.Name.Equals(targetText));
+        // ✅ First, check non-QR targets
+        TargetFacade target = currentTargetItems.Find(x => x.Name.Equals(targetText));
+
+        if (target == null)
+        {
+            // ✅ If not found, check QR targets
+            target = qrTargetItems.Find(x => x.Name.Equals(targetText));
+        }
+
+        return target;
+    }
+
+    public void TogglePinVisibility(Vector3 targetPosition, bool isVisible)
+    {   
+        HideAllPins(); // ✅ Hide all previous pins before making a new one visible
+
+        if (targetPins.ContainsKey(targetPosition))
+        {
+            targetPins[targetPosition].SetActive(isVisible);
+        }
+    }
+
+    public void HideAllPins()
+    {
+        foreach (var pin in targetPins.Values)
+        {
+            pin.SetActive(false);
+        }
     }
 }
