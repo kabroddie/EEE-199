@@ -56,21 +56,5 @@ public class IndicatorArrowController : MonoBehaviour
             );
         }
 
-
-
-        // {
-        //     // ✅ Make the arrow face the same direction as the AR camera
-        //     Quaternion cameraRotation = Quaternion.LookRotation(arCamera.transform.forward, Vector3.up);
-            
-        //     // ✅ Apply the 90-degree static Z offset
-        //     Quaternion targetRotation = cameraRotation * Quaternion.Euler(arrowForwardOffset);
-
-        //     // ✅ Smooth rotation using Slerp
-        //     indicatorArrow.transform.rotation = Quaternion.Slerp(
-        //         indicatorArrow.transform.rotation,
-        //         targetRotation,
-        //         Time.deltaTime * rotationSpeed
-        //     );
-        // }
     }
 }

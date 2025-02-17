@@ -24,6 +24,7 @@ public class TargetHandler : MonoBehaviour
     private List<TargetFacade> qrTargetItems = new List<TargetFacade>(); // ✅ Store QR targets as TargetFacade
 
     private Dictionary<Vector3, GameObject> targetPins = new Dictionary<Vector3, GameObject>(); // ✅ Store pins by position
+    private Vector3 tourStartingPoint; // ✅ Stores the dynamically assigned tour start
 
 
 
@@ -31,6 +32,16 @@ public class TargetHandler : MonoBehaviour
     {
         GenerateTargetItems();
         FillDropdownWithTargetItems();
+        SetStartingPoint(); // ✅ Automatically set the starting point at "Entry"
+    }
+
+    private void SetStartingPoint()
+    {
+        TargetFacade startingPoint = GetCurrentTargetByTargetText("Entry");
+        if (startingPoint != null)
+        {
+            tourStartingPoint = startingPoint.transform.position;
+        }
     }
 
 
@@ -166,5 +177,15 @@ public class TargetHandler : MonoBehaviour
         {
             pin.SetActive(false);
         }
+    }
+
+    public List<Vector3> GetNonQRTargetPositions()
+    {
+        return currentTargetItems.Select(x => x.transform.position).ToList();
+    }
+
+    public Vector3 GetTourStartingPoint()
+    {
+        return tourStartingPoint;
     }
 }

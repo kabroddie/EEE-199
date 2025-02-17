@@ -26,9 +26,12 @@ public class NavigationController : MonoBehaviour
     [SerializeField]
     private Transform userTransform; // ✅ Added reference to user transform
 
+    private TourManager tourManager;
+
     private bool navigationActive = false;
     private bool hasTarget = false;
     private float arrivalThreshold = 1.0f; // Distance threshold for arrival
+
 
     // Start is called before the first frame update
     private void Start()
@@ -36,6 +39,8 @@ public class NavigationController : MonoBehaviour
         path = new NavMeshPath();
         // disable screen dimming
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+        tourManager = FindObjectOfType<TourManager>();
     }
 
     // Update is called once per frame
@@ -176,5 +181,11 @@ public class NavigationController : MonoBehaviour
         navigationActive = false;
         targetHandler.HideAllPins();
         UpdateToggleButtonText();
+        
+        // ✅ Notify TourManager if we are in Tour Mode
+        if (tourManager != null && tourManager.IsTourActive())
+        {
+            tourManager.OnArrivalAtPOI();
+        }
     }
 }
