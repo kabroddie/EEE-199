@@ -1,4 +1,4 @@
-    using UnityEngine;
+using UnityEngine;
 using Unity.Collections;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -21,9 +21,26 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField]
     private GameObject qrCodeScanningPanel;
 
+    private TourManager tourManager;
+
+    [SerializeField]
+    private GameObject readyForTourButton;
+
     private Texture2D cameraImageTexture;
     private IBarcodeReader reader = new BarcodeReader();
     private bool scanningEnabled = false;
+
+    private void Start()
+    {
+        // ✅ Find TourManager instance
+        tourManager = FindObjectOfType<TourManager>();
+
+        // ✅ Ensure the "Ready for Tour" button is hidden at the start
+        if (readyForTourButton != null)
+        {
+            readyForTourButton.SetActive(false);
+        }
+    }
 
     private void OnEnable() {
         cameraManager.frameReceived += OnCameraFrameReceived;
@@ -93,6 +110,21 @@ public class QrCodeRecenter : MonoBehaviour
 
             sessionOrigin.transform.position = currentTarget.transform.position;
             sessionOrigin.transform.rotation = currentTarget.transform.rotation;
+
+             // ✅ Check if this is the tour's starting point
+            if (tourManager != null && targetText == "Entry") // Ensure it matches the defined starting point
+            {
+                tourManager.OnQRCodeScannedAtStartingPoint();
+                ShowReadyForTourButton();
+            }
+        }
+    }
+
+    private void ShowReadyForTourButton()
+    {
+        if (readyForTourButton != null)
+        {
+            readyForTourButton.SetActive(true); // ✅ Show the "Ready for Tour" button
         }
     }
 

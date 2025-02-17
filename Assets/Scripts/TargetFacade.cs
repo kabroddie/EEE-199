@@ -8,4 +8,7 @@ public class TargetFacade : MonoBehaviour
     public int Floor;
     public string Building;
     public string Purpose;
+
+    public Vector3 Position;  // ✅ Store position manually
+    public Quaternion Rotation;  // ✅ Store rotation manually
 }
