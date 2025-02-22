@@ -184,6 +184,11 @@ public class TargetHandler : MonoBehaviour
         return currentTargetItems.Select(x => x.transform.position).ToList();
     }
 
+    public List<string> GetNonQRTargetNames()
+    {
+        return currentTargetItems.Select(x => x.Name).ToList();
+    }
+
     public Vector3 GetTourStartingPoint()
     {
         return tourStartingPoint;
