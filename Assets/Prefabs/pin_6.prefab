@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5087065467916786466}
   - component: {fileID: 4544039995366318757}
   - component: {fileID: -675912975894162829}
-  - component: {fileID: 7374063751904477382}
+  - component: {fileID: 6134556794127464624}
   m_Layer: 0
   m_Name: pin_6
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   Purpose: 
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7374063751904477382
+--- !u!114 &6134556794127464624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
