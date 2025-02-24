@@ -2326,7 +2326,7 @@ MonoBehaviour:
   navigationController: {fileID: 1494500961}
   targetModelData: {fileID: 4900000, guid: 0b707041c6d95a945a27386701199605, type: 3}
   targetDataDropdown: {fileID: 1828703098}
-  targetObjectPrefab: {fileID: 5016516561730703721, guid: 9bf03646cf7252548b5c2f6a98975c10, type: 3}
+  targetObjectPrefab: {fileID: 154381381538100863, guid: 000c013feb431bf4aa8cb88c5e7d635f, type: 3}
   targetObjectsParentTransforms:
   - {fileID: 102246375}
   lineRenderer: {fileID: 1494500958}
@@ -2626,7 +2626,7 @@ Camera:
   far clip plane: 1000
   field of view: 26.991467
   orthographic: 1
-  orthographic size: 2.7
+  orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -4117,8 +4117,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.63936996
-        value: 0.22574832
+        time: 0.083341345
+        value: 0.33408922
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -4180,7 +4180,7 @@ PositionConstraint:
   m_AffectTranslationY: 0
   m_AffectTranslationZ: 1
   m_IsContraintActive: 1
-  m_IsLocked: 0
+  m_IsLocked: 1
   m_Sources:
   - sourceTransform: {fileID: 2022535047}
     weight: 1
@@ -4218,6 +4218,7 @@ MonoBehaviour:
   planeManager: {fileID: 204672481}
   targetHandler: {fileID: 962775275}
   userTransform: {fileID: 2022535047}
+  pinPrefab: {fileID: 5016516561730703721, guid: 9bf03646cf7252548b5c2f6a98975c10, type: 3}
 --- !u!1 &1496253155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5356,7 +5357,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 19.839493
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5396,6 +5409,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 3a358d6412f9ef34b8990469e6a6173c, type: 3}
@@ -6555,6 +6572,7 @@ GameObject:
   - component: {fileID: 2022535048}
   - component: {fileID: 2022535054}
   - component: {fileID: 2022535053}
+  - component: {fileID: 2022535055}
   m_Layer: 0
   m_Name: AR Camera
   m_TagString: MainCamera
@@ -6698,6 +6716,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98a0fda58436951499ff17aaee5a1ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2022535055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022535046}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b9a445b125cb14ba9393c29b3858ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2061907891

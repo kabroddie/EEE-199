@@ -9,6 +9,7 @@ public class PinSpin : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Rotating pin");
         // ✅ Rotate only around the Y-axis
         transform.Rotate(0, rotationSpeedY * Time.deltaTime, 0, Space.World);
     }
