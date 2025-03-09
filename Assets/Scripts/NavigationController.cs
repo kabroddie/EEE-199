@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
+using System.Collections.Generic;
 
 public class NavigationController : MonoBehaviour
 {
@@ -26,7 +28,15 @@ public class NavigationController : MonoBehaviour
     [SerializeField]
     private Transform userTransform; // Reference to user transform
 
+    [SerializeField]
+    private ARRaycastManager raycastManager; // Attach AR Raycast Manager
+
+    // [SerializeField]
+    // private Slider navigationYOffset; // Slider for dynamic height adjustment
+
     private TourManager tourManager;
+
+    private FloorTransitionManager floorTransitionManager;
 
     private bool navigationActive = false;
     private bool hasTarget = false;
@@ -46,6 +56,12 @@ public class NavigationController : MonoBehaviour
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         tourManager = FindObjectOfType<TourManager>();
+        floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
+
+        if (floorTransitionManager == null)
+        {
+            Debug.LogError("[NavigationController] ❌ FloorTransitionManager not found in the scene!");
+        }
 
         // ✅ Instantiate the pin once, hide it at first
         if (pinPrefab != null)
@@ -59,64 +75,108 @@ public class NavigationController : MonoBehaviour
     {
         if (navigationActive && hasTarget)
         { 
+
             // Calculate the path
             NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path);
 
-            // Update the line
-            line.positionCount = path.corners.Length;
-            line.SetPositions(path.corners);
+            // ✅ Store a modified version of path.corners
+            Vector3[] adjustedPath = new Vector3[path.corners.Length];
+            for (int i = 0; i < path.corners.Length; i++)
+            {
+                adjustedPath[i] = path.corners[i]; // Copy original path
+            }
+
+            // ✅ Apply modified path to the line before dynamic height adjustment
+            line.positionCount = adjustedPath.Length;
+            line.SetPositions(adjustedPath);
+
+             // ✅ Now dynamically adjust height based on AR planes only
+            AdjustLineHeightUsingRaycast(adjustedPath);
+
+            // // Update the line
+            // line.positionCount = path.corners.Length;
+            
 
             // Check line visibility
             UpdateLineVisibility();
 
             // Adjust line height dynamically
-            AdjustLineHeight();
+            // AdjustLineHeight();
+            // Vector3[] calculatePathandOffset = AddLineOffset();
+            // line.SetPositions(calculatePathandOffset);
+            
 
             // ✅ Update the pin position to the end of the line
             UpdatePinPosition();
 
-            // Arrival check
-            if (Vector3.Distance(transform.position, targetPosition) < arrivalThreshold)
+            CheckArrival(); // ✅ Now checks if the user arrived at a POI
+
+            // // Arrival check
+            // if (Vector3.Distance(transform.position, targetPosition) < arrivalThreshold)
+            // {
+            //     HandleArrival();
+            // }
+        }
+    }
+
+    private void CheckArrival()
+    {
+        if (!navigationActive || !hasTarget)
+            return;
+
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+
+        if (distanceToTarget < arrivalThreshold)
+        {
+            TargetFacade arrivedTarget = targetHandler.GetCurrentTargetByPosition(targetPosition);
+            if (arrivedTarget != null)
             {
                 HandleArrival();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Dynamically adjusts the line's height based on floor elevation
-    /// </summary>
-    private void AdjustLineHeight()
-    {
-        for (int i = 0; i < line.positionCount; i++)
-        {
-            Vector3 point = line.GetPosition(i);
-
-            // First, check for AR plane height if available
-            foreach (var plane in planeManager.trackables)
-            {
-                if (IsPointInsideBoundary(point, plane.boundary))
+                if (floorTransitionManager != null && floorTransitionManager.IsTransitionPOI(arrivedTarget.Name))
                 {
-                    float targetY = plane.transform.position.y + lineHeightOffset;
-                    point.y = Mathf.Lerp(point.y, targetY, Time.deltaTime * heightAdjustmentSpeed);
-                    break;
+                    // ✅ User has arrived at a transition POI
+                    floorTransitionManager.OnArrivedAtPOI(arrivedTarget.Name);
                 }
             }
-
-            // If no AR plane, use Raycast to find floor height
-            if (Physics.Raycast(point + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 5f))
-            {
-                float targetY = hit.point.y + lineHeightOffset;
-                point.y = Mathf.Lerp(point.y, targetY, Time.deltaTime * heightAdjustmentSpeed);
-            }
-
-            line.SetPosition(i, point);
         }
     }
 
-    /// <summary>
-    /// Checks if any point is behind a wall, toggles line/pin visibility
-    /// </summary>
+
+/// <summary>
+/// Adjusts the height of the line renderer dynamically using AR Depth API.
+/// </summary>
+    private void AdjustLineHeightUsingRaycast(Vector3[] adjustedPath)
+    {
+        if (adjustedPath.Length == 0 || raycastManager == null) return; // ✅ Safety check
+
+        List<ARRaycastHit> hits = new List<ARRaycastHit>();
+
+        for (int i = 0; i < adjustedPath.Length; i++)
+        {
+            Vector3 point = adjustedPath[i];
+            float adjustedY = point.y;
+
+            // ✅ Convert world position to screen position
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(point);
+
+            // ✅ Perform AR Raycast to detect real-world floor height
+            if (raycastManager.Raycast(screenPos, hits, TrackableType.PlaneWithinBounds))
+            {
+                adjustedY = hits[0].pose.position.y + lineHeightOffset;
+            }
+
+            // ✅ Apply smooth transition to prevent sudden jumps
+            adjustedPath[i] = new Vector3(point.x, Mathf.Lerp(point.y, adjustedY, Time.deltaTime * heightAdjustmentSpeed), point.z);
+        }
+
+        // ✅ Apply updated path to LineRenderer
+        line.SetPositions(adjustedPath);
+    }
+
+
+//     /// <summary>
+//     /// Checks if any point is behind a wall, toggles line/pin visibility
+//     /// </summary>
     private void UpdateLineVisibility()
     {
         for (int i = 0; i < line.positionCount; i++)
@@ -219,6 +279,26 @@ public class NavigationController : MonoBehaviour
     /// </summary>
     public void ActivateNavigation(Vector3 newTarget)
     {
+        TargetFacade target = targetHandler.GetCurrentTargetByPosition(newTarget);
+
+        Debug.Log($"[NavigationController] 🚀 Navigating to {target.Name}");
+
+        if (target == null)
+        {
+            Debug.LogWarning("[NavigationController] ❌ Target POI not found!");
+            return;
+        }
+
+        // ✅ If the target is on a different floor, let FloorTransitionManager handle it
+        if (floorTransitionManager != null && target.Floor != floorTransitionManager.GetCurrentFloor())
+        {
+            Debug.Log($"[NavigationController] 🏢 POI '{target.Name}' is on Floor {target.Floor}, transitioning...");
+            floorTransitionManager.OnPOISelected(target.Name);
+            return; // ✅ Do not continue normal navigation, FloorTransitionManager takes over
+        }
+
+        
+
         if (targetPosition == newTarget && navigationActive)
         {
             ToggleNavigation(); 
@@ -278,7 +358,7 @@ public class NavigationController : MonoBehaviour
     /// <summary>
     /// Called when user arrives at the destination
     /// </summary>
-    private void HandleArrival()
+    public void HandleArrival()
     {
         line.enabled = false;
         hasTarget = false;

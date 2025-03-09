@@ -43,7 +43,6 @@ public class TourManager : MonoBehaviour
         TargetFacade startingPoint = targetHandler.GetCurrentTargetByTargetText("Entry");
         if (startingPoint != null)
         {
-            Debug.Log("Setting starting point...");
             tourStartingPoint = startingPoint.transform.position;
         }
     }
