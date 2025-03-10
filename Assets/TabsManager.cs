@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class TabsManager : MonoBehaviour
 {
     public GameObject[] Tabs;
-    public Button[] TabButtons; // Assign buttons in the inspector
-
+    public Button[] TabButtons; 
+    
     private Color activeColor = Color.green;
     private Color inactiveColor = Color.white;
     private int defaultTab = 0;
