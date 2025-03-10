@@ -25,6 +25,7 @@ public class TourManager : MonoBehaviour
 
     private Vector3 tourStartingPoint;
     private List<Vector3> tourPOIs = new List<Vector3>();
+    private List<string> tourPOINames = new List<string>();
     private float arrivalThreshold = 1.0f;
     private int currentPOIIndex = 0;
 
@@ -32,6 +33,7 @@ public class TourManager : MonoBehaviour
     {
         SetStartingPoint(); // ✅ Find and set the "Entry" QR code as the starting point
         tourPOIs = targetHandler.GetNonQRTargetPositions(); // ✅ Get POI locations
+        tourPOINames = targetHandler.GetNonQRTargetNames(); // ✅ Get POI names
         qrScanPromptTextObject.SetActive(false); // Hide QR scan message initially
         readyForTourButton.SetActive(false); // Hide "Ready for Tour" button initially
     }
@@ -41,7 +43,6 @@ public class TourManager : MonoBehaviour
         TargetFacade startingPoint = targetHandler.GetCurrentTargetByTargetText("Entry");
         if (startingPoint != null)
         {
-            Debug.Log("Setting starting point...");
             tourStartingPoint = startingPoint.transform.position;
         }
     }
@@ -129,7 +130,6 @@ public class TourManager : MonoBehaviour
     {
         if (currentPOIIndex < tourPOIs.Count)
         {
-            Debug.Log($"Navigating to POI {currentPOIIndex + 1} of {tourPOIs.Count}...");
             navigationController.ActivateNavigation(tourPOIs[currentPOIIndex]);
         }
         else
@@ -143,7 +143,7 @@ public class TourManager : MonoBehaviour
         if (currentState == TourState.TourActive)
         {
             tourPromptPanel.SetActive(true);
-            promptText.text = $"You have reached {tourPOIs[currentPOIIndex]}.\nPress 'Next' to continue or 'Exit' to leave the tour.";
+            promptText.text = $"You have reached {tourPOINames[currentPOIIndex]}.\nPress 'Next' to continue or 'Exit' to leave the tour.";
         }
     }
 

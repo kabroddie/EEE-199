@@ -123,7 +123,7 @@ public class TargetHandler : MonoBehaviour
             .Where(x => x.Purpose != "QR")
             .Select(x => new TMP_Dropdown.OptionData 
             { 
-                text = $"{x.Building} - {x.Floor} - {x.Name}" 
+                text = $"{x.Building} - {x.Name}" 
             })
             .ToList();
 
@@ -161,6 +161,15 @@ public class TargetHandler : MonoBehaviour
         return target;
     }
 
+        /// <summary>
+    /// Finds a target based on its world position.
+    /// </summary>
+    public TargetFacade GetCurrentTargetByPosition(Vector3 position)
+    {
+        return currentTargetItems.FirstOrDefault(target => Vector3.Distance(target.transform.position, position) < 0.5f);
+    }
+
+
     public void TogglePinVisibility(Vector3 targetPosition, bool isVisible)
     {   
         HideAllPins(); // ✅ Hide all previous pins before making a new one visible
@@ -184,8 +193,24 @@ public class TargetHandler : MonoBehaviour
         return currentTargetItems.Select(x => x.transform.position).ToList();
     }
 
+    public List<string> GetNonQRTargetNames()
+    {
+        return currentTargetItems.Select(x => x.Name).ToList();
+    }
+
+    public List<TargetFacade> GetTransitionPOIs()
+    {
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && 
+                        (x.Name.ToLower().Contains("stairs") || 
+                         x.Name.ToLower().Contains("entrance") || 
+                         x.Name.Contains("120")))
+            .ToList();
+    }
+
     public Vector3 GetTourStartingPoint()
     {
         return tourStartingPoint;
     }
+
 }

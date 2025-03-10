@@ -26,6 +26,8 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField]
     private GameObject readyForTourButton;
 
+    private FloorTransitionManager floorTransitionManager; // ✅ Reference to FloorTransitionManager
+
     private Texture2D cameraImageTexture;
     private IBarcodeReader reader = new BarcodeReader();
     private bool scanningEnabled = false;
@@ -34,6 +36,7 @@ public class QrCodeRecenter : MonoBehaviour
     {
         // ✅ Find TourManager instance
         tourManager = FindObjectOfType<TourManager>();
+        floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
 
         // ✅ Ensure the "Ready for Tour" button is hidden at the start
         if (readyForTourButton != null)
@@ -110,6 +113,11 @@ public class QrCodeRecenter : MonoBehaviour
 
             sessionOrigin.transform.position = currentTarget.transform.position;
             sessionOrigin.transform.rotation = currentTarget.transform.rotation;
+
+            if (floorTransitionManager != null)
+            {
+                floorTransitionManager.UpdateCurrentFloorFromScanning(currentTarget.Floor);
+            }
 
              // ✅ Check if this is the tour's starting point
             if (tourManager != null && targetText == "Entry") // Ensure it matches the defined starting point
