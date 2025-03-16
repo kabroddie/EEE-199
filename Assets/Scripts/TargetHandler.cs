@@ -131,6 +131,31 @@ public class TargetHandler : MonoBehaviour
         targetDataDropdown.AddOptions(targetFacadeOptionData);
     }
 
+    public List<string> SearchPOIs(string searchBarText){
+        if (string.IsNullOrWhiteSpace(searchBarText)){
+            return new List<string>();
+        }
+
+        return currentTargetItems
+        .Where(x => x.Name.ToLower().Contains(searchBarText.ToLower()))
+        .Select(x => x.Name)
+        .ToList();
+    }
+
+    public void NavigateToPOI(string targetName)
+    {
+        Vector3 targetPos = GetTargetPositionByName(targetName);
+        navigationController.ActivateNavigation(targetPos);
+
+    }
+
+    private Vector3 GetTargetPositionByName(string targetName){
+        TargetFacade target = currentTargetItems
+        .Find(x => x.Name.Equals(targetName, System.StringComparison.OrdinalIgnoreCase));
+
+        return target != null ? target.transform.position : Vector3.zero;
+    }
+
     public void SetSelectedTargetPositionWithDropdown (int selectedValue)
     {
         Vector3 targetPos = GetCurrentlySelectedTarget(selectedValue);
