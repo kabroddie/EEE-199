@@ -30,9 +30,6 @@ public class QrCodeRecenter : MonoBehaviour
 
     private TourManager tourManager;
 
-    [SerializeField]
-    private GameObject readyForTourButton;
-
     private FloorTransitionManager floorTransitionManager; // ✅ Reference to FloorTransitionManager
 
     private Texture2D cameraImageTexture;
@@ -44,12 +41,6 @@ public class QrCodeRecenter : MonoBehaviour
         // ✅ Find TourManager instance
         tourManager = FindObjectOfType<TourManager>();
         floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
-
-        // ✅ Ensure the "Ready for Tour" button is hidden at the start
-        if (readyForTourButton != null)
-        {
-            readyForTourButton.SetActive(false);
-        }
     }
 
     private void OnEnable() {
@@ -71,6 +62,8 @@ public class QrCodeRecenter : MonoBehaviour
         {
             return;
         }
+
+        // ToggleScanning(false);
         
         var conversionParams = new XRCpuImage.ConversionParams
         {
@@ -105,8 +98,10 @@ public class QrCodeRecenter : MonoBehaviour
 
         if (result != null)
         {
-            SetQrCodeRecenterTarget(result.Text);
             ToggleScanning();
+            SetQrCodeRecenterTarget(result.Text);
+            // ToggleScanning(false);
+            
         }
             
     }
@@ -133,10 +128,9 @@ public class QrCodeRecenter : MonoBehaviour
             TourManager.TourState state = tourManager.GetCurrentState();
 
              // ✅ Check if this is the tour's starting point
-            if (tourManager != null && targetText == "Entry" && state == TourManager.TourState.WaitingForScan) // Ensure it matches the defined starting point
+            if (tourManager != null && targetText == tourManager.startingPoint.Name && state == TourManager.TourState.WaitingForScan) // Ensure it matches the defined starting point
             {
                 tourManager.OnQRCodeScannedAtStartingPoint();
-                ShowReadyForTourButton();
             }
         }
     }
@@ -208,21 +202,25 @@ public class QrCodeRecenter : MonoBehaviour
             Debug.LogWarning($"[QrCodeRecenter] ❌ Failed to create anchor for '{qrCodeName}'!");
             Destroy(anchorObject); // Cleanup if anchor creation fails
         }
+    
     }
-
-
-
-    private void ShowReadyForTourButton()
-    {
-        if (readyForTourButton != null)
-        {
-            readyForTourButton.SetActive(true); // ✅ Show the "Ready for Tour" button
-        }
-    }
-
     public void ToggleScanning()
     {
         scanningEnabled = !scanningEnabled;
         qrCodeScanningPanel.SetActive(scanningEnabled);
     }
+
+    // ✅ Default version (for UI Button)
+    // public void ToggleScanning()
+    // {
+    //     ToggleScanning(!scanningEnabled); // ✅ Calls the explicit version
+    // }
+
+    // // ✅ Explicit version (for script control)
+    // public void ToggleScanning(bool enable)
+    // {
+    //     scanningEnabled = enable;
+    //     qrCodeScanningPanel.SetActive(enable);
+    // }
+
 }
