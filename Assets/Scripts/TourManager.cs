@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -21,40 +19,20 @@ public class TourManager : MonoBehaviour
     [SerializeField] private TargetHandler targetHandler;
     [SerializeField] private GameObject tourPromptPanel;
     [SerializeField] private TMP_Text promptText;
-    [SerializeField] private GameObject qrScanPromptTextObject; // ✅ Floating text for scanning QR code
-    [SerializeField] private GameObject readyForTourButton; // ✅ Button for user to confirm readiness
-    
+    [SerializeField] private GameObject qrScanPromptTextObject;
+    [SerializeField] private GameObject readyForTourButton;
 
-    private Vector3 tourStartingPoint;
-    // private List<Vector3> tourPOIs = new List<Vector3>();
-    // private List<string> tourPOINames = new List<string>();
-
-    private List<TargetFacade> oldFirstFloorTourPOIs = new List<TargetFacade>();
+    private TargetFacade startingPoint;
+    private Vector3 tourStartingPoint = Vector3.zero;
+    private List<TargetFacade> selectedTourPOIs = new List<TargetFacade>();
 
     private float arrivalThreshold = 1.0f;
     private int currentPOIIndex = 0;
 
     private void Start()
     {
-        SetStartingPoint(); // ✅ Find and set the "Entry" QR code as the starting point
-        // tourPOIs = targetHandler.GetNonQRTargetPositions(); // ✅ Get POI locations
-        // tourPOINames = targetHandler.GetNonQRTargetNames(); // ✅ Get POI names
-        oldFirstFloorTourPOIs = targetHandler.GetOldFirstFloorTourPOIs();
-        // foreach (TargetFacade oldFirstFloorTourPOI in oldFirstFloorTourPOIs)
-        // {
-        //     Debug.Log($"POI: {oldFirstFloorTourPOI.Name} at {oldFirstFloorTourPOI.transform.position}");
-        // }
-        qrScanPromptTextObject.SetActive(false); // Hide QR scan message initially
-        readyForTourButton.SetActive(false); // Hide "Ready for Tour" button initially
-    }
-
-    private void SetStartingPoint()
-    {
-        TargetFacade startingPoint = targetHandler.GetCurrentTargetByTargetText("Tour Start");
-        if (startingPoint != null)
-        {
-            tourStartingPoint = startingPoint.transform.position;
-        }
+        qrScanPromptTextObject.SetActive(false);
+        readyForTourButton.SetActive(false);
     }
 
     private void Update()
@@ -69,11 +47,11 @@ public class TourManager : MonoBehaviour
         }
     }
 
-    public void ToggleTourMode()
+    public void ToggleTourMode(string tourType)
     {
         if (currentState == TourState.Inactive)
         {
-            StartTourMode();
+            StartTourMode(tourType);
         }
         else
         {
@@ -81,25 +59,64 @@ public class TourManager : MonoBehaviour
         }
     }
 
-    private void StartTourMode()
+    private void StartTourMode(string tourType)
     {
         if (currentState != TourState.Inactive) return;
 
-        Debug.Log("Switching to Tour Mode...");
+        Debug.Log($"Switching to Tour Mode: {tourType}...");
+
+        switch (tourType)
+        {
+            case "Old Bldg 1F Tour":
+                selectedTourPOIs = targetHandler.GetOldFirstFloorPresetPath();
+                startingPoint = targetHandler.GetCurrentTargetByTargetText("Entry");
+                break;
+
+            case "New Bldg 1F Tour":
+                selectedTourPOIs = targetHandler.GetNewFirstFloorPresetPath();
+                startingPoint = targetHandler.GetCurrentTargetByTargetText("MeralcoHall");
+                break;
+
+            case "1F Tour":
+                selectedTourPOIs = targetHandler.GetAllFirstFloorPresetPath();
+                startingPoint = targetHandler.GetCurrentTargetByTargetText("Entry");
+                break;
+
+            default:
+                Debug.LogWarning($"[TourManager] Unknown tour type: {tourType}");
+                return;
+        }
+
+        if (selectedTourPOIs.Count == 0)
+        {
+            Debug.LogWarning($"[TourManager] No POIs found for tour type: {tourType}");
+            return;
+        }
+
+        if (startingPoint != null)
+        {
+            tourStartingPoint = startingPoint.transform.position;
+        }
+        else
+        {
+            Debug.LogWarning($"[TourManager] Starting point not found for tour type: {tourType}");
+            tourStartingPoint = Vector3.zero;
+            return;
+        }
+
+        Debug.Log("Starting Tour...");
         currentState = TourState.HeadingToStart;
         navigationController.ActivateNavigation(tourStartingPoint);
-        
     }
 
     private void ShowQRScanPrompt()
     {
-        qrScanPromptTextObject.SetActive(true); // ✅ Floating text: "Please scan the QR code."
-
+        qrScanPromptTextObject.SetActive(true);
     }
 
     public void OnQRCodeScanned(string scannedText)
     {
-        if (currentState == TourState.WaitingForScan && scannedText == "Entry") // ✅ Ensure it matches the defined starting point
+        if (currentState == TourState.WaitingForScan && scannedText == startingPoint.Name)
         {
             OnQRCodeScannedAtStartingPoint();
         }
@@ -109,8 +126,8 @@ public class TourManager : MonoBehaviour
     {
         if (currentState == TourState.WaitingForScan)
         {
-            qrScanPromptTextObject.SetActive(false); // ✅ Hide QR scan floating text
-            readyForTourButton.SetActive(true); // ✅ Enable "Ready for Tour" button
+            qrScanPromptTextObject.SetActive(false);
+            readyForTourButton.SetActive(true);
         }
     }
 
@@ -118,7 +135,6 @@ public class TourManager : MonoBehaviour
     {
         return currentState == TourState.TourActive;
     }
-
 
     public void OnReadyForTour()
     {
@@ -128,8 +144,9 @@ public class TourManager : MonoBehaviour
 
     private void StartTour()
     {
-        if (oldFirstFloorTourPOIs.Count == 0)
+        if (selectedTourPOIs.Count == 0)
         {
+            Debug.LogWarning("[TourManager] No POIs available for the tour.");
             return;
         }
 
@@ -140,14 +157,13 @@ public class TourManager : MonoBehaviour
 
     private void NavigateToNextPOI()
     {
-        if (currentPOIIndex < oldFirstFloorTourPOIs.Count)
-        {
-            navigationController.ActivateNavigation(oldFirstFloorTourPOIs[currentPOIIndex].transform.position);
-        }
-        else
+        if (currentPOIIndex >= selectedTourPOIs.Count)
         {
             EndTour();
+            return;
         }
+
+        navigationController.ActivateNavigation(selectedTourPOIs[currentPOIIndex].transform.position);
     }
 
     public void OnArrivalAtPOI()
@@ -155,15 +171,22 @@ public class TourManager : MonoBehaviour
         if (currentState == TourState.TourActive)
         {
             tourPromptPanel.SetActive(true);
-            promptText.text = $"You have reached {oldFirstFloorTourPOIs[currentPOIIndex].Name}.\nPress 'Next' to continue or 'Exit' to leave the tour.";
+            promptText.text = $"You have reached {selectedTourPOIs[currentPOIIndex].Name}.\nPress 'Next' to continue or 'Exit' to leave the tour.";
         }
     }
 
     public void OnNextPOI()
     {
-        tourPromptPanel.SetActive(false);
-        currentPOIIndex++;
-        NavigateToNextPOI();
+        if (currentPOIIndex < selectedTourPOIs.Count - 1)
+        {
+            tourPromptPanel.SetActive(false);
+            currentPOIIndex++;
+            NavigateToNextPOI();
+        }
+        else
+        {
+            EndTour();
+        }
     }
 
     public void EndTour()

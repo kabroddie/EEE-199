@@ -141,6 +141,40 @@ public class QrCodeRecenter : MonoBehaviour
         }
     }
 
+    // private void CreateAnchor(string qrCodeName, Vector3 position, Quaternion rotation)
+    // {
+    //     if (anchorManager == null)
+    //     {
+    //         Debug.LogWarning("[QrCodeRecenter] ARAnchorManager not assigned!");
+    //         return;
+    //     }
+
+    //     // ✅ Always replace the previous anchor
+    //     if (qrAnchors.TryGetValue(qrCodeName, out ARAnchor existingAnchor))
+    //     {
+    //         Destroy(existingAnchor.gameObject);
+    //         qrAnchors.Remove(qrCodeName);
+    //     }
+
+    //     GameObject anchorObject = new GameObject($"QR_Anchor_{qrCodeName}");
+    //     anchorObject.transform.position = position;
+    //     anchorObject.transform.rotation = rotation;
+
+    //     Pose anchorPose = new Pose(position, rotation);
+    //     ARAnchor newAnchor = anchorManager.AddAnchor(anchorPose);
+
+    //     if (newAnchor != null)
+    //     {
+    //         qrAnchors[qrCodeName] = newAnchor; // ✅ Store new anchor
+    //         Debug.Log($"[QrCodeRecenter] ✅ Created anchor for QR code '{qrCodeName}' at {position}");
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning($"[QrCodeRecenter] ❌ Failed to create anchor for '{qrCodeName}'!");
+    //         Destroy(anchorObject); // Cleanup if anchor creation fails
+    //     }
+    // }
+
     private void CreateAnchor(string qrCodeName, Vector3 position, Quaternion rotation)
     {
         if (anchorManager == null)
@@ -156,12 +190,13 @@ public class QrCodeRecenter : MonoBehaviour
             qrAnchors.Remove(qrCodeName);
         }
 
+        // ✅ Create an empty GameObject at the position
         GameObject anchorObject = new GameObject($"QR_Anchor_{qrCodeName}");
         anchorObject.transform.position = position;
         anchorObject.transform.rotation = rotation;
 
-        Pose anchorPose = new Pose(position, rotation);
-        ARAnchor newAnchor = anchorManager.AddAnchor(anchorPose);
+        // ✅ Add ARAnchor Component (Fixes Obsolete Method)
+        ARAnchor newAnchor = anchorObject.AddComponent<ARAnchor>();
 
         if (newAnchor != null)
         {
@@ -174,6 +209,7 @@ public class QrCodeRecenter : MonoBehaviour
             Destroy(anchorObject); // Cleanup if anchor creation fails
         }
     }
+
 
 
     private void ShowReadyForTourButton()

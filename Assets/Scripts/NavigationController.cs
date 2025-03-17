@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System.Collections.Generic;
+using System.Linq;
 
 public class NavigationController : MonoBehaviour
 {
@@ -43,12 +44,14 @@ public class NavigationController : MonoBehaviour
     private float arrivalThreshold = 1.0f; // Distance threshold for arrival
 
     // Dynamic height variables
-    private float lineHeightOffset = 0.2f; 
-    private float heightAdjustmentSpeed = 5f; 
+    private float lineHeightOffset = 0.2f;  
 
     // ✅ NEW: Pin prefab for the end of the line
     [SerializeField] private GameObject pinPrefab;
     private GameObject dynamicPin; // Holds the instantiated pin
+
+    private Dictionary<int, Queue<float>> heightHistory = new Dictionary<int, Queue<float>>();
+    private int historySize = 5; // ✅ Store the last 5 heights per point
 
     private void Start()
     {
@@ -145,31 +148,69 @@ public class NavigationController : MonoBehaviour
 /// <summary>
 /// Adjusts the height of the line renderer dynamically using AR Depth API.
 /// </summary>
+    // private void AdjustLineHeightUsingRaycast(Vector3[] adjustedPath)
+    // {
+    //     if (adjustedPath.Length == 0 || raycastManager == null) return; // ✅ Safety check
+
+    //     List<ARRaycastHit> hits = new List<ARRaycastHit>();
+
+    //     for (int i = 0; i < adjustedPath.Length; i++)
+    //     {
+    //         Vector3 point = adjustedPath[i];
+    //         float adjustedY = point.y;
+
+    //         // ✅ Convert world position to screen position
+    //         Vector2 screenPos = Camera.main.WorldToScreenPoint(point);
+
+    //         // ✅ Perform AR Raycast to detect real-world floor height
+    //         if (raycastManager.Raycast(screenPos, hits, TrackableType.PlaneWithinBounds))
+    //         {
+    //             adjustedY = hits[0].pose.position.y + lineHeightOffset;
+    //         }
+
+    //         // ✅ Apply smooth transition to prevent sudden jumps
+    //         adjustedPath[i] = new Vector3(point.x, Mathf.Lerp(point.y, adjustedY, Time.deltaTime * heightAdjustmentSpeed), point.z);
+    //     }
+
+    //     // ✅ Apply updated path to LineRenderer
+    //     line.SetPositions(adjustedPath);
+    // }
     private void AdjustLineHeightUsingRaycast(Vector3[] adjustedPath)
     {
-        if (adjustedPath.Length == 0 || raycastManager == null) return; // ✅ Safety check
+        if (adjustedPath.Length == 0 || raycastManager == null) return;
 
         List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
         for (int i = 0; i < adjustedPath.Length; i++)
         {
             Vector3 point = adjustedPath[i];
-            float adjustedY = point.y;
+            float detectedY = point.y;
 
-            // ✅ Convert world position to screen position
             Vector2 screenPos = Camera.main.WorldToScreenPoint(point);
-
-            // ✅ Perform AR Raycast to detect real-world floor height
             if (raycastManager.Raycast(screenPos, hits, TrackableType.PlaneWithinBounds))
             {
-                adjustedY = hits[0].pose.position.y + lineHeightOffset;
+                detectedY = hits[0].pose.position.y + lineHeightOffset;
             }
 
-            // ✅ Apply smooth transition to prevent sudden jumps
-            adjustedPath[i] = new Vector3(point.x, Mathf.Lerp(point.y, adjustedY, Time.deltaTime * heightAdjustmentSpeed), point.z);
+            // ✅ Maintain height history for smoothing
+            if (!heightHistory.ContainsKey(i))
+            {
+                heightHistory[i] = new Queue<float>();
+            }
+
+            Queue<float> history = heightHistory[i];
+            if (history.Count >= historySize)
+            {
+                history.Dequeue(); // Remove oldest height value
+            }
+            history.Enqueue(detectedY);
+
+            // ✅ Use the average of stored height values for stability
+            float smoothedY = history.Average();
+
+            adjustedPath[i] = new Vector3(point.x, smoothedY, point.z);
         }
 
-        // ✅ Apply updated path to LineRenderer
         line.SetPositions(adjustedPath);
     }
 
@@ -280,6 +321,7 @@ public class NavigationController : MonoBehaviour
     public void ActivateNavigation(Vector3 newTarget)
     {
         TargetFacade target = targetHandler.GetCurrentTargetByPosition(newTarget);
+        Debug.Log($"[NavigationController] 🎯 Activating navigation to {target.Name}");
 
 
         if (target == null)

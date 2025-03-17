@@ -17,22 +17,6 @@
             }
         },
         {
-            "Name": "Tour Start",
-            "Floor": 0,
-            "Building": "Old",
-            "Purpose": "POI",
-            "Position": {
-                "x": -15.84,
-                "y": 0.0,
-                "z": -9.27
-            },
-            "Rotation": {
-                "x": 0.0,
-                "y": 270.0,
-                "z": 0.0
-            }
-        },
-        {
             "Name": "VLC",
             "Floor": 0,
             "Building": "Old",
@@ -81,7 +65,7 @@
             }
         },
         {
-            "Name": "Male CR",
+            "Name": "Old 1F Male CR",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -97,7 +81,7 @@
             }
         },
         {
-            "Name": "Female CR",
+            "Name": "Old 1F Female CR",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -291,7 +275,7 @@
             }
         },
         {
-            "Name": "Male CR",
+            "Name": "New 1F Male CR",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -307,7 +291,7 @@
             }
         },
         {
-            "Name": "Female CR",
+            "Name": "New 1F Female CR",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",

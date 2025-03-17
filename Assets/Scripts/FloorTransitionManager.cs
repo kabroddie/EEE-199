@@ -32,7 +32,7 @@ public class FloorTransitionManager : MonoBehaviour
     /// <summary>
     /// Current floor of the user.
     /// </summary>
-    private int currentFloor = 0;
+    private int currentFloor = 1;
 
     /// <summary>
     /// The final POI the user originally selected.
