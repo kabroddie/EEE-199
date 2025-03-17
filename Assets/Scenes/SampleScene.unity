@@ -655,6 +655,7 @@ GameObject:
   - component: {fileID: 204672483}
   - component: {fileID: 204672482}
   - component: {fileID: 204672484}
+  - component: {fileID: 204672485}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -722,6 +723,12 @@ MonoBehaviour:
   - {fileID: 3359442777040097260, guid: 505b13c2cf093fe40a6fa95064fb7572, type: 3}
   - {fileID: 3359442777040097260, guid: 60fdcacf2534377449b75412fa7e9327, type: 3}
   - {fileID: 3359442777040097260, guid: 3af595dfb84c2ba47b7077b2133997d9, type: 3}
+  - {fileID: 3359442777040097260, guid: fc22ce1fc3de1dc4897cc01bf0398f00, type: 3}
+  - {fileID: 3359442777040097260, guid: f596625014c834f498358ff2efddbdf2, type: 3}
+  - {fileID: 3359442777040097260, guid: ac98aef6efaff004281eeefad8185c98, type: 3}
+  - {fileID: 3359442777040097260, guid: d3d17d2ead8b62043bff412abe6bdec7, type: 3}
+  - {fileID: 3359442777040097260, guid: 4fa70e3c54df02b4c9211886321e7842, type: 3}
+  - {fileID: 3359442777040097260, guid: da9a5f0bfbda0ae489feff521f22ad25, type: 3}
 --- !u!114 &204672483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,6 +757,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RaycastPrefab: {fileID: 0}
+--- !u!114 &204672485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204672478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnchorPrefab: {fileID: 0}
 --- !u!1 &212249857
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,8 +980,8 @@ MonoBehaviour:
   cameraManager: {fileID: 2022535049}
   targetHandler: {fileID: 962775275}
   qrCodeScanningPanel: {fileID: 1775500994}
-  anchorManager: {fileID: 0}
-  readyForTourButton: {fileID: 0}
+  anchorManager: {fileID: 204672485}
+  readyForTourButton: {fileID: 1350179519}
 --- !u!4 &222924638
 Transform:
   m_ObjectHideFlags: 0
