@@ -47,24 +47,27 @@ public class TargetHandler : MonoBehaviour
 
     private void GenerateTargetItems()
     {
-        
         IEnumerable<Target> targets = GenerateTargetDataFromSource();
+
         foreach (Target target in targets)
         {
             if (target.Purpose == "QR")
             {
-                // ✅ Create a TargetFacade for QR targets, but do not instantiate a prefab
                 TargetFacade qrTarget = CreateTargetFacadeWithoutInstantiation(target);
                 qrTargetItems.Add(qrTarget);
             }
             else
             {
+                TargetFacade facade = CreateTargetFacade(target);
+                currentTargetItems.Add(facade);
 
-                currentTargetItems.Add(CreateTargetFacade(target));
-
+                Debug.Log($"[TargetHandler] Added POI: {facade.Name} at {facade.transform.position}");
             }
         }
+
+        Debug.Log($"[TargetHandler] Total POIs Loaded: {currentTargetItems.Count}");
     }
+
 
     private IEnumerable<Target> GenerateTargetDataFromSource()
     {
@@ -131,6 +134,54 @@ public class TargetHandler : MonoBehaviour
         targetDataDropdown.AddOptions(targetFacadeOptionData);
     }
 
+    public List<string> SearchPOIs(string searchBarText){
+        if (string.IsNullOrWhiteSpace(searchBarText)){
+            return new List<string>();
+        }
+
+        return currentTargetItems
+        .Where(x => x.Name.ToLower().Contains(searchBarText.ToLower()))
+        .Select(x => x.Name)
+        .ToList();
+    }
+
+    public void NavigateToPOI(string targetName)
+    {
+        Vector3 targetPos = GetTargetPositionByName(targetName);
+
+        if (targetPos == Vector3.zero)
+        {
+            Debug.LogWarning($"[TargetHandler] POI Not Found or Position is Zero: {targetName}");
+            return; // ✅ Prevents activating navigation to (0,0,0)
+        }
+
+        Debug.Log($"[TargetHandler] Navigating to: {targetName} at Position: {targetPos}");
+        navigationController.ActivateNavigation(targetPos);
+    }
+
+    public int GetIndexOfTarget(TargetFacade target)
+    {
+        return currentTargetItems.IndexOf(target);
+    }
+
+    private Vector3 GetTargetPositionByName(string targetName)
+    {
+        Debug.Log($"[TargetHandler] Looking for POI: {targetName} in {currentTargetItems.Count} POIs");
+
+        TargetFacade target = currentTargetItems
+            .FirstOrDefault(x => x.Name.Equals(targetName, System.StringComparison.OrdinalIgnoreCase));
+
+        if (target == null)
+        {
+            Debug.LogWarning($"[TargetHandler] POI Not Found: {targetName}");
+            return Vector3.zero;
+        }
+
+        Debug.Log($"[TargetHandler] Found POI: {target.Name} at {target.transform.position}");
+        return target.transform.position;
+    }
+
+
     public void SetSelectedTargetPositionWithDropdown (int selectedValue)
     {
         Vector3 targetPos = GetCurrentlySelectedTarget(selectedValue);
@@ -166,7 +217,7 @@ public class TargetHandler : MonoBehaviour
     /// </summary>
     public TargetFacade GetCurrentTargetByPosition(Vector3 position)
     {
-        return currentTargetItems.FirstOrDefault(target => Vector3.Distance(target.transform.position, position) < 0.5f);
+        return currentTargetItems.Find(target => Vector3.Distance(target.transform.position, position) < 0.5f);
     }
 
 
@@ -196,6 +247,21 @@ public class TargetHandler : MonoBehaviour
     public List<string> GetNonQRTargetNames()
     {
         return currentTargetItems.Select(x => x.Name).ToList();
+    }
+
+    public List<TargetFacade> GetOldFirstFloorTourPOIs()
+    {
+        // ✅ Hardcoded POI name order
+        string[] hardcodedOrder = new string[]
+        {
+            "VLC", "LC2", "LC1", "Male CR",
+            "Female CR", "O1 Stairs"
+        };
+
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+            .ToList();
     }
 
     public List<TargetFacade> GetTransitionPOIs()

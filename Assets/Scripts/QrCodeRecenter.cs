@@ -2,6 +2,8 @@ using UnityEngine;
 using Unity.Collections;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using System.Collections.Generic;
+using System.Linq;
 using ZXing;
 
 public class QrCodeRecenter : MonoBehaviour
@@ -20,6 +22,11 @@ public class QrCodeRecenter : MonoBehaviour
 
     [SerializeField]
     private GameObject qrCodeScanningPanel;
+
+    [SerializeField]
+    private ARAnchorManager anchorManager; // ✅ Added ARAnchorManager
+
+    private Dictionary<string, ARAnchor> qrAnchors = new Dictionary<string, ARAnchor>(); // ✅ Stores anchors for each QR
 
     private TourManager tourManager;
 
@@ -114,19 +121,60 @@ public class QrCodeRecenter : MonoBehaviour
             sessionOrigin.transform.position = currentTarget.transform.position;
             sessionOrigin.transform.rotation = currentTarget.transform.rotation;
 
+            // CreateOrUpdateAnchor(targetText, currentTarget.transform.position, currentTarget.transform.rotation);
+
+            CreateAnchor(targetText, currentTarget.transform.position, currentTarget.transform.rotation);
+
             if (floorTransitionManager != null)
             {
                 floorTransitionManager.UpdateCurrentFloorFromScanning(currentTarget.Floor);
             }
 
+            TourManager.TourState state = tourManager.GetCurrentState();
+
              // ✅ Check if this is the tour's starting point
-            if (tourManager != null && targetText == "Entry") // Ensure it matches the defined starting point
+            if (tourManager != null && targetText == "Entry" && state == TourManager.TourState.WaitingForScan) // Ensure it matches the defined starting point
             {
                 tourManager.OnQRCodeScannedAtStartingPoint();
                 ShowReadyForTourButton();
             }
         }
     }
+
+    private void CreateAnchor(string qrCodeName, Vector3 position, Quaternion rotation)
+    {
+        if (anchorManager == null)
+        {
+            Debug.LogWarning("[QrCodeRecenter] ARAnchorManager not assigned!");
+            return;
+        }
+
+        // ✅ Always replace the previous anchor
+        if (qrAnchors.TryGetValue(qrCodeName, out ARAnchor existingAnchor))
+        {
+            Destroy(existingAnchor.gameObject);
+            qrAnchors.Remove(qrCodeName);
+        }
+
+        GameObject anchorObject = new GameObject($"QR_Anchor_{qrCodeName}");
+        anchorObject.transform.position = position;
+        anchorObject.transform.rotation = rotation;
+
+        Pose anchorPose = new Pose(position, rotation);
+        ARAnchor newAnchor = anchorManager.AddAnchor(anchorPose);
+
+        if (newAnchor != null)
+        {
+            qrAnchors[qrCodeName] = newAnchor; // ✅ Store new anchor
+            Debug.Log($"[QrCodeRecenter] ✅ Created anchor for QR code '{qrCodeName}' at {position}");
+        }
+        else
+        {
+            Debug.LogWarning($"[QrCodeRecenter] ❌ Failed to create anchor for '{qrCodeName}'!");
+            Destroy(anchorObject); // Cleanup if anchor creation fails
+        }
+    }
+
 
     private void ShowReadyForTourButton()
     {

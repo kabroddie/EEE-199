@@ -281,7 +281,6 @@ public class NavigationController : MonoBehaviour
     {
         TargetFacade target = targetHandler.GetCurrentTargetByPosition(newTarget);
 
-        Debug.Log($"[NavigationController] 🚀 Navigating to {target.Name}");
 
         if (target == null)
         {
