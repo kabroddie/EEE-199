@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TourManager : MonoBehaviour
 {
-    private enum TourState
+    public enum TourState
     {
         Inactive,        // Tour mode is OFF
         HeadingToStart,  // User is navigating to the starting point
@@ -15,7 +15,7 @@ public class TourManager : MonoBehaviour
         TourActive       // Actively navigating through POIs
     }
 
-    private TourState currentState = TourState.Inactive;
+    public TourState currentState = TourState.Inactive;
 
     [SerializeField] private NavigationController navigationController;
     [SerializeField] private TargetHandler targetHandler;
@@ -183,5 +183,10 @@ public class TourManager : MonoBehaviour
         tourPromptPanel.SetActive(false);
         qrScanPromptTextObject.SetActive(false);
         readyForTourButton.SetActive(false);
+    }
+
+    public TourState GetCurrentState()
+    {
+        return currentState;
     }
 }

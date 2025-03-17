@@ -130,8 +130,10 @@ public class QrCodeRecenter : MonoBehaviour
                 floorTransitionManager.UpdateCurrentFloorFromScanning(currentTarget.Floor);
             }
 
+            TourManager.TourState state = tourManager.GetCurrentState();
+
              // ✅ Check if this is the tour's starting point
-            if (tourManager != null && targetText == "Tour Start") // Ensure it matches the defined starting point
+            if (tourManager != null && targetText == "Entry" && state == TourManager.TourState.WaitingForScan) // Ensure it matches the defined starting point
             {
                 tourManager.OnQRCodeScannedAtStartingPoint();
                 ShowReadyForTourButton();
