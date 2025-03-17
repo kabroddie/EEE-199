@@ -14,6 +14,7 @@ public class SearchBar : MonoBehaviour
     [SerializeField] private Transform searchResultsContent;
     [SerializeField] private GameObject searchResultPrefab;
     [SerializeField] private TargetHandler targetHandler;
+    [SerializeField] private PullUpUI pullUp;
     // Start is called before the first frame update
 
     private Vector2 originalPos;
@@ -26,7 +27,7 @@ public class SearchBar : MonoBehaviour
         focusedPos = new Vector2(originalPos.x, 625f);
 
         searchBar.onSelect.AddListener(_ => FocusSearchBar());
-        searchBar.onDeselect.AddListener(_ => UnfocusedSearchBar());
+        //searchBar.onDeselect.AddListener(_ => UnfocusedSearchBar());
         searchBar.onValueChanged.AddListener(UpdateSearchResults);
 
     }
@@ -91,8 +92,17 @@ public class SearchBar : MonoBehaviour
 
     private void SelectPOI(string poiName)
     {
+        Debug.Log($"[SearchBar] POI Selected: {poiName}");
+
+        if (string.IsNullOrWhiteSpace(poiName))
+        {
+            Debug.LogWarning("[SearchBar] POI Name is Empty!");
+            return;
+        }
+
         targetHandler.NavigateToPOI(poiName);
         searchBar.text = poiName;
         UnfocusedSearchBar();
+        pullUp.ClosePanel();
     }
 }
