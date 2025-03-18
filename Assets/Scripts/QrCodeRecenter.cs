@@ -28,6 +28,8 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField]
     private GameObject map;
 
+    [SerializeField] GameObject bottomBar;
+
     private Dictionary<string, ARAnchor> qrAnchors = new Dictionary<string, ARAnchor>(); // ✅ Stores anchors for each QR
 
     private TourManager tourManager;
@@ -218,6 +220,7 @@ public class QrCodeRecenter : MonoBehaviour
         scanningEnabled = !scanningEnabled;
         qrCodeScanningPanel.SetActive(scanningEnabled);
         map.SetActive(!scanningEnabled);
+        bottomBar.SetActive(!scanningEnabled);
     }
 
     // ✅ Default version (for UI Button)

@@ -392,7 +392,7 @@ public class NavigationController : MonoBehaviour
     {
         if (toggleButtonText != null)
         {
-            toggleButtonText.text = navigationActive ? "Line: On" : "Line: Off";
+            toggleButtonText.text = navigationActive ? "Line: ON" : "Line: OFF";
         }
     }
 
