@@ -25,13 +25,12 @@ public class QrCodeRecenter : MonoBehaviour
 
     [SerializeField]
     private ARAnchorManager anchorManager; // ✅ Added ARAnchorManager
+    [SerializeField]
+    private GameObject map;
 
     private Dictionary<string, ARAnchor> qrAnchors = new Dictionary<string, ARAnchor>(); // ✅ Stores anchors for each QR
 
     private TourManager tourManager;
-
-    [SerializeField]
-    private GameObject readyForTourButton;
 
     private FloorTransitionManager floorTransitionManager; // ✅ Reference to FloorTransitionManager
 
@@ -44,12 +43,6 @@ public class QrCodeRecenter : MonoBehaviour
         // ✅ Find TourManager instance
         tourManager = FindObjectOfType<TourManager>();
         floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
-
-        // ✅ Ensure the "Ready for Tour" button is hidden at the start
-        if (readyForTourButton != null)
-        {
-            readyForTourButton.SetActive(false);
-        }
     }
 
     private void OnEnable() {
@@ -71,6 +64,8 @@ public class QrCodeRecenter : MonoBehaviour
         {
             return;
         }
+
+        // ToggleScanning(false);
         
         var conversionParams = new XRCpuImage.ConversionParams
         {
@@ -105,8 +100,10 @@ public class QrCodeRecenter : MonoBehaviour
 
         if (result != null)
         {
-            SetQrCodeRecenterTarget(result.Text);
             ToggleScanning();
+            SetQrCodeRecenterTarget(result.Text);
+            // ToggleScanning(false);
+            
         }
             
     }
@@ -114,6 +111,7 @@ public class QrCodeRecenter : MonoBehaviour
     private void SetQrCodeRecenterTarget(string targetText)
     {
         TargetFacade currentTarget = targetHandler.GetCurrentTargetByTargetText(targetText);
+        Debug.Log($"[QrCodeRecenter] ✅ Transition to recenter map: {currentTarget.Name}");
         if (currentTarget != null)
         {
             session.Reset();
@@ -128,16 +126,56 @@ public class QrCodeRecenter : MonoBehaviour
             if (floorTransitionManager != null)
             {
                 floorTransitionManager.UpdateCurrentFloorFromScanning(currentTarget.Floor);
+                if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingNewFloor)
+                {
+                   
+                    floorTransitionManager.QRCodeScanned();
+                }
             }
 
+            TourManager.TourState tourstate = tourManager.GetCurrentState();
+
              // ✅ Check if this is the tour's starting point
-            if (tourManager != null && targetText == "Tour Start") // Ensure it matches the defined starting point
+            if (tourManager != null && targetText == tourManager.startingPoint.Name && tourstate == TourManager.TourState.WaitingForScan) // Ensure it matches the defined starting point
             {
                 tourManager.OnQRCodeScannedAtStartingPoint();
-                ShowReadyForTourButton();
             }
         }
     }
+
+    // private void CreateAnchor(string qrCodeName, Vector3 position, Quaternion rotation)
+    // {
+    //     if (anchorManager == null)
+    //     {
+    //         Debug.LogWarning("[QrCodeRecenter] ARAnchorManager not assigned!");
+    //         return;
+    //     }
+
+    //     // ✅ Always replace the previous anchor
+    //     if (qrAnchors.TryGetValue(qrCodeName, out ARAnchor existingAnchor))
+    //     {
+    //         Destroy(existingAnchor.gameObject);
+    //         qrAnchors.Remove(qrCodeName);
+    //     }
+
+    //     GameObject anchorObject = new GameObject($"QR_Anchor_{qrCodeName}");
+    //     anchorObject.transform.position = position;
+    //     anchorObject.transform.rotation = rotation;
+
+    //     Pose anchorPose = new Pose(position, rotation);
+    //     ARAnchor newAnchor = anchorManager.AddAnchor(anchorPose);
+
+    //     if (newAnchor != null)
+    //     {
+    //         qrAnchors[qrCodeName] = newAnchor; // ✅ Store new anchor
+    //         Debug.Log($"[QrCodeRecenter] ✅ Created anchor for QR code '{qrCodeName}' at {position}");
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning($"[QrCodeRecenter] ❌ Failed to create anchor for '{qrCodeName}'!");
+    //         Destroy(anchorObject); // Cleanup if anchor creation fails
+    //     }
+    // }
 
     private void CreateAnchor(string qrCodeName, Vector3 position, Quaternion rotation)
     {
@@ -154,12 +192,13 @@ public class QrCodeRecenter : MonoBehaviour
             qrAnchors.Remove(qrCodeName);
         }
 
+        // ✅ Create an empty GameObject at the position
         GameObject anchorObject = new GameObject($"QR_Anchor_{qrCodeName}");
         anchorObject.transform.position = position;
         anchorObject.transform.rotation = rotation;
 
-        Pose anchorPose = new Pose(position, rotation);
-        ARAnchor newAnchor = anchorManager.AddAnchor(anchorPose);
+        // ✅ Add ARAnchor Component (Fixes Obsolete Method)
+        ARAnchor newAnchor = anchorObject.AddComponent<ARAnchor>();
 
         if (newAnchor != null)
         {
@@ -171,20 +210,27 @@ public class QrCodeRecenter : MonoBehaviour
             Debug.LogWarning($"[QrCodeRecenter] ❌ Failed to create anchor for '{qrCodeName}'!");
             Destroy(anchorObject); // Cleanup if anchor creation fails
         }
+    
     }
-
-
-    private void ShowReadyForTourButton()
-    {
-        if (readyForTourButton != null)
-        {
-            readyForTourButton.SetActive(true); // ✅ Show the "Ready for Tour" button
-        }
-    }
-
     public void ToggleScanning()
     {
+        
         scanningEnabled = !scanningEnabled;
         qrCodeScanningPanel.SetActive(scanningEnabled);
+        map.SetActive(!scanningEnabled);
     }
+
+    // ✅ Default version (for UI Button)
+    // public void ToggleScanning()
+    // {
+    //     ToggleScanning(!scanningEnabled); // ✅ Calls the explicit version
+    // }
+
+    // // ✅ Explicit version (for script control)
+    // public void ToggleScanning(bool enable)
+    // {
+    //     scanningEnabled = enable;
+    //     qrCodeScanningPanel.SetActive(enable);
+    // }
+
 }

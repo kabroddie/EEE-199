@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.2.2
+  bundleVersion: 1.3.0
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -908,8 +908,14 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Collab: 1
+    Analytics: 0
+    Build: 0
+    Collab: 0
+    Game Performance: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -923,11 +929,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 11cb7428-19bb-48eb-b1cf-60b558eb4231
+  cloudProjectId: a938522f-12f8-4110-9f68-b5271a0ab42a
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: shala
-  organizationId: rbdoletin
+  projectName: EEEzGuide
+  organizationId: rpdoletin
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

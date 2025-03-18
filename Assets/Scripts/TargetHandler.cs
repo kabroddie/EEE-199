@@ -212,13 +212,22 @@ public class TargetHandler : MonoBehaviour
         return target;
     }
 
-        /// <summary>
+    /// <summary>
     /// Finds a target based on its world position.
     /// </summary>
     public TargetFacade GetCurrentTargetByPosition(Vector3 position)
     {
-        return currentTargetItems.Find(target => Vector3.Distance(target.transform.position, position) < 0.5f);
+        // ✅ Check if the position exists in currentTargetItems
+        TargetFacade target = currentTargetItems.Find(t => Vector3.Distance(t.transform.position, position) < 0.5f);
+
+        if (target == null) // ✅ If not found, check QR targets
+        {
+            target = qrTargetItems.Find(t => Vector3.Distance(t.transform.position, position) < 0.5f);
+        }
+
+        return target; // ✅ Returns null if no match is found
     }
+
 
 
     public void TogglePinVisibility(Vector3 targetPosition, bool isVisible)
@@ -249,13 +258,13 @@ public class TargetHandler : MonoBehaviour
         return currentTargetItems.Select(x => x.Name).ToList();
     }
 
-    public List<TargetFacade> GetOldFirstFloorTourPOIs()
+    public List<TargetFacade> GetOldFirstFloorPresetPath()
     {
         // ✅ Hardcoded POI name order
         string[] hardcodedOrder = new string[]
         {
-            "VLC", "LC2", "LC1", "Male CR",
-            "Female CR", "O1 Stairs"
+            "VLC", "LC2", "LC1", "Old 1F Male CR",
+            "Old 1F Female CR"
         };
 
         return currentTargetItems
@@ -263,6 +272,56 @@ public class TargetHandler : MonoBehaviour
             .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
             .ToList();
     }
+
+    public List<TargetFacade> GetNewFirstFloorPresetPath()
+    {
+        // ✅ Hardcoded POI name order
+        string[] hardcodedOrder = new string[]
+        {
+            "120", "123", "124 ASTEC", "127 (EMRL)",
+            "129 (Fab Lab)", "HVL", "New 1F Male CR",
+            "New 1F Female CR"
+        };
+
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+            .ToList();
+    }
+
+    public List<TargetFacade> GetAllFirstFloorPresetPath()
+    {
+        // ✅ Hardcoded POI name order
+        string[] hardcodedOrder = new string[]
+        {
+            "VLC", "LC2", "LC1", "Old 1F Male CR",
+            "Old 1F Female CR", "Entrance", 
+
+            "120", "123", "124 ASTEC", "127 (EMRL)",
+            "129 (Fab Lab)", "HVL", "New 1F Male CR",
+            "New 1F Female CR"
+        };
+
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+            .ToList();
+    }
+
+    // public List<TargetFacade> GetOldFirstFloorTourPOIs()
+    // {
+    //     // ✅ Hardcoded POI name order
+    //     string[] hardcodedOrder = new string[]
+    //     {
+    //         "VLC", "LC2", "LC1", "Male CR",
+    //         "Female CR", "O1 Stairs"
+    //     };
+
+    //     return currentTargetItems
+    //         .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
+    //         .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+    //         .ToList();
+    // }
 
     public List<TargetFacade> GetTransitionPOIs()
     {
