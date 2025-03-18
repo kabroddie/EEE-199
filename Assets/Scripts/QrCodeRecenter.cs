@@ -25,6 +25,8 @@ public class QrCodeRecenter : MonoBehaviour
 
     [SerializeField]
     private ARAnchorManager anchorManager; // ✅ Added ARAnchorManager
+    [SerializeField]
+    private GameObject map;
 
     private Dictionary<string, ARAnchor> qrAnchors = new Dictionary<string, ARAnchor>(); // ✅ Stores anchors for each QR
 
@@ -109,6 +111,7 @@ public class QrCodeRecenter : MonoBehaviour
     private void SetQrCodeRecenterTarget(string targetText)
     {
         TargetFacade currentTarget = targetHandler.GetCurrentTargetByTargetText(targetText);
+        Debug.Log($"[QrCodeRecenter] ✅ Transition to recenter map: {currentTarget.Name}");
         if (currentTarget != null)
         {
             session.Reset();
@@ -123,12 +126,17 @@ public class QrCodeRecenter : MonoBehaviour
             if (floorTransitionManager != null)
             {
                 floorTransitionManager.UpdateCurrentFloorFromScanning(currentTarget.Floor);
+                if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingNewFloor)
+                {
+                   
+                    floorTransitionManager.QRCodeScanned();
+                }
             }
 
-            TourManager.TourState state = tourManager.GetCurrentState();
+            TourManager.TourState tourstate = tourManager.GetCurrentState();
 
              // ✅ Check if this is the tour's starting point
-            if (tourManager != null && targetText == tourManager.startingPoint.Name && state == TourManager.TourState.WaitingForScan) // Ensure it matches the defined starting point
+            if (tourManager != null && targetText == tourManager.startingPoint.Name && tourstate == TourManager.TourState.WaitingForScan) // Ensure it matches the defined starting point
             {
                 tourManager.OnQRCodeScannedAtStartingPoint();
             }
@@ -206,8 +214,10 @@ public class QrCodeRecenter : MonoBehaviour
     }
     public void ToggleScanning()
     {
+        
         scanningEnabled = !scanningEnabled;
         qrCodeScanningPanel.SetActive(scanningEnabled);
+        map.SetActive(!scanningEnabled);
     }
 
     // ✅ Default version (for UI Button)

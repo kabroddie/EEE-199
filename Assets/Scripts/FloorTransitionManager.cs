@@ -29,10 +29,16 @@ public class FloorTransitionManager : MonoBehaviour
     [SerializeField]
     private GameObject map;
 
+    [SerializeField]
+    private QrCodeRecenter qrCodeScanner;
+
+    [SerializeField]
+    private GameObject qrCodeScanningPanel;
+
     /// <summary>
     /// Current floor of the user.
     /// </summary>
-    private int currentFloor = 1;
+    public int currentFloor;
 
     /// <summary>
     /// The final POI the user originally selected.
@@ -52,7 +58,7 @@ public class FloorTransitionManager : MonoBehaviour
     [SerializeField] private GameObject floorTransitionPanel;
     [SerializeField] private Button proceedButton;
 
-    private enum FloorState
+    public enum FloorState
     {
         Idle,
         NavigatingSameFloor,
@@ -82,7 +88,7 @@ public class FloorTransitionManager : MonoBehaviour
 
         // Ensure UI is properly set up
         floorTransitionPanel.SetActive(false);
-        proceedButton.onClick.AddListener(OnUserConfirmedFloorChange);
+        // proceedButton.onClick.AddListener(OnUserConfirmedFloorChange);
     }
 
 
@@ -154,11 +160,11 @@ public class FloorTransitionManager : MonoBehaviour
     /// <summary>
     /// Moves the user to the correct floor and resumes navigation.
     /// </summary>
-    private void OnUserConfirmedFloorChange()
+    public void OnUserConfirmedFloorChange()
     {
         floorTransitionPanel.SetActive(false);
         map.SetActive(true);
-        
+        // qrCodeScanningPanel.SetActive(true);
         
         foreach (var transition in transitionToRecenterMap)
         {
@@ -178,17 +184,35 @@ public class FloorTransitionManager : MonoBehaviour
             Debug.LogError("[FloorTransitionManager] ❌ recenterTarget is NULL before mapping!");
         }
 
-
+        
         // ✅ Update floor and recenter
         currentFloor = recenterTarget.Floor;
 
-        session.Reset();
-        sessionOrigin.transform.position = recenterTarget.transform.position;
-        sessionOrigin.transform.rotation = recenterTarget.transform.rotation;
+        // session.Reset();
+        // sessionOrigin.transform.position = recenterTarget.transform.position;
+        // sessionOrigin.transform.rotation = recenterTarget.transform.rotation;
 
-        Debug.Log($"[FloorTransitionManager] Re-centered to {recenterTarget.Name} on floor {currentFloor}.");
+        qrCodeScanner.ToggleScanning();
+
+        currentState = FloorState.NavigatingNewFloor;
 
         // ✅ Resume navigation to the final POI
+        // TargetFacade finalTarget = targetHandler.GetCurrentTargetByTargetText(pendingTargetName);
+        // if (finalTarget != null)
+        // {   
+        //     navigationController.HandleArrival();
+        //     navigationController.ActivateNavigation(finalTarget.transform.position);
+        //     targetTransitionPOI = string.Empty;
+        // }
+        // else
+        // {
+        //     Debug.LogWarning($"[FloorTransitionManager] Final target not found: {pendingTargetName}");
+        //     currentState = FloorState.Idle;
+        // }
+    }
+
+    public void QRCodeScanned()
+    {
         TargetFacade finalTarget = targetHandler.GetCurrentTargetByTargetText(pendingTargetName);
         if (finalTarget != null)
         {   
@@ -202,81 +226,6 @@ public class FloorTransitionManager : MonoBehaviour
             currentState = FloorState.Idle;
         }
     }
-    // {
-    //     floorTransitionPanel.SetActive(false);
-
-    //     // ✅ Set the floor based on the POI destination
-    //     currentFloor = targetFloor;
-
-    //     // ✅ Automatically re-center
-    //     AutoRecenterToFloor(targetFloor);
-
-    //     // ✅ Resume navigation to the final POI
-    //     currentState = FloorState.NavigatingNewFloor;
-    //     TargetFacade finalTarget = targetHandler.GetCurrentTargetByTargetText(pendingTargetName);
-    //     if (finalTarget != null)
-    //     {
-    //         navigationController.ActivateNavigation(finalTarget.transform.position);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning($"[FloorTransitionManager] Final target not found: {pendingTargetName}");
-    //         currentState = FloorState.Idle;
-    //     }
-    // }.
-
-    // private Vector3 FindNearestTransitionPoint(int floor)
-    // {
-    //     List<TargetFacade> transitionPoints = targetHandler.GetTransitionPOIs();
-    //     if (transitionPoints == null || transitionPoints.Count == 0)
-    //     {
-    //         Debug.LogWarning("[FloorTransitionManager] ❌ No transition points found!");
-    //         return Vector3.zero;
-    //     }
-
-    //     Vector3 userPos = sessionOrigin != null ? sessionOrigin.transform.position : Vector3.zero;
-
-    //     TargetFacade pendingTarget = targetHandler.GetCurrentTargetByTargetText(pendingTargetName);
-    //     if (pendingTarget == null)
-    //     {
-    //         Debug.LogWarning($"[FloorTransitionManager] ❌ Pending target not found: {pendingTargetName}");
-    //         return Vector3.zero; // Exit to prevent recursion
-    //     }
-
-    //     TargetFacade nearest = null;
-
-    //     if (pendingTarget.Building == "New" && floor == 1)
-    //     {
-    //         nearest = transitionPoints.Find(tp => tp.Name == "New1stLink");
-    //     }
-    //     else if (pendingTarget.Building == "Old" && floor == 1)
-    //     {
-    //         nearest = transitionPoints.Find(tp => tp.Name == "Old Entrance");
-    //     }
-    //     else
-    //     {
-    //         float minDistance = float.MaxValue;
-    //         foreach (var tp in transitionPoints)
-    //         {
-    //             if (tp.Floor == floor)
-    //             {
-    //                 float distance = Vector3.Distance(userPos, tp.transform.position);
-    //                 if (distance < minDistance)
-    //                 {
-    //                     minDistance = distance;
-    //                     nearest = tp;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     targetTransitionPOI = nearest != null ? nearest.Name : string.Empty;
-
-    //     return nearest != null ? nearest.transform.position : Vector3.zero;
-    // }
-
-
-
 
     private Vector3 FindNearestTransitionPoint(int floor)
     {
@@ -292,14 +241,6 @@ public class FloorTransitionManager : MonoBehaviour
 
         TargetFacade nearest = null; // ✅ Declare outside
 
-
-
-        // // // foreach (var tp in transitionPoints)
-        // // // {
-        // // //     Debug.Log($"[FloorTransitionManager] Transition point: {tp.Name} - {tp.Floor} pending: {pendingTarget.Name} - {pendingTarget.Building}");
-        // // // }
-
-        // // // Debug.Log($"[FloorTransitionManager] Nearest transition point: {nearest.Name}");
 
         foreach (var tp in transitionPoints)
         {
@@ -324,21 +265,6 @@ public class FloorTransitionManager : MonoBehaviour
                 .FirstOrDefault();
         }
 
-        // // // foreach (var tp in transitionPoints) {
-        // // //     if (tp.Floor == floor) {
-        // // //         if (pendingTargetName == tp.Name) {
-        // // //             if (tp.Building == "New" && tp.Floor == 1) {
-        // // //                 return tp.transform.position;
-        // // //             }
-        // // //         }
-                
-        // // //     }
-        // // // }
-        // TargetFacade nearest = transitionPoints
-        //     .Where(tp => tp.Floor == floor)
-        //     .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
-        //     .FirstOrDefault();
-
         targetTransitionPOI = nearest != null ? nearest.Name : string.Empty;
 
         return nearest != null ? nearest.transform.position : Vector3.zero;
@@ -355,6 +281,11 @@ public class FloorTransitionManager : MonoBehaviour
     public int GetCurrentFloor()
     {
         return currentFloor;
+    }
+
+    public FloorState GetCurrentState()
+    {
+        return currentState;
     }
 
     public void UpdateCurrentFloorFromScanning(int newFloor)

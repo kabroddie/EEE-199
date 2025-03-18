@@ -286,6 +286,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1350179520}
   - {fileID: 1981069304}
   - {fileID: 299941665}
   - {fileID: 1350778895}
@@ -295,7 +296,7 @@ RectTransform:
   - {fileID: 1591725325}
   - {fileID: 511499194}
   m_Father: {fileID: 534476797}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -727,7 +728,7 @@ MonoBehaviour:
   - {fileID: 3359442777040097260, guid: fc22ce1fc3de1dc4897cc01bf0398f00, type: 3}
   - {fileID: 3359442777040097260, guid: f596625014c834f498358ff2efddbdf2, type: 3}
   - {fileID: 3359442777040097260, guid: ac98aef6efaff004281eeefad8185c98, type: 3}
-  - {fileID: 3359442777040097260, guid: d3d17d2ead8b62043bff412abe6bdec7, type: 3}
+  - {fileID: 3359442777040097260, guid: c5674501173d0794d81539bd6c6cbe71, type: 3}
   - {fileID: 3359442777040097260, guid: 4fa70e3c54df02b4c9211886321e7842, type: 3}
   - {fileID: 3359442777040097260, guid: da9a5f0bfbda0ae489feff521f22ad25, type: 3}
 --- !u!114 &204672483
@@ -982,6 +983,7 @@ MonoBehaviour:
   targetHandler: {fileID: 962775275}
   qrCodeScanningPanel: {fileID: 1775500994}
   anchorManager: {fileID: 204672485}
+  map: {fileID: 1350778894}
 --- !u!4 &222924638
 Transform:
   m_ObjectHideFlags: 0
@@ -1107,7 +1109,7 @@ RectTransform:
   - {fileID: 1619949729}
   - {fileID: 1109156208}
   m_Father: {fileID: 58227288}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1533,7 +1535,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 58227288}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -2973,7 +2975,7 @@ RectTransform:
   - {fileID: 1018082721}
   - {fileID: 582632848}
   m_Father: {fileID: 58227288}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3207,7 +3209,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1350179520}
   - {fileID: 58227288}
   - {fileID: 1775500995}
   - {fileID: 898750206}
@@ -3475,24 +3476,25 @@ MonoBehaviour:
 
 
     1.
-    There are two modes in using EEEzGuide: Free Navigation Mode and Tour Mode. You
-    may find these in the Settings.
+    There are two modes in using EEEzGuide: Free Navigation Mode and Tour Mode.
 
 
-    2. In free navigation mode, you can select
-    your desired POI to go to.
+    2.
+    In free navigation mode, you can select your desired POI by sliding the bottom
+    bar below.
 
 
-    3. In tour mode, you can choose a preset tour
-    path.
+    3. In tour mode, you can choose a preset tour path. You may
+    find this in the settings located at the top right of the screen.
 
 
-    4. There are QR codes situated in various locations in EEEI. Please
-    scan those in case you are drifting. You may find the scanner in the Settings.
+    4. There
+    are QR codes situated in various locations in EEEI. Please scan those in case
+    you are drifting. You may find the scanner in the Settings.
 
 
-    5.
-    Lastly, before using, you are expected to scan a QR code for localization.
+    5. Lastly,
+    before using, you are expected to scan a QR code for localization.
 
 
     Thank
@@ -4709,7 +4711,7 @@ RectTransform:
   m_Children:
   - {fileID: 715585025}
   m_Father: {fileID: 58227288}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -4818,7 +4820,7 @@ RectTransform:
   - {fileID: 642792826}
   - {fileID: 877575355}
   m_Father: {fileID: 534476797}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5395,7 +5397,7 @@ RectTransform:
   - {fileID: 1841821328}
   - {fileID: 1445427946}
   m_Father: {fileID: 534476797}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -7040,7 +7042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1109156208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8323,12 +8325,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 328925895}
-  m_Father: {fileID: 534476797}
+  m_Father: {fileID: 58227288}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 600}
+  m_AnchoredPosition: {x: 0, y: 733}
   m_SizeDelta: {x: 350, y: 155.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1350179521
@@ -8458,7 +8460,7 @@ RectTransform:
   m_Children:
   - {fileID: 1500520763}
   m_Father: {fileID: 58227288}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -10013,7 +10015,7 @@ RectTransform:
   - {fileID: 1181393676}
   - {fileID: 370371841}
   m_Father: {fileID: 58227288}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10077,7 +10079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1619949729
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10988,7 +10990,7 @@ RectTransform:
   m_Children:
   - {fileID: 1509787187}
   m_Father: {fileID: 534476797}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11188,6 +11190,7 @@ MonoBehaviour:
   promptText: {fileID: 1884009662}
   qrScanPromptTextObject: {fileID: 2061907891}
   readyForTourButton: {fileID: 1350179519}
+  map: {fileID: 1350778894}
   startingPoint: {fileID: 0}
 --- !u!4 &1820281164
 Transform:
@@ -11222,7 +11225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1828703097
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11239,7 +11242,7 @@ RectTransform:
   - {fileID: 1108357103}
   - {fileID: 2006671842}
   m_Father: {fileID: 58227288}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -12008,6 +12011,9 @@ MonoBehaviour:
   targetHandler: {fileID: 962775275}
   sessionOrigin: {fileID: 204672480}
   map: {fileID: 1350778894}
+  qrCodeScanner: {fileID: 222924637}
+  qrCodeScanningPanel: {fileID: 1775500994}
+  currentFloor: 1
   floorTransitionPanel: {fileID: 865559060}
   proceedButton: {fileID: 877575356}
 --- !u!4 &1889619225
@@ -12416,13 +12422,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 58227288}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -419, y: 877.23}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 39.99997, y: -91.76996}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1981069305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13180,7 +13186,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 534476797}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}

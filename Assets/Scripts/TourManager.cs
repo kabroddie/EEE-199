@@ -32,6 +32,8 @@ public class TourManager : MonoBehaviour
 
     [SerializeField]
     private GameObject readyForTourButton;
+    [SerializeField]
+    private GameObject map;
 
     public TargetFacade startingPoint;
     private Vector3 tourStartingPoint = Vector3.zero;
@@ -158,6 +160,7 @@ public class TourManager : MonoBehaviour
     private void OnReadyForTour()
     {
         readyForTourButton.SetActive(false);
+        map.SetActive(true);
         StartTour();
     }
 

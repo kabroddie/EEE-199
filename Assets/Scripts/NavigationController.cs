@@ -94,7 +94,7 @@ public class NavigationController : MonoBehaviour
             line.SetPositions(adjustedPath);
 
              // ✅ Now dynamically adjust height based on AR planes only
-            AdjustLineHeightUsingRaycast(adjustedPath);
+            // AdjustLineHeightUsingRaycast(adjustedPath);
 
             // // Update the line
             // line.positionCount = path.corners.Length;
@@ -331,7 +331,7 @@ public class NavigationController : MonoBehaviour
         }
 
         // ✅ If the target is on a different floor, let FloorTransitionManager handle it
-        if (floorTransitionManager != null && target.Floor != floorTransitionManager.GetCurrentFloor())
+        if (floorTransitionManager != null && target.Floor != floorTransitionManager.currentFloor)
         {
             Debug.Log($"[NavigationController] 🏢 POI '{target.Name}' is on Floor {target.Floor}, transitioning...");
             floorTransitionManager.OnPOISelected(target.Name);
