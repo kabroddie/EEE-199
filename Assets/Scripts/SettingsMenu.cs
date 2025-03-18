@@ -4,6 +4,7 @@ using DG.Tweening;
 
 public class SettingsMenu : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup gradient;
     public Button mainButton; // Assign your three-dot button
     public RectTransform[] menuItems; // Assign the menu items (Settings, Tour Presets, Custom Tour)
     public float spacing = 80f; // Space between menu items
@@ -55,7 +56,7 @@ public class SettingsMenu : MonoBehaviour
 
     void ExpandMenu()
     {
-        
+        gradient.DOFade(1f, 0.3f).SetEase(Ease.InQuad); 
 
         for (int i = 0; i < menuItems.Length; i++)
         {
@@ -74,6 +75,7 @@ public class SettingsMenu : MonoBehaviour
     void CollapseMenu()
     {
         isExpanded = false; // Make sure the state is updated
+        gradient.DOFade(0f, 0.3f).SetEase(Ease.OutQuad); 
 
         foreach (var item in menuItems)
         {

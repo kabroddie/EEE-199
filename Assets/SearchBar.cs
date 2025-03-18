@@ -60,6 +60,8 @@ public class SearchBar : MonoBehaviour
     private void UpdateSearchResults(string searchText)
     {
         ClearSearchResults();
+        RectTransform content = searchResultsContent.GetComponent<RectTransform>();
+        content.pivot = new Vector2(0.5f, 1f);
 
         List<string> matchingPOIs = string.IsNullOrWhiteSpace(searchText)
             ? targetHandler.GetNonQRTargetNames() 
@@ -73,6 +75,8 @@ public class SearchBar : MonoBehaviour
         foreach (string poi in matchingPOIs)
         {
             GameObject resultItem = Instantiate(searchResultPrefab, searchResultsContent);
+
+
             TMP_Text poiText = resultItem.GetComponentInChildren<TMP_Text>();
             poiText.text = poi;
 

@@ -35,6 +35,8 @@ public class TourManager : MonoBehaviour
     [SerializeField]
     private GameObject map;
 
+    [SerializeField] GameObject bottomBar;
+
     public TargetFacade startingPoint;
     private Vector3 tourStartingPoint = Vector3.zero;
     private List<TargetFacade> selectedTourPOIs = new List<TargetFacade>();
@@ -123,6 +125,7 @@ public class TourManager : MonoBehaviour
 
     private void ShowQRScanPrompt()
     {
+        bottomBar.SetActive(false);
         qrScanPromptTextObject.SetActive(true);
     }
 
@@ -149,6 +152,7 @@ public class TourManager : MonoBehaviour
         {
             qrScanPromptTextObject.SetActive(false);
             readyForTourButton.SetActive(true);
+            bottomBar.SetActive(true);
         }
     }
 

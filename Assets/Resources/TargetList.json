@@ -2,6 +2,7 @@
     "TargetList": [
         {
             "Name": "Old Entrance",
+            "Category": "Entrance",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -18,6 +19,7 @@
         },
         {
             "Name": "VLC",
+            "Category": "Classroom",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -34,6 +36,7 @@
         },
         {
             "Name": "LC2",
+            "Category": "Classroom",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -50,6 +53,7 @@
         },
         {
             "Name": "LC1",
+            "Category": "Classroom",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -66,6 +70,7 @@
         },
         {
             "Name": "Old 1F Male CR",
+            "Category": "Restroom",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -82,6 +87,7 @@
         },
         {
             "Name": "Old 1F Female CR",
+            "Category": "Restroom",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -98,6 +104,7 @@
         },
         {
             "Name": "O1 Stairs",
+            "Category": "Stair",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
@@ -116,6 +123,7 @@
 
         {
             "Name": "Lobby",
+            "Category": "Hallway",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -132,6 +140,7 @@
         },
         {
             "Name": "120",
+            "Category": "Classroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -148,6 +157,7 @@
         },
         {
             "Name": "N1 Stairs1",
+            "Category": "Stair",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -164,6 +174,7 @@
         },
         {
             "Name": "123",
+            "Category": "Classroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -180,6 +191,7 @@
         },
         {
             "Name": "124 (ASTEC)",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -196,6 +208,7 @@
         },
         {
             "Name": "125 (PEL Faculty Rm)",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -212,6 +225,7 @@
         },
         {
             "Name": "126",
+            "Category": "Classroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -228,6 +242,7 @@
         },
         {
             "Name": "127 (EMRL)",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -244,6 +259,7 @@
         },
         {
             "Name": "129 (Fab Lab)",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -260,6 +276,7 @@
         },
         {
             "Name": "HVL",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -276,6 +293,7 @@
         },
         {
             "Name": "New 1F Male CR",
+            "Category": "Restroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -292,6 +310,7 @@
         },
         {
             "Name": "New 1F Female CR",
+            "Category": "Restroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -308,6 +327,7 @@
         },
         {
             "Name": "N1 Stairs2",
+            "Category": "Stair",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -327,6 +347,7 @@
 
         {
             "Name": "VlcLobby",
+            "Category": "Hallway",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "QR",
@@ -343,6 +364,7 @@
         },
         {
             "Name": "Lc1Hallway",
+            "Category": "Hallway",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "QR",
@@ -359,6 +381,7 @@
         },
         {
             "Name": "Lc2Hallway",
+            "Category": "Hallway",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "QR",
@@ -375,6 +398,7 @@
         },
         {
             "Name": "Old1stStair",
+            "Category": "Stair",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "QR",
@@ -391,6 +415,7 @@
         },
         {
             "Name": "Entry",
+            "Category": "Hallway",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "QR",
@@ -409,6 +434,7 @@
 
         {
             "Name": "New1stLink",
+            "Category": "Hallway",
             "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
@@ -425,6 +451,7 @@
         },
         {
             "Name": "MeralcoHall",
+            "Category": "Classroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
@@ -441,6 +468,7 @@
         },
         {
             "Name": "New1stStair1",
+            "Category": "Stair",
             "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
@@ -457,6 +485,7 @@
         },
         {
             "Name": "New1stTsection",
+            "Category": "Hallway",
             "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
@@ -473,6 +502,7 @@
         },
         {
             "Name": "New1stStair2",
+            "Category": "Stair",
             "Floor": 1,
             "Building": "New",
             "Purpose": "QR",

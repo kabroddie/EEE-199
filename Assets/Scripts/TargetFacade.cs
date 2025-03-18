@@ -5,6 +5,7 @@ using UnityEngine;
 public class TargetFacade : MonoBehaviour
 {
     public string Name;
+    public string Category;
     public int Floor;
     public string Building;
     public string Purpose;
