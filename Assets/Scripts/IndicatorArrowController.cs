@@ -15,7 +15,7 @@ public class IndicatorArrowController : MonoBehaviour
     /// <summary>
     /// For smoothing the arrow’s rotation
     /// </summary>
-    [SerializeField] private float positionSmoothness = 0.1f; // ✅ Adjust smoothing level
+    [SerializeField] private float positionSmoothness = 1.0f; // ✅ Adjust smoothing level
     private Vector3 stabilizedPosition; // ✅ Stores the smoothed position
 
     private void Start()

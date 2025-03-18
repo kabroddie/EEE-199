@@ -32,7 +32,7 @@ public class FloorTransitionManager : MonoBehaviour
     /// <summary>
     /// Current floor of the user.
     /// </summary>
-    private int currentFloor = 1;
+    private int currentFloor = 0;
 
     /// <summary>
     /// The final POI the user originally selected.
@@ -223,19 +223,121 @@ public class FloorTransitionManager : MonoBehaviour
     //         Debug.LogWarning($"[FloorTransitionManager] Final target not found: {pendingTargetName}");
     //         currentState = FloorState.Idle;
     //     }
+    // }.
+
+    // private Vector3 FindNearestTransitionPoint(int floor)
+    // {
+    //     List<TargetFacade> transitionPoints = targetHandler.GetTransitionPOIs();
+    //     if (transitionPoints == null || transitionPoints.Count == 0)
+    //     {
+    //         Debug.LogWarning("[FloorTransitionManager] ❌ No transition points found!");
+    //         return Vector3.zero;
+    //     }
+
+    //     Vector3 userPos = sessionOrigin != null ? sessionOrigin.transform.position : Vector3.zero;
+
+    //     TargetFacade pendingTarget = targetHandler.GetCurrentTargetByTargetText(pendingTargetName);
+    //     if (pendingTarget == null)
+    //     {
+    //         Debug.LogWarning($"[FloorTransitionManager] ❌ Pending target not found: {pendingTargetName}");
+    //         return Vector3.zero; // Exit to prevent recursion
+    //     }
+
+    //     TargetFacade nearest = null;
+
+    //     if (pendingTarget.Building == "New" && floor == 1)
+    //     {
+    //         nearest = transitionPoints.Find(tp => tp.Name == "New1stLink");
+    //     }
+    //     else if (pendingTarget.Building == "Old" && floor == 1)
+    //     {
+    //         nearest = transitionPoints.Find(tp => tp.Name == "Old Entrance");
+    //     }
+    //     else
+    //     {
+    //         float minDistance = float.MaxValue;
+    //         foreach (var tp in transitionPoints)
+    //         {
+    //             if (tp.Floor == floor)
+    //             {
+    //                 float distance = Vector3.Distance(userPos, tp.transform.position);
+    //                 if (distance < minDistance)
+    //                 {
+    //                     minDistance = distance;
+    //                     nearest = tp;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     targetTransitionPOI = nearest != null ? nearest.Name : string.Empty;
+
+    //     return nearest != null ? nearest.transform.position : Vector3.zero;
     // }
+
+
+
+
     private Vector3 FindNearestTransitionPoint(int floor)
     {
+        
         List<TargetFacade> transitionPoints = targetHandler.GetTransitionPOIs();
+        
         if (transitionPoints.Count == 0)
             return Vector3.zero;
 
         Vector3 userPos = sessionOrigin.transform != null ? sessionOrigin.transform.position : Vector3.zero;
 
-        TargetFacade nearest = transitionPoints
-            .Where(tp => tp.Floor == floor)
-            .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
-            .FirstOrDefault();
+        TargetFacade pendingTarget = targetHandler.GetCurrentTargetByTargetText(pendingTargetName);
+
+        TargetFacade nearest = null; // ✅ Declare outside
+
+
+
+        // // // foreach (var tp in transitionPoints)
+        // // // {
+        // // //     Debug.Log($"[FloorTransitionManager] Transition point: {tp.Name} - {tp.Floor} pending: {pendingTarget.Name} - {pendingTarget.Building}");
+        // // // }
+
+        // // // Debug.Log($"[FloorTransitionManager] Nearest transition point: {nearest.Name}");
+
+        foreach (var tp in transitionPoints)
+        {
+            Debug.Log($"hotdog: Name: {tp.Name} Purpose: {tp.Purpose} Floor: {tp.Floor} Building: {tp.Building}");
+        }
+
+        Debug.Log($"pending target: {pendingTarget.Building} Floor: {floor}");
+
+        if (pendingTarget != null && pendingTarget.Building == "New" && floor == 0)
+        {
+            nearest = transitionPoints.Find(tp => tp.Name == "Old Entrance");
+        }
+        else if (pendingTarget != null && pendingTarget.Building == "Old" && floor == 1)
+        {
+            nearest = transitionPoints.Find(tp => tp.Name == "120");
+        }
+        else
+        {
+            nearest = transitionPoints
+                .Where(tp => tp.Floor == floor)
+                .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
+                .FirstOrDefault();
+        }
+
+        // // // foreach (var tp in transitionPoints) {
+        // // //     if (tp.Floor == floor) {
+        // // //         if (pendingTargetName == tp.Name) {
+        // // //             if (tp.Building == "New" && tp.Floor == 1) {
+        // // //                 return tp.transform.position;
+        // // //             }
+        // // //         }
+                
+        // // //     }
+        // // // }
+        // TargetFacade nearest = transitionPoints
+        //     .Where(tp => tp.Floor == floor)
+        //     .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
+        //     .FirstOrDefault();
 
         targetTransitionPOI = nearest != null ? nearest.Name : string.Empty;
 

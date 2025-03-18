@@ -217,7 +217,7 @@ public class TargetHandler : MonoBehaviour
     /// </summary>
     public TargetFacade GetCurrentTargetByPosition(Vector3 position)
     {
-        return currentTargetItems.FirstOrDefault(target => Vector3.Distance(target.transform.position, position) < 0.5f);
+        return currentTargetItems.Find(target => Vector3.Distance(target.transform.position, position) < 0.5f);
     }
 
 
@@ -247,6 +247,21 @@ public class TargetHandler : MonoBehaviour
     public List<string> GetNonQRTargetNames()
     {
         return currentTargetItems.Select(x => x.Name).ToList();
+    }
+
+    public List<TargetFacade> GetOldFirstFloorTourPOIs()
+    {
+        // ✅ Hardcoded POI name order
+        string[] hardcodedOrder = new string[]
+        {
+            "VLC", "LC2", "LC1", "Male CR",
+            "Female CR", "O1 Stairs"
+        };
+
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+            .ToList();
     }
 
     public List<TargetFacade> GetTransitionPOIs()

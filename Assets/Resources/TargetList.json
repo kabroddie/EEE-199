@@ -17,6 +17,22 @@
             }
         },
         {
+            "Name": "Tour Start",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": -15.84,
+                "y": 0.0,
+                "z": -9.27
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 270.0,
+                "z": 0.0
+            }
+        },
+        {
             "Name": "VLC",
             "Floor": 0,
             "Building": "Old",
@@ -397,7 +413,7 @@
             "Position": {
                 "x": -15.84,
                 "y": 0.0,
-                "z": -9.270000457763672
+                "z": -9.27
             },
             "Rotation": {
                 "x": 0.0,
@@ -424,14 +440,14 @@
             }
         },
         {
-            "Name": "MeralcoHall",
+            "Name": "NewLobby",
             "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": -11.82,
+                "x": -10.02,
                 "y": 0.0,
-                "z": -26.8
+                "z": -24.19
             },
             "Rotation": {
                 "x": 0.0,
@@ -467,7 +483,7 @@
             },
             "Rotation": {
                 "x": 0.0,
-                "y": 270.0,
+                "y": 180.0,
                 "z": 0.0
             }
         },
