@@ -506,7 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13812,6 +13812,8 @@ GameObject:
   - component: {fileID: 2022535054}
   - component: {fileID: 2022535053}
   - component: {fileID: 2022535055}
+  - component: {fileID: 2022535056}
+  - component: {fileID: 2022535057}
   m_Layer: 0
   m_Name: AR Camera
   m_TagString: MainCamera
@@ -13964,11 +13966,47 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022535046}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b9a445b125cb14ba9393c29b3858ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2022535056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022535046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Device: 0
+  m_PoseSource: 2
+  m_PoseProviderComponent: {fileID: 0}
+  m_TrackingType: 0
+  m_UpdateType: 2
+  m_UseRelativeTransform: 1
+--- !u!114 &2022535057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022535046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a1e6dd6483e8f4dab6bc880301eb60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  processNoisePos: 0.00001
+  measurementNoisePos: 0.01
+  estimatedErrorPos: 1
+  processNoiseRot: 0.00001
+  measurementNoiseRot: 0.01
+  estimatedErrorRot: 1
 --- !u!1 &2038589403
 GameObject:
   m_ObjectHideFlags: 0

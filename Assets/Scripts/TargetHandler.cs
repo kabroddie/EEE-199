@@ -260,7 +260,6 @@ public class TargetHandler : MonoBehaviour
 
     public List<TargetFacade> GetOldFirstFloorPresetPath()
     {
-        // ✅ Hardcoded POI name order
         string[] hardcodedOrder = new string[]
         {
             "VLC", "LC2", "LC1", "Old 1F Male CR",
@@ -268,14 +267,13 @@ public class TargetHandler : MonoBehaviour
         };
 
         return currentTargetItems
-            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
-            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name))
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
             .ToList();
     }
 
     public List<TargetFacade> GetNewFirstFloorPresetPath()
     {
-        // ✅ Hardcoded POI name order
         string[] hardcodedOrder = new string[]
         {
             "120", "123", "124 ASTEC", "127 (EMRL)",
@@ -284,14 +282,13 @@ public class TargetHandler : MonoBehaviour
         };
 
         return currentTargetItems
-            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
-            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name))
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
             .ToList();
     }
 
     public List<TargetFacade> GetAllFirstFloorPresetPath()
     {
-        // ✅ Hardcoded POI name order
         string[] hardcodedOrder = new string[]
         {
             "VLC", "LC2", "LC1", "Old 1F Male CR",
@@ -303,8 +300,8 @@ public class TargetHandler : MonoBehaviour
         };
 
         return currentTargetItems
-            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
-            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name))
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
             .ToList();
     }
 
