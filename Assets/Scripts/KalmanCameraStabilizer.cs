@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class KalmanCameraStabilizer : MonoBehaviour
 {
+    public Vector3 previousPosition;
+    public Vector3 previousRotation;
+
     [Header("Position Kalman Filter Settings")]
     public float processNoisePos = 5e-4f;
     public float measurementNoisePos = 3e-2f;
@@ -81,7 +84,15 @@ public class KalmanCameraStabilizer : MonoBehaviour
         );
 
         // Apply filtered results
+        previousPosition = transform.position;
+        previousRotation = transform.eulerAngles;
         transform.position = kalmanEstimatePos;
         transform.rotation = Quaternion.Euler(kalmanEstimateEuler);
+    }
+
+    public string GetDebugInfo()
+    {
+        return $"Pos: ({previousPosition.x:F2}, {previousPosition.y:F2}, {previousPosition.z:F2})\n" +
+                $"Rot: ({previousRotation.x:F2}, {previousRotation.y:F2}, {previousRotation.z:F2})";
     }
 }

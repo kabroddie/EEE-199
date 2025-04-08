@@ -1,15 +1,15 @@
 {
     "TargetList": [
         {
-            "Name": "Old Entrance",
+            "Name": "B1 Entrance",
             "Category": "Entrance",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -12.33,
+                "x": -12.32,
                 "y": 0.0,
-                "z": -8.9
+                "z": -8.72
             },
             "Rotation": {
                 "x": 90.0,
@@ -24,9 +24,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -11.01,
+                "x": -10.86,
                 "y": -0.25,
-                "z": -5.679999828338623
+                "z": -5.61
             },
             "Rotation": {
                 "x": 90.0,
@@ -41,9 +41,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 4.5    ,
+                "x": 4.69,
                 "y": -0.25,
-                "z": 12.100000381469727
+                "z": 11.7
             },
             "Rotation": {
                 "x": 90.0,
@@ -58,9 +58,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 5.10,
+                "x": 4.69,
                 "y": -0.25,
-                "z": -8.539999961853028
+                "z": -8.54
             },
             "Rotation": {
                 "x": 90.0,
@@ -69,15 +69,15 @@
             }
         },
         {
-            "Name": "Old 1F Male CR",
+            "Name": "B1 1F Male CR",
             "Category": "Restroom",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -20.11,
+                "x": -20.01,
                 "y": 0.0,
-                "z": -7.53
+                "z": -7.17
             },
             "Rotation": {
                 "x": 90.0,
@@ -86,15 +86,15 @@
             }
         },
         {
-            "Name": "Old 1F Female CR",
+            "Name": "B1 1F Female CR",
             "Category": "Restroom",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -17.44,
+                "x": -17.52,
                 "y": 0.0,
-                "z": -7.83
+                "z": -7.35
             },
             "Rotation": {
                 "x": 90.0,
@@ -109,9 +109,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -17.75,
+                "x": -17.71,
                 "y": 0.0,
-                "z": 0.73
+                "z": 0.26
             },
             "Rotation": {
                 "x": 90.0,
@@ -352,9 +352,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -12.07,
+                "x": -11.83,
                 "y": 0.0,
-                "z": 1.93
+                "z": 2.13
             },
             "Rotation": {
                 "x": 0.0,
@@ -369,9 +369,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -10.989999771118164,
+                "x": -10.31,
                 "y": 0.0,
-                "z": 12.53
+                "z": -7.95
             },
             "Rotation": {
                 "x": 0.0,
@@ -386,9 +386,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -10.210000038146973,
+                "x": -10.88,
                 "y": 0.0,
-                "z": -8.41
+                "z": 12.3
             },
             "Rotation": {
                 "x": 0.0,
@@ -403,9 +403,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -17.399999618530275,
+                "x": -17.86,
                 "y": 0.0,
-                "z": 1.55
+                "z": 1.5
             },
             "Rotation": {
                 "x": 0.0,
@@ -420,9 +420,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -15.84,
+                "x": -15.8,
                 "y": 0.0,
-                "z": -9.27
+                "z": -8.95
             },
             "Rotation": {
                 "x": 0.0,
@@ -456,9 +456,9 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": -10.41,
+                "x": -9.99,
                 "y": 0.0,
-                "z": -24.12
+                "z": -24.7
             },
             "Rotation": {
                 "x": 0.0,
@@ -473,9 +473,9 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": -10.98,
+                "x": -11.15,
                 "y": 0.0,
-                "z": -33.15
+                "z": -33.32
             },
             "Rotation": {
                 "x": 0.0,
@@ -507,13 +507,13 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": 14.47,
+                "x": 11.32,
                 "y": 0.0,
-                "z": -61.31
+                "z": -60.11
             },
             "Rotation": {
                 "x": 0.0,
-                "y": 90.0,
+                "y": 270.0,
                 "z": 0.0
             }
         }
