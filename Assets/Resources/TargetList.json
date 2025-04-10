@@ -16,7 +16,7 @@
                 "y": 0.0,
                 "z": 0.0
             }
-        },
+        }, 
         {
             "Name": "VLC",
             "Category": "Classroom",
@@ -369,9 +369,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -10.31,
+                "x": -10.831,
                 "y": 0.0,
-                "z": -7.95
+                "z": -7.728
             },
             "Rotation": {
                 "x": 0.0,
@@ -386,9 +386,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -10.88,
+                "x": -11.084,
                 "y": 0.0,
-                "z": 12.3
+                "z": 12.78
             },
             "Rotation": {
                 "x": 0.0,
