@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 
 public class NavigationController : MonoBehaviour
@@ -53,6 +54,7 @@ public class NavigationController : MonoBehaviour
     private Dictionary<int, Queue<float>> heightHistory = new Dictionary<int, Queue<float>>();
     private int historySize = 5; // ✅ Store the last 5 heights per point
 
+    [SerializeField] private TextMeshProUGUI arrivedText; // Text to show when the user arrives at a POI
     private void Start()
     {
         path = new NavMeshPath();
@@ -137,6 +139,7 @@ public class NavigationController : MonoBehaviour
                 HandleArrival();
                 if (floorTransitionManager != null && floorTransitionManager.IsTransitionPOI(arrivedTarget.Name))
                 {
+                    Debug.Log($"[KUPAL] 🏢 User has arrived at a transition POI: {arrivedTarget.Name}");
                     // ✅ User has arrived at a transition POI
                     floorTransitionManager.OnArrivedAtPOI(arrivedTarget.Name);
                 }
@@ -396,9 +399,6 @@ public class NavigationController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Called when user arrives at the destination
-    /// </summary>
     public void HandleArrival()
     {
         line.enabled = false;
@@ -406,8 +406,10 @@ public class NavigationController : MonoBehaviour
         navigationActive = false;
         targetHandler.HideAllPins();
         UpdateToggleButtonText();
+        arrivedText.gameObject.SetActive(true);
+        arrivedText.color = new Color(arrivedText.color.r, arrivedText.color.g, arrivedText.color.b, 1f); // reset alpha
+        StartCoroutine(FadeOutText(arrivedText, 4f)); // Fade out text after 2 seconds
 
-        // ✅ Hide pin upon arrival
         if (dynamicPin != null) dynamicPin.SetActive(false);
 
         if (tourManager != null && tourManager.IsTourActive())
@@ -415,4 +417,22 @@ public class NavigationController : MonoBehaviour
             tourManager.OnArrivalAtPOI();
         }
     }
+
+    private IEnumerator FadeOutText(TextMeshProUGUI text, float duration)
+    {
+        Color originalColor = text.color;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            text.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        text.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        text.gameObject.SetActive(false);
+    }
+
 }
