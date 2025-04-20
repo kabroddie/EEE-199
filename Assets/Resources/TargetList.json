@@ -7,9 +7,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -12.32,
+                "x": -11.15,
                 "y": 0.0,
-                "z": -8.72
+                "z": -10.89
             },
             "Rotation": {
                 "x": 90.0,
@@ -24,9 +24,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -10.86,
-                "y": -0.25,
-                "z": -5.61
+                "x": -9.35,
+                "y": 0.0,
+                "z": -7.09
             },
             "Rotation": {
                 "x": 90.0,
@@ -41,9 +41,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 4.69,
-                "y": -0.25,
-                "z": 11.7
+                "x": 6.06,
+                "y": -1.79,
+                "z": 10.83
             },
             "Rotation": {
                 "x": 90.0,
@@ -58,9 +58,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 4.69,
-                "y": -0.25,
-                "z": -8.54
+                "x": 6.24,
+                "y": -1.79,
+                "z": -10.04
             },
             "Rotation": {
                 "x": 90.0,
@@ -75,9 +75,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -20.01,
+                "x": -19.37,
                 "y": 0.0,
-                "z": -7.17
+                "z": -8.58
             },
             "Rotation": {
                 "x": 90.0,
@@ -92,9 +92,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -17.52,
+                "x": -16.46,
                 "y": 0.0,
-                "z": -7.35
+                "z": -9.24
             },
             "Rotation": {
                 "x": 90.0,
@@ -109,9 +109,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -17.71,
+                "x": -16.93,
                 "y": 0.0,
-                "z": 0.26
+                "z": -1.33
             },
             "Rotation": {
                 "x": 90.0,
@@ -122,9 +122,9 @@
 
 
         {
-            "Name": "B1 1F Lobby",
+            "Name": "B2 1F Lobby",
             "Category": "Hallway",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -141,7 +141,7 @@
         {
             "Name": "120",
             "Category": "Classroom",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -158,7 +158,7 @@
         {
             "Name": "B2 1F Stairs 1",
             "Category": "Stair",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -175,7 +175,7 @@
         {
             "Name": "B2 1F Stairs 2",
             "Category": "Stair",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -193,7 +193,7 @@
         {
             "Name": "123",
             "Category": "Classroom",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -210,7 +210,7 @@
         {
             "Name": "124 (ASTEC)",
             "Category": "Laboratory",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -227,7 +227,7 @@
         {
             "Name": "125 (PEL Faculty Rm)",
             "Category": "Laboratory",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -244,7 +244,7 @@
         {
             "Name": "126",
             "Category": "Classroom",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -261,7 +261,7 @@
         {
             "Name": "127 (EMRL)",
             "Category": "Laboratory",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -278,7 +278,7 @@
         {
             "Name": "129 (Fab Lab)",
             "Category": "Laboratory",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -295,7 +295,7 @@
         {
             "Name": "HVL",
             "Category": "Laboratory",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -312,7 +312,7 @@
         {
             "Name": "B2 1F Male CR",
             "Category": "Restroom",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -329,7 +329,7 @@
         {
             "Name": "B2 1F Female CR",
             "Category": "Restroom",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -348,7 +348,7 @@
         {
             "Name": "202",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -365,7 +365,7 @@
         {
             "Name": "204",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -382,7 +382,7 @@
         {
             "Name": "205",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -399,7 +399,7 @@
         {
             "Name": "206",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -416,7 +416,7 @@
         {
             "Name": "207 (CNL Lab)",
             "Category": "Laboratory",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -433,7 +433,7 @@
         {
             "Name": "208",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -450,7 +450,7 @@
         {
             "Name": "209",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -467,7 +467,7 @@
         {
             "Name": "210",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -484,7 +484,7 @@
         {
             "Name": "B1 2F Stairs",
             "Category": "Stair",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -501,7 +501,7 @@
         {
             "Name": "B1 2F Male CR",
             "Category": "Restroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -518,7 +518,7 @@
         {
             "Name": "B1 2F Female CR",
             "Category": "Stair",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
@@ -536,7 +536,7 @@
         {
             "Name": "B2 2F Lobby",
             "Category": "Hallway",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -553,7 +553,7 @@
         {
             "Name": "EEE Admin",
             "Category": "Admin",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -570,7 +570,7 @@
         {
             "Name": "ACBEL Research Lab",
             "Category": "Laboratory",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -587,7 +587,7 @@
         {
             "Name": "PEL Instructional Lab",
             "Category": "Laboratory",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -604,7 +604,7 @@
         {
             "Name": "224",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -621,7 +621,7 @@
         {
             "Name": "B2 2F Stairs 1",
             "Category": "Stair",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -638,7 +638,7 @@
         {
             "Name": "B2 2F Stairs 2",
             "Category": "Stair",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -655,7 +655,7 @@
         {
             "Name": "B2 2F Male CR",
             "Category": "Restroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -672,7 +672,7 @@
         {
             "Name": "B2 2F Female CR",
             "Category": "Restroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
@@ -695,9 +695,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -11.83,
+                "x": -10.92,
                 "y": 0.0,
-                "z": 2.13
+                "z": 0.86
             },
             "Rotation": {
                 "x": 0.0,
@@ -712,9 +712,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -10.831,
+                "x": -9.18,
                 "y": 0.0,
-                "z": -7.728
+                "z": -9.48
             },
             "Rotation": {
                 "x": 0.0,
@@ -729,9 +729,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -11.084,
+                "x": -9.98,
                 "y": 0.0,
-                "z": 12.78
+                "z": 11.49
             },
             "Rotation": {
                 "x": 0.0,
@@ -746,9 +746,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -17.86,
+                "x": -16.92,
                 "y": 0.0,
-                "z": 1.5
+                "z": 0.42
             },
             "Rotation": {
                 "x": 0.0,
@@ -763,9 +763,9 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": -15.8,
+                "x": -14.84,
                 "y": 0.0,
-                "z": -8.95
+                "z": -10.54 
             },
             "Rotation": {
                 "x": 0.0,
@@ -777,7 +777,7 @@
         {
             "Name": "MeralcoHall",
             "Category": "Classroom",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
@@ -794,7 +794,7 @@
         {
             "Name": "New1stStair1",
             "Category": "Stair",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
@@ -811,7 +811,7 @@
         {
             "Name": "New1stTsection",
             "Category": "Hallway",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
@@ -828,7 +828,7 @@
         {
             "Name": "New1stStair2",
             "Category": "Stair",
-            "Floor": 1,
+            "Floor": 0,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
@@ -846,7 +846,7 @@
         {
             "Name": "Old2ndStair",
             "Category": "Stair",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
@@ -863,7 +863,7 @@
         {
             "Name": "DatingWellnessRoom",
             "Category": "Classroom",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
@@ -880,7 +880,7 @@
         {
             "Name": "Old2ndEndWall",
             "Category": "Hallway",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
@@ -897,7 +897,7 @@
         {
             "Name": "2ndTerrace",
             "Category": "Hallway",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
@@ -914,7 +914,7 @@
         {
             "Name": "New2ndLobby",
             "Category": "Hallway",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
@@ -931,7 +931,7 @@
         {
             "Name": "New2ndStair1",
             "Category": "Stair",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
@@ -948,7 +948,7 @@
         {
             "Name": "New2ndTsection",
             "Category": "Hallway",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
             "Position": {
@@ -965,7 +965,7 @@
         {
             "Name": "New2ndStair2",
             "Category": "Stair",
-            "Floor": 2,
+            "Floor": 1,
             "Building": "New",
             "Purpose": "QR",
             "Position": {

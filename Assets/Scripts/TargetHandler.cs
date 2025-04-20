@@ -324,9 +324,7 @@ public class TargetHandler : MonoBehaviour
     {
         return currentTargetItems
             .Where(x => x.Purpose == "POI" && 
-                        (x.Name.ToLower().Contains("stairs") || 
-                         x.Name.ToLower().Contains("entrance") || 
-                         x.Name.Contains("120")))
+                        (x.Name.ToLower().Contains("stairs")))
             .ToList();
     }
 
