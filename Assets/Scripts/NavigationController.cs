@@ -42,7 +42,7 @@ public class NavigationController : MonoBehaviour
 
     private bool navigationActive = false;
     private bool hasTarget = false;
-    private float arrivalThreshold = 1.0f; // Distance threshold for arrival
+    private float arrivalThreshold = 2.0f; // Distance threshold for arrival
 
     // Dynamic height variables
     private float lineHeightOffset = 0.2f;  
