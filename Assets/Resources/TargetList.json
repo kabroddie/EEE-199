@@ -109,7 +109,7 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": -16.93,
+                "x": -16.07,
                 "y": 0.0,
                 "z": -1.33
             },
@@ -488,9 +488,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 45.95,
+                "x": 43.68,
                 "y": 0.0,
-                "z": -19.83
+                "z": -20.01
             },
             "Rotation": {
                 "x": 90.0,
@@ -782,7 +782,7 @@
             "Purpose": "QR",
             "Position": {
                 "x": -9.99,
-                "y": 0.0,
+                "y": 1.0,
                 "z": -24.7
             },
             "Rotation": {
@@ -799,7 +799,7 @@
             "Purpose": "QR",
             "Position": {
                 "x": -11.15,
-                "y": 0.0,
+                "y": 1.0,
                 "z": -33.40
             },
             "Rotation": {
@@ -816,7 +816,7 @@
             "Purpose": "QR",
             "Position": {
                 "x": -11.75,
-                "y": 0.0,
+                "y": 1.0,
                 "z": -61.67
             },
             "Rotation": {
@@ -833,7 +833,7 @@
             "Purpose": "QR",
             "Position": {
                 "x": 11.32,
-                "y": 0.0,
+                "y": 1.0,
                 "z": -60.11
             },
             "Rotation": {
@@ -850,7 +850,7 @@
             "Building": "Old",
             "Purpose": "QR",
             "Position": {
-                "x": 45.56,
+                "x": 43.58,
                 "y": 0.0,
                 "z": -18.3
             },
