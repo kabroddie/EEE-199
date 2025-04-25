@@ -540,9 +540,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 54.43,
+                "x": 54.26,
                 "y": 0.0,
-                "z": -40.85
+                "z": -40.97
             },
             "Rotation": {
                 "x": 90.0,
@@ -557,9 +557,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 50.53,
+                "x": 50.92,
                 "y": 0.0,
-                "z": -43.98
+                "z": -44.3
             },
             "Rotation": {
                 "x": 90.0,
@@ -593,7 +593,7 @@
             "Position": {
                 "x": 59.46,
                 "y": 0.0,
-                "z": -76.87
+                "z": -77.08
             },
             "Rotation": {
                 "x": 90.0,
@@ -608,9 +608,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 59.46,
+                "x": 61.51,
                 "y": 0.0,
-                "z": -76.87
+                "z": -77.08
             },
             "Rotation": {
                 "x": 90.0,
@@ -625,9 +625,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 52.32,
+                "x": 52.51,
                 "y": 0.0,
-                "z": -49.17
+                "z": -49.47
             },
             "Rotation": {
                 "x": 90.0,
@@ -642,9 +642,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 74.96,
+                "x": 74.83,
                 "y": 0.0,
-                "z": -74.99
+                "z": -74.74
             },
             "Rotation": {
                 "x": 90.0,
@@ -659,9 +659,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 67.97,
+                "x": 68.17,
                 "y": 0.0,
-                "z": -75.74
+                "z": -76.29
             },
             "Rotation": {
                 "x": 90.0,
@@ -676,9 +676,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 71.63,
+                "x": 72.57,
                 "y": 0.0,
-                "z": -75.74
+                "z": -76.29
             },
             "Rotation": {
                 "x": 90.0,
@@ -781,9 +781,9 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": -9.99,
+                "x": -9.84,
                 "y": 1.0,
-                "z": -23.31
+                "z": -23.32
             },
             "Rotation": {
                 "x": 0.0,
@@ -798,7 +798,7 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": -11.01,
+                "x": -10.89,
                 "y": 1.0,
                 "z": -32.18
             },
@@ -817,7 +817,7 @@
             "Position": {
                 "x": -11.75,
                 "y": 1.0,
-                "z": -61.18
+                "z": -61.19
             },
             "Rotation": {
                 "x": 0.0,
@@ -918,9 +918,9 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": 52.89,
+                "x": 53.19,
                 "y": 0.0,
-                "z": -40.58
+                "z": -39.3
             },
             "Rotation": {
                 "x": 0.0,
@@ -935,9 +935,9 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": 51.71,
+                "x": 51.88,
                 "y": 0.0,
-                "z": -47.84
+                "z": -48.22
             },
             "Rotation": {
                 "x": 0.0,
@@ -952,9 +952,9 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": 52.72,
+                "x": 52.64,
                 "y": 0.0,
-                "z": -76.75
+                "z": -77.08
             },
             "Rotation": {
                 "x": 0.0,
@@ -969,9 +969,9 @@
             "Building": "New",
             "Purpose": "QR",
             "Position": {
-                "x": 74.49,
+                "x": 74.24,
                 "y": 0.0,
-                "z": -74.58
+                "z": -75.12
             },
             "Rotation": {
                 "x": 0.0,
