@@ -217,30 +217,6 @@ public class FloorTransitionManager : MonoBehaviour
 
         TargetFacade nearest = null; // ✅ Declare outside
 
-        // if (pendingTarget != null && pendingTarget.Floor == 1 && floor == 0)
-        // {
-        //     Debug.Log($"1");
-        //     floortransitionText.text = $"[!!!PLEASE READ!!!]\n\n\nYou are about to move to the other building.\n\n\nPlease scan the designated QR code located on lobby near the guard's post.";
-        //     nearest = transitionPoints.Find(tp => tp.Name == "B1 Entrance");
-        // }
-        // else if (pendingTarget != null && pendingTarget.Floor == 0 && floor == 1)
-        // {
-        //     Debug.Log($"2");
-        //     floortransitionText.text = $"[!!!PLEASE READ!!!]\n\n\nYou are about to move to the other building.\n\n\nPlease scan the designated QR code located near entrance.";
-        //     nearest = transitionPoints.Find(tp => tp.Name == "120");
-        // }
-        // else if (pendingTarget != null &&  floor <= 1 && pendingTarget.Floor > 1)
-        // {
-        //     Debug.Log($"3");
-        //     floortransitionText.text = $"[!!!PLEASE READ!!!]\n\n\nYou are about to move to Floor {pendingTarget.Floor}.\n\nPlease be careful as you take the stairs.\n\nScan the designated QR code located near the stairs of Floor {pendingTarget.Floor}.";
-        //     nearest = transitionPoints
-        //         .Where(tp => tp.Floor == floor && tp.name != "B1 Entrance" && tp.name != "120")
-        //         .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
-        //         .FirstOrDefault();
-        //     // Debug.Log($"[FloorTransitionManager] Nearest transition point: {nearest.Name}");
-        // }
-        // else
-        // {
         if (currentFloor == 0)
         {
             Debug.Log($"3");
