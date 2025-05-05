@@ -7235,10 +7235,10 @@ RectTransform:
   m_Father: {fileID: 1967557018}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2039.2, y: -0.00036621094}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 2038, y: -0.00036621094}
+  m_SizeDelta: {x: 1019, y: 2034}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &852675659
 MonoBehaviour:
@@ -10166,6 +10166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slideRoot: {fileID: 1967557018}
+  viewport: {fileID: 1869834486}
   pages:
   - {fileID: 1868548569}
   - {fileID: 1847843808}
@@ -14303,10 +14304,10 @@ RectTransform:
   m_Father: {fileID: 1967557018}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1019.6, y: -0.00036621094}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1019, y: -0.00036621094}
+  m_SizeDelta: {x: 1019, y: 2034}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1847843809
 MonoBehaviour:
@@ -14632,10 +14633,10 @@ RectTransform:
   m_Father: {fileID: 1967557018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 509.5, y: -1017}
+  m_SizeDelta: {x: 1019, y: 2034}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1868548570
 MonoBehaviour:

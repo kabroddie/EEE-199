@@ -5,6 +5,7 @@ using DG.Tweening;
 public class onboardingManager : MonoBehaviour
 {
     public RectTransform slideRoot;
+    public RectTransform viewport; 
     public RectTransform[] pages;
     public float slideDuration = 0.5f;
 
@@ -42,7 +43,7 @@ public class onboardingManager : MonoBehaviour
 
     private void GoToPage(int pageID, bool instant = false)
     {
-        float pageWidth = pages[0].rect.width;
+        float pageWidth = viewport.rect.width;
         float targetX = -pageID * pageWidth;
 
         if (instant)
@@ -55,7 +56,7 @@ public class onboardingManager : MonoBehaviour
         }
     }
 
-    public void FinishOnboarding()
+    void FinishOnboarding()
     {
         PlayerPrefs.SetInt(onboardingKey, 1);
         PlayerPrefs.Save();
