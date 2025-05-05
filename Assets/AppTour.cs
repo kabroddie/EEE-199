@@ -34,6 +34,8 @@ public class AppTour : MonoBehaviour
     void Start()
     {
         if(counter == 0){
+            desc.text = descriptions[counter];
+            title.text = titles[counter];
             buttonBack.SetActive(false); 
         }
     }
