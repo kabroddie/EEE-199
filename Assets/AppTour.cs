@@ -12,7 +12,8 @@ public class AppTour : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI buttonText;
     public GameObject buttonBack;
-    public GameObject canvas;
+    public QrCodeRecenter scanQR;
+    public SettingsEnabler enabler;
 
     [SerializeField] private Image[] tourImages;
 
@@ -58,7 +59,8 @@ public class AppTour : MonoBehaviour
     public void buttonPress(bool next)
     {
         if(finish & next){
-            canvas.SetActive(false);
+            enabler.ScanFirst();
+            scanQR.ToggleScanning();
         }
 
         int previous = counter;
