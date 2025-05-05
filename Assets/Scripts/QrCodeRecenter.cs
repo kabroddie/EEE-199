@@ -146,21 +146,26 @@ public class QrCodeRecenter : MonoBehaviour
     /// </summary>
     private void RecenterToQR(string qrKey)
     {
-        var target = targetHandler.GetCurrentTargetByTargetText(qrKey);
+        TargetFacade target = targetHandler.GetCurrentTargetByTargetText(qrKey);
         if (target == null)
             return;
 
         Vector3 pos = target.transform.position;
         Quaternion rot = target.transform.rotation;
 
+        sessionOrigin.transform.position = pos;
+        sessionOrigin.transform.rotation = rot;
+
         // Create or replace the anchor for this QR code
         ARAnchor anchor = CreateAnchor(qrKey, pos, rot);
 
         // Move the ARSessionOrigin so the camera ends up at 'pos/rot'
-        sessionOrigin.transform.SetPositionAndRotation(
-            sessionOrigin.transform.position + (pos - sessionOrigin.camera.transform.position),
-            rot * Quaternion.Inverse(sessionOrigin.camera.transform.rotation) * sessionOrigin.transform.rotation
-        );
+        // sessionOrigin.transform.SetPositionAndRotation(
+        //     sessionOrigin.transform.position + (pos - sessionOrigin.camera.transform.position),
+        //     rot * Quaternion.Inverse(sessionOrigin.camera.transform.rotation) * sessionOrigin.transform.rotation
+        // );
+
+        
 
         // Floor transition
         if (floorTransitionManager != null)
