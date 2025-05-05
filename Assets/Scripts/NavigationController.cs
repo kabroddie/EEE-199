@@ -11,12 +11,14 @@ using System.Linq;
 
 public class NavigationController : MonoBehaviour
 {
+    [SerializeField]
+    private ArrowPathVisualization arrowPathVis; // Reference to the ArrowPathVisualization script
     public Vector3 targetPosition { get; set; } = Vector3.zero;
 
     [SerializeField]
     private LineRenderer line;
     
-    private NavMeshPath path;
+    public NavMeshPath path;
 
     [SerializeField]
     private TextMeshProUGUI toggleButtonText;
@@ -33,26 +35,18 @@ public class NavigationController : MonoBehaviour
     [SerializeField]
     private ARRaycastManager raycastManager; // Attach AR Raycast Manager
 
-    // [SerializeField]
-    // private Slider navigationYOffset; // Slider for dynamic height adjustment
-
     private TourManager tourManager;
 
     private FloorTransitionManager floorTransitionManager;
 
-    private bool navigationActive = false;
-    private bool hasTarget = false;
+    public bool navigationActive = false;
+    public bool hasTarget = false;
     private float arrivalThreshold = 2.0f; // Distance threshold for arrival
 
-    // Dynamic height variables
-    private float lineHeightOffset = 0.2f;  
 
     // ✅ NEW: Pin prefab for the end of the line
     [SerializeField] private GameObject pinPrefab;
     private GameObject dynamicPin; // Holds the instantiated pin
-
-    private Dictionary<int, Queue<float>> heightHistory = new Dictionary<int, Queue<float>>();
-    private int historySize = 5; // ✅ Store the last 5 heights per point
 
     [SerializeField] private TextMeshProUGUI arrivedText; // Text to show when the user arrives at a POI
     private void Start()
@@ -83,44 +77,15 @@ public class NavigationController : MonoBehaviour
 
             // Calculate the path
             NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path);
-
-            // ✅ Store a modified version of path.corners
-            Vector3[] adjustedPath = new Vector3[path.corners.Length];
-            for (int i = 0; i < path.corners.Length; i++)
-            {
-                adjustedPath[i] = path.corners[i]; // Copy original path
-            }
-
-            // ✅ Apply modified path to the line before dynamic height adjustment
-            line.positionCount = adjustedPath.Length;
-            line.SetPositions(adjustedPath);
-
-             // ✅ Now dynamically adjust height based on AR planes only
-            // AdjustLineHeightUsingRaycast(adjustedPath);
-
-            // // Update the line
-            // line.positionCount = path.corners.Length;
             
-
-            // Check line visibility
+            line.positionCount = path.corners.Length;
+            line.SetPositions(path.corners);
             UpdateLineVisibility();
-
-            // Adjust line height dynamically
-            // AdjustLineHeight();
-            // Vector3[] calculatePathandOffset = AddLineOffset();
-            // line.SetPositions(calculatePathandOffset);
-            
 
             // ✅ Update the pin position to the end of the line
             UpdatePinPosition();
 
             CheckArrival(); // ✅ Now checks if the user arrived at a POI
-
-            // // Arrival check
-            // if (Vector3.Distance(transform.position, targetPosition) < arrivalThreshold)
-            // {
-            //     HandleArrival();
-            // }
         }
     }
 
@@ -139,84 +104,12 @@ public class NavigationController : MonoBehaviour
                 HandleArrival();
                 if (floorTransitionManager != null && floorTransitionManager.IsTransitionPOI(arrivedTarget.Name))
                 {
-                    Debug.Log($"[KUPAL] 🏢 User has arrived at a transition POI: {arrivedTarget.Name}");
                     // ✅ User has arrived at a transition POI
                     floorTransitionManager.OnArrivedAtPOI(arrivedTarget.Name);
                 }
             }
         }
     }
-
-
-/// <summary>
-/// Adjusts the height of the line renderer dynamically using AR Depth API.
-/// </summary>
-    // private void AdjustLineHeightUsingRaycast(Vector3[] adjustedPath)
-    // {
-    //     if (adjustedPath.Length == 0 || raycastManager == null) return; // ✅ Safety check
-
-    //     List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
-    //     for (int i = 0; i < adjustedPath.Length; i++)
-    //     {
-    //         Vector3 point = adjustedPath[i];
-    //         float adjustedY = point.y;
-
-    //         // ✅ Convert world position to screen position
-    //         Vector2 screenPos = Camera.main.WorldToScreenPoint(point);
-
-    //         // ✅ Perform AR Raycast to detect real-world floor height
-    //         if (raycastManager.Raycast(screenPos, hits, TrackableType.PlaneWithinBounds))
-    //         {
-    //             adjustedY = hits[0].pose.position.y + lineHeightOffset;
-    //         }
-
-    //         // ✅ Apply smooth transition to prevent sudden jumps
-    //         adjustedPath[i] = new Vector3(point.x, Mathf.Lerp(point.y, adjustedY, Time.deltaTime * heightAdjustmentSpeed), point.z);
-    //     }
-
-    //     // ✅ Apply updated path to LineRenderer
-    //     line.SetPositions(adjustedPath);
-    // }
-    private void AdjustLineHeightUsingRaycast(Vector3[] adjustedPath)
-    {
-        if (adjustedPath.Length == 0 || raycastManager == null) return;
-
-        List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
-        for (int i = 0; i < adjustedPath.Length; i++)
-        {
-            Vector3 point = adjustedPath[i];
-            float detectedY = point.y;
-
-            Vector2 screenPos = Camera.main.WorldToScreenPoint(point);
-            if (raycastManager.Raycast(screenPos, hits, TrackableType.PlaneWithinBounds))
-            {
-                detectedY = hits[0].pose.position.y + lineHeightOffset;
-            }
-
-            // ✅ Maintain height history for smoothing
-            if (!heightHistory.ContainsKey(i))
-            {
-                heightHistory[i] = new Queue<float>();
-            }
-
-            Queue<float> history = heightHistory[i];
-            if (history.Count >= historySize)
-            {
-                history.Dequeue(); // Remove oldest height value
-            }
-            history.Enqueue(detectedY);
-
-            // ✅ Use the average of stored height values for stability
-            float smoothedY = history.Average();
-
-            adjustedPath[i] = new Vector3(point.x, smoothedY, point.z);
-        }
-
-        line.SetPositions(adjustedPath);
-    }
-
 
 //     /// <summary>
 //     /// Checks if any point is behind a wall, toggles line/pin visibility
@@ -355,6 +248,7 @@ public class NavigationController : MonoBehaviour
         navigationActive = true;
         line.enabled = true;
 
+
         targetHandler.TogglePinVisibility(targetPosition, true);
         UpdateToggleButtonText();
 
@@ -434,5 +328,44 @@ public class NavigationController : MonoBehaviour
         text.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
         text.gameObject.SetActive(false);
     }
+
+    /// <summary>
+    /// Stops and fully resets navigation (line, pins, flags, UI text).
+    /// Call this from your Cancel/Reset button.
+    /// </summary>
+    public void ResetNavigation()
+    {
+        Debug.Log("[NavigationController] 🔄 Resetting navigation...");
+        // Stop movement updates
+        navigationActive = false;
+        hasTarget = false;
+        
+        // Clear stored target
+        targetPosition = Vector3.zero;
+
+        // Disable and clear the line
+        if (line != null)
+        {
+            line.enabled = false;
+            line.positionCount = 0;
+        }
+
+        // Hide all pins
+        if (dynamicPin != null)
+            dynamicPin.SetActive(false);
+        
+        targetHandler?.HideAllPins();
+
+        if (arrivedText != null)
+            arrivedText.gameObject.SetActive(false);
+
+        UpdateToggleButtonText();
+
+        if (tourManager != null && tourManager.GetCurrentState() != TourManager.TourState.Inactive)
+        {
+            tourManager.ExitTourMode();
+        }
+    }
+
 
 }
