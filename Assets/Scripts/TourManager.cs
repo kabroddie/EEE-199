@@ -82,19 +82,20 @@ public class TourManager : MonoBehaviour
 
         switch (tourType)
         {
-            case "Old Bldg 1F Tour":
-                selectedTourPOIs = targetHandler.GetOldFirstFloorPresetPath();
-                startingPoint = targetHandler.GetCurrentTargetByTargetText("Entry");
-                break;
-
-            case "New Bldg 1F Tour":
-                selectedTourPOIs = targetHandler.GetNewFirstFloorPresetPath();
-                startingPoint = targetHandler.GetCurrentTargetByTargetText("MeralcoHall");
-                break;
 
             case "1F Tour":
                 selectedTourPOIs = targetHandler.GetAllFirstFloorPresetPath();
-                startingPoint = targetHandler.GetCurrentTargetByTargetText("Entry");
+                startingPoint = targetHandler.GetCurrentTargetByTargetText("MeralcoHall");
+                break;
+
+            case "2F Tour":
+                selectedTourPOIs = targetHandler.GetAllSecondFloorPresetPath();
+                startingPoint = targetHandler.GetCurrentTargetByTargetText("Old2ndStair");
+                break;
+
+            case "1F and 2F Tour":
+                selectedTourPOIs = targetHandler.GetFirstAndSecondFloorPresetPath();
+                startingPoint = targetHandler.GetCurrentTargetByTargetText("MeralcoHall");
                 break;
 
             default:

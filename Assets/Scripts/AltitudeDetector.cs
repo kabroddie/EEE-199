@@ -7,7 +7,7 @@ public class AltitudeDetector : MonoBehaviour
     public Transform trackedTransform;
 
     [SerializeField]
-    public float thresholdY = 1.5f;
+    public float thresholdY;
 
     [SerializeField]
     private GameObject altitudeChangedPanel;
@@ -20,6 +20,13 @@ public class AltitudeDetector : MonoBehaviour
 
     [SerializeField]
     private QrCodeRecenter qrCodeScanner;
+    
+    [SerializeField]
+    public GameObject confirmationPanel; // Reference to the confirmation panel
+
+    public bool altitudeHasChanged = false;
+
+    private float lastY;
 
     void Start()
     {
@@ -30,13 +37,22 @@ public class AltitudeDetector : MonoBehaviour
 
     void Update()
     {
-        if (altitudeChangedPanel == null || trackedTransform == null) return;
+        float currentY = trackedTransform.position.y;
 
-        // Check if we've crossed the Y threshold
-        if (trackedTransform.position.y >= thresholdY || trackedTransform.position.y <= -thresholdY)
+        // Only fire the moment we cross up or down through the threshold:
+        if (!altitudeHasChanged)
         {
-            ShowPrompt();
+            bool crossedUp   = lastY <  thresholdY && currentY >=  thresholdY;
+            bool crossedDown = lastY > -thresholdY && currentY <= -thresholdY;
+
+            if (crossedUp || crossedDown)
+            {
+                ShowPrompt();
+                altitudeHasChanged = true;
+            }
         }
+
+        lastY = currentY;
     }
 
     private void ShowPrompt()
@@ -46,14 +62,19 @@ public class AltitudeDetector : MonoBehaviour
         altitudeChangedText.text = $"It seems you changed floors.\n\nKindly please scan the QR code near the staircase.\n\nThank you!"; // Update the prompt text
     }
 
-    private void HidePrompt()
+    public void ConfirmationPrompt()
     {
+        // Hide the prompt when the user confirms the action
         altitudeChangedPanel.SetActive(false);
-        qrCodeScanner.ToggleScanning(); // Stop scanning when the prompt is hidden
+        confirmationPanel.SetActive(true); // Reset the flag
     }
+
     public void OnQRCodeScanned()
     {
         // Hide the prompt when the QR code is scanned
-        HidePrompt();
+        confirmationPanel.SetActive(false);
+        altitudeChangedPanel.SetActive(false);
+        altitudeHasChanged = false; // Reset the flag
+        qrCodeScanner.ToggleScanning(); // Resume scanning
     }
 }

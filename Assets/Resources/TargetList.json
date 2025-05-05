@@ -1,7 +1,7 @@
 {
     "TargetList": [
         {
-            "Name": "B1 Entrance",
+            "Name": "Bldg 1 Entrance",
             "Category": "Entrance",
             "Floor": 0,
             "Building": "Old",
@@ -18,7 +18,7 @@
             }
         }, 
         {
-            "Name": "VLC",
+            "Name": "PLDT Multimedia Lecture Hall (VLC)",
             "Category": "Classroom",
             "Floor": 0,
             "Building": "Old",
@@ -35,7 +35,7 @@
             }
         },
         {
-            "Name": "LC2",
+            "Name": "ASTEC Multimedia Lecture Hall (LC2)",
             "Category": "Classroom",
             "Floor": 0,
             "Building": "Old",
@@ -52,7 +52,7 @@
             }
         },
         {
-            "Name": "LC1",
+            "Name": "MERALCO Multimedia Lecture Hall (LC1)",
             "Category": "Classroom",
             "Floor": 0,
             "Building": "Old",
@@ -139,7 +139,7 @@
             }
         },
         {
-            "Name": "120",
+            "Name": "UP Meralco Innovation Hall (Rm 120)",
             "Category": "Classroom",
             "Floor": 0,
             "Building": "New",
@@ -191,7 +191,7 @@
         },
         
         {
-            "Name": "123",
+            "Name": "Lecture Room (Rm 123)",
             "Category": "Classroom",
             "Floor": 0,
             "Building": "New",
@@ -208,7 +208,7 @@
             }
         },
         {
-            "Name": "124 (ASTEC)",
+            "Name": "Power Electronics Laboratory (PEL) (Rm 124)",
             "Category": "Laboratory",
             "Floor": 0,
             "Building": "New",
@@ -225,7 +225,7 @@
             }
         },
         {
-            "Name": "125 (PEL Faculty Rm)",
+            "Name": "PEL Faculty (Rm 125)",
             "Category": "Laboratory",
             "Floor": 0,
             "Building": "New",
@@ -242,7 +242,7 @@
             }
         },
         {
-            "Name": "126",
+            "Name": "Electronics Laboratory (ELab) (Rm 126)",
             "Category": "Classroom",
             "Floor": 0,
             "Building": "New",
@@ -259,7 +259,7 @@
             }
         },
         {
-            "Name": "127 (EMRL)",
+            "Name": "Electric Machines Instructional Laboratory (EMRL) (Rm 127)",
             "Category": "Laboratory",
             "Floor": 0,
             "Building": "New",
@@ -276,7 +276,7 @@
             }
         },
         {
-            "Name": "129 (Fab Lab)",
+            "Name": "Fabrications Laboratory (Rm 128)",
             "Category": "Laboratory",
             "Floor": 0,
             "Building": "New",
@@ -293,7 +293,7 @@
             }
         },
         {
-            "Name": "HVL",
+            "Name": "Motors Drive Instructional Laboratory (Rm 129)",
             "Category": "Laboratory",
             "Floor": 0,
             "Building": "New",
@@ -346,7 +346,7 @@
 
         
         {
-            "Name": "202",
+            "Name": "Lecturers' Office (Rm 202)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "Old",
@@ -363,7 +363,7 @@
             }
         },
         {
-            "Name": "204",
+            "Name": "Samsung Laboratory (Rm 204)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "Old",
@@ -380,7 +380,7 @@
             }
         },
         {
-            "Name": "205",
+            "Name": "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "Old",
@@ -397,7 +397,7 @@
             }
         },
         {
-            "Name": "206",
+            "Name": "UCL Research Office (Rm 206)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "Old",
@@ -414,7 +414,7 @@
             }
         },
         {
-            "Name": "207 (CNL Lab)",
+            "Name": "Computer Networks Laboratory (CNL) (Rm 207)",
             "Category": "Laboratory",
             "Floor": 1,
             "Building": "Old",
@@ -431,7 +431,7 @@
             }
         },
         {
-            "Name": "208",
+            "Name": "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "Old",
@@ -448,7 +448,7 @@
             }
         },
         {
-            "Name": "209",
+            "Name": "CNL Faculty (Rm 209)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "Old",
@@ -465,7 +465,7 @@
             }
         },
         {
-            "Name": "210",
+            "Name": "UCL Faculty (Rm 210)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "Old",
@@ -551,7 +551,7 @@
             }
         },
         {
-            "Name": "EEE Admin",
+            "Name": "EEE Administrative Office",
             "Category": "Admin",
             "Floor": 1,
             "Building": "New",
@@ -568,7 +568,7 @@
             }
         },
         {
-            "Name": "ACBEL Research Lab",
+            "Name": "UP NOKIA Engineering Laboratory (Rm 227)",
             "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
@@ -585,7 +585,7 @@
             }
         },
         {
-            "Name": "PEL Instructional Lab",
+            "Name": "PEL Instructional Laboratory (Rm 228)",
             "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
@@ -602,7 +602,7 @@
             }
         },
         {
-            "Name": "224",
+            "Name": "Small Classroom 6 (SCL) (Rm 229)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "New",

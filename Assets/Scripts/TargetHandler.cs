@@ -258,45 +258,21 @@ public class TargetHandler : MonoBehaviour
         return currentTargetItems.Select(x => x.Name).ToList();
     }
 
-    public List<TargetFacade> GetOldFirstFloorPresetPath()
-    {
-        string[] hardcodedOrder = new string[]
-        {
-            "VLC", "LC2", "LC1", "Old 1F Male CR",
-            "Old 1F Female CR"
-        };
-
-        return currentTargetItems
-            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name))
-            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
-            .ToList();
-    }
-
-    public List<TargetFacade> GetNewFirstFloorPresetPath()
-    {
-        string[] hardcodedOrder = new string[]
-        {
-            "120", "123", "124 ASTEC", "127 (EMRL)",
-            "129 (Fab Lab)", "HVL", "New 1F Male CR",
-            "New 1F Female CR"
-        };
-
-        return currentTargetItems
-            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name))
-            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
-            .ToList();
-    }
-
     public List<TargetFacade> GetAllFirstFloorPresetPath()
     {
         string[] hardcodedOrder = new string[]
         {
-            "VLC", "LC2", "LC1", "Old 1F Male CR",
-            "Old 1F Female CR", "Entrance", 
+            "UP Meralco Innovation Hall (Rm 120)", "Lecture Room (Rm 123)",
+            "Power Electronics Laboratory (PEL) (Rm 124)", "Electronics Laboratory (ELab) (Rm 126)",
+            "Electric Machines Instructional Laboratory (EMRL) (Rm 127)",
+            "Fabrications Laboratory (Rm 128)",
+            "Motors Drive Instructional Laboratory (Rm 129)",
 
-            "120", "123", "124 ASTEC", "127 (EMRL)",
-            "129 (Fab Lab)", "HVL", "New 1F Male CR",
-            "New 1F Female CR"
+            "Lc1Hallway", //For recentering the QR code
+
+            "PLDT Multimedia Lecture Hall (VLC)", 
+            "ASTEC Multimedia Lecture Hall (LC2)", 
+            "MERALCO Multimedia Lecture Hall (LC1)"   
         };
 
         return currentTargetItems
@@ -305,20 +281,57 @@ public class TargetHandler : MonoBehaviour
             .ToList();
     }
 
-    // public List<TargetFacade> GetOldFirstFloorTourPOIs()
-    // {
-    //     // ✅ Hardcoded POI name order
-    //     string[] hardcodedOrder = new string[]
-    //     {
-    //         "VLC", "LC2", "LC1", "Male CR",
-    //         "Female CR", "O1 Stairs"
-    //     };
+    public List<TargetFacade> GetAllSecondFloorPresetPath()
+    {
+        string[] hardcodedOrder = new string[]
+        {
+            "Lecturers' Office (Rm 202)", "Samsung Laboratory (Rm 204)",
+            "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
+            "UCL Research Office (Rm 206)", "Computer Networks Laboratory (CNL) (Rm 207)",
+            "Ubiquitous Computing Laboratory (UCL) (Rm 208)", "CNL Faculty (Rm 209)",
+            "UCL Faculty (Rm 210)",
 
-    //     return currentTargetItems
-    //         .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name)) // ✅ Filter: Only keep hardcoded POIs
-    //         .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name)) // ✅ Sort based on the hardcoded order
-    //         .ToList();
-    // }
+            "EEE Administrative Office", "UP NOKIA Engineering Laboratory (Rm 227)",
+            "PEL Instructional Laboratory (Rm 228)", "Small Classroom 6 (SCL) (Rm 229)"
+        };
+
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name))
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
+            .ToList();
+    }
+
+    public List<TargetFacade> GetFirstAndSecondFloorPresetPath()
+    {
+        string[] hardcodedOrder = new string[]
+        {
+            "UP Meralco Innovation Hall (Rm 120)", "Lecture Room (Rm 123)",
+            "Power Electronics Laboratory (PEL) (Rm 124)", "Electronics Laboratory (ELab) (Rm 126)",
+            "Electric Machines Instructional Laboratory (EMRL) (Rm 127)",
+            "Fabrications Laboratory (Rm 128)",
+            "Motors Drive Instructional Laboratory (Rm 129)",
+
+            "PLDT Multimedia Lecture Hall (VLC)", 
+            "ASTEC Multimedia Lecture Hall (LC2)", 
+            "MERALCO Multimedia Lecture Hall (LC1)",
+
+            "Lecturers' Office (Rm 202)", "Samsung Laboratory (Rm 204)",
+            "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
+            "UCL Research Office (Rm 206)", "Computer Networks Laboratory (CNL) (Rm 207)",
+            "Ubiquitous Computing Laboratory (UCL) (Rm 208)", "CNL Faculty (Rm 209)",
+            "UCL Faculty (Rm 210)",
+
+            "EEE Administrative Office", "UP NOKIA Engineering Laboratory (Rm 227)",
+            "PEL Instructional Laboratory (Rm 228)", "Small Classroom 6 (SCL) (Rm 229)"
+        };
+
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(hardcodedOrder, poi => poi == x.Name))
+            .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
+            .ToList();
+    }
+
+    
 
     public List<TargetFacade> GetTransitionPOIs()
     {

@@ -180,7 +180,6 @@ public class FloorTransitionManager : MonoBehaviour
     public void OnUserConfirmedFloorChange()
     {
         confirmationPanel.SetActive(false);
-        map.SetActive(true);
 
         qrCodeScanner.ToggleScanning();
 

@@ -329,4 +329,43 @@ public class NavigationController : MonoBehaviour
         text.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Stops and fully resets navigation (line, pins, flags, UI text).
+    /// Call this from your Cancel/Reset button.
+    /// </summary>
+    public void ResetNavigation()
+    {
+        Debug.Log("[NavigationController] 🔄 Resetting navigation...");
+        // Stop movement updates
+        navigationActive = false;
+        hasTarget = false;
+        
+        // Clear stored target
+        targetPosition = Vector3.zero;
+
+        // Disable and clear the line
+        if (line != null)
+        {
+            line.enabled = false;
+            line.positionCount = 0;
+        }
+
+        // Hide all pins
+        if (dynamicPin != null)
+            dynamicPin.SetActive(false);
+        
+        targetHandler?.HideAllPins();
+
+        if (arrivedText != null)
+            arrivedText.gameObject.SetActive(false);
+
+        UpdateToggleButtonText();
+
+        if (tourManager != null && tourManager.GetCurrentState() != TourManager.TourState.Inactive)
+        {
+            tourManager.ExitTourMode();
+        }
+    }
+
+
 }
