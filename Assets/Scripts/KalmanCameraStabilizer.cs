@@ -25,10 +25,18 @@ public class KalmanCameraStabilizer : MonoBehaviour
 
     private bool initialized = false;
 
+    // NEW: Raw sensor data cache
+    private Vector3 rawPosition;
+    private Vector3 rawEuler;
+
     void Update()
     {
-        Vector3 measuredPosition = transform.position;
-        Vector3 measuredEulerAngles = transform.rotation.eulerAngles;
+        // Cache raw data before filtering
+        rawPosition = transform.position;
+        rawEuler = transform.rotation.eulerAngles;
+
+        Vector3 measuredPosition = rawPosition;
+        Vector3 measuredEulerAngles = rawEuler;
 
         if (!initialized)
         {
@@ -84,15 +92,26 @@ public class KalmanCameraStabilizer : MonoBehaviour
         );
 
         // Apply filtered results
-        previousPosition = transform.position;
-        previousRotation = transform.eulerAngles;
+        previousPosition = rawPosition;
+        previousRotation = rawEuler;
         transform.position = kalmanEstimatePos;
         transform.rotation = Quaternion.Euler(kalmanEstimateEuler);
     }
 
     public string GetDebugInfo()
     {
-        return $"Pos: ({previousPosition.x:F2}, {previousPosition.y:F2}, {previousPosition.z:F2})\n" +
-                $"Rot: ({previousRotation.x:F2}, {previousRotation.y:F2}, {previousRotation.z:F2})";
+        return $"Filtered Pos: ({kalmanEstimatePos.x:F2}, {kalmanEstimatePos.y:F2}, {kalmanEstimatePos.z:F2})\n" +
+               $"Filtered Rot: ({kalmanEstimateEuler.x:F2}, {kalmanEstimateEuler.y:F2}, {kalmanEstimateEuler.z:F2})";
+    }
+
+    // NEW: Public accessors for raw position and rotation
+    public Vector3 GetRawPosition()
+    {
+        return rawPosition;
+    }
+
+    public Vector3 GetRawRotation()
+    {
+        return rawEuler;
     }
 }

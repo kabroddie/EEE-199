@@ -32,13 +32,20 @@ public class ArDebug : MonoBehaviour
             Vector3 filteredPos = arCamera.transform.position;
             Vector3 filteredRot = arCamera.transform.eulerAngles;
 
-            string rawInfo = $"FILTERED:\n" +
-                             $"Pos: ({filteredPos.x:F2}, {filteredPos.y:F2}, {filteredPos.z:F2})\n" +
-                             $"Rot: ({filteredRot.x:F2}, {filteredRot.y:F2}, {filteredRot.z:F2})\n\n";
+            Vector3 rawPos = kalman != null ? kalman.GetRawPosition() : Vector3.zero;
+            Vector3 rawRot = kalman != null ? kalman.GetRawRotation() : Vector3.zero;
 
-            string filteredInfo = $"RAW:\n{kalman.GetDebugInfo()}";
+            string output = $"POSITION (Filtered | Raw)\n" +
+                            $"X: {filteredPos.x:F2} | {rawPos.x:F2}\n" +
+                            $"Y: {filteredPos.y:F2} | {rawPos.y:F2}\n" +
+                            $"Z: {filteredPos.z:F2} | {rawPos.z:F2}\n\n" +
 
-            debugText.text = rawInfo + filteredInfo;
+                            $"ROTATION (Filtered | Raw)\n" +
+                            $"X: {filteredRot.x:F2} | {rawRot.x:F2}\n" +
+                            $"Y: {filteredRot.y:F2} | {rawRot.y:F2}\n" +
+                            $"Z: {filteredRot.z:F2} | {rawRot.z:F2}\n";
+
+            debugText.text = output;
 
             yield return new WaitForSeconds(updateInterval);
         }
