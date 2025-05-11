@@ -26,6 +26,9 @@ public class TargetHandler : MonoBehaviour
     private Dictionary<Vector3, GameObject> targetPins = new Dictionary<Vector3, GameObject>(); // ✅ Store pins by position
     private Vector3 tourStartingPoint; // ✅ Stores the dynamically assigned tour start
 
+    [SerializeField] private GameObject categoryPinPrefab; // assign in Inspector
+    private List<GameObject> spawnedCategoryPins = new List<GameObject>();
+
 
 
     private void Start()
@@ -88,6 +91,7 @@ public class TargetHandler : MonoBehaviour
         targetData.Floor = target.Floor;
         targetData.Building = target.Building;
         targetData.Purpose = target.Purpose;
+        targetData.Category = target.Category;
 
         targetObject.SetActive(false); // Start hidden
         targetPins[target.Position] = targetObject; // Store the pin reference
@@ -109,6 +113,7 @@ public class TargetHandler : MonoBehaviour
         qrTarget.Floor = target.Floor;
         qrTarget.Building = target.Building;
         qrTarget.Purpose = target.Purpose;
+        qrTarget.Category = target.Category;
 
         // ✅ Set position and rotation
         qrTarget.transform.position = target.Position;
@@ -344,6 +349,32 @@ public class TargetHandler : MonoBehaviour
     public Vector3 GetTourStartingPoint()
     {
         return tourStartingPoint;
+    }
+
+    public void ShowPins(string categoryName)
+    {
+        // First hide all pins
+
+        
+        // Check if any targets have the specified category
+        bool foundCategory = false;
+        
+        foreach (var target in currentTargetItems)
+        {
+            if (target.Category == categoryName)
+            {
+                foundCategory = true;
+                Vector3 targetPosition = target.transform.position + Vector3.up * 0.5f;
+                Debug.Log($"Found target: {target.Name} at position: {targetPosition}");
+                GameObject catPin = Instantiate(categoryPinPrefab, targetPosition, Quaternion.identity);
+                spawnedCategoryPins.Add(catPin);
+            }
+        }
+        Debug.Log($"[TargetHandler] Spawned {spawnedCategoryPins.Count} pins for category: {categoryName}");
+        if (!foundCategory)
+        {
+            Debug.LogWarning($"[TargetHandler] No targets found with category: {categoryName}");
+        }
     }
 
 }

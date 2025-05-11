@@ -6,6 +6,7 @@ public class Target
 {
     public string Name;
     public int Floor;
+    public string Category;
     public string Building;
     public string Purpose;
     public Vector3 Position;
