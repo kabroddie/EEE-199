@@ -377,4 +377,18 @@ public class TargetHandler : MonoBehaviour
         }
     }
 
+    public void clearCatPins()
+    {
+        foreach (var pin in spawnedCategoryPins){
+            Destroy(pin);
+        }
+        spawnedCategoryPins.Clear();
+    }
+
+    public List<TargetFacade> CategoryPOIs(string categoryName, int floorNumber){
+        return currentTargetItems
+            .Where(x => x.Category == categoryName && x.Floor == floorNumber)
+            .ToList();
+    }
+
 }
