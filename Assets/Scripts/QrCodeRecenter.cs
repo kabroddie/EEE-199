@@ -240,6 +240,7 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField] private ARAnchorManager anchorManager;
     [SerializeField] private GameObject map;
     [SerializeField] private GameObject bottomBar;
+    [SerializeField] private float requiredHoldTime;
     [SerializeField] private Image scanProgressCircle; // ✅ Radial progress circle
 
     private Dictionary<string, ARAnchor> qrAnchors = new Dictionary<string, ARAnchor>();
@@ -250,12 +251,11 @@ public class QrCodeRecenter : MonoBehaviour
 
     private Texture2D cameraImageTexture;
     private IBarcodeReader reader = new BarcodeReader();
-    private bool scanningEnabled = false;
+    public bool scanningEnabled = false;
 
     // ✅ Progress tracking
     private string lastDetectedQr = null;
     private float qrHoldTime = 0f;
-    private float requiredHoldTime = 1.5f;
     private float scanCooldown = 2.0f;
     private float cooldownTimer = 0f;
 
