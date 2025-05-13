@@ -49,8 +49,8 @@ public class AltitudeDetector : MonoBehaviour
             bool crossedDown = lastY > -thresholdY && currentY <= -thresholdY;
 
             if ((crossedUp || crossedDown) && 
-                (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.Idle &&
-                 floorTransitionManager.GetCurrentState() != FloorTransitionManager.FloorState.NavigatingNewFloor))
+                (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.Idle ||
+                 floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingNewFloor))
              {
                 ShowPrompt();
                 altitudeHasChanged = true;

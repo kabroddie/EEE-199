@@ -436,7 +436,7 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 53.66,
+                "x": 58.07,
                 "y": 0.0,
                 "z": -19.59
             },
@@ -453,7 +453,7 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 59.47,
+                "x": 69.13,
                 "y": 0.0,
                 "z": -19.76
             },
@@ -504,7 +504,7 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 72.0,
+                "x": 79.248,
                 "y": 0.0,
                 "z": -17.98
             },
@@ -669,8 +669,8 @@
             }
         },
         {
-            "Name": "UP NOKIA Engineering Laboratory (Rm 227)",
-            "Category": "Classroom",
+            "Name": "UP OpenRAN Laboratory (Rm 227)",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -687,14 +687,14 @@
         },
         {
             "Name": "PEL Instructional Laboratory (Rm 228)",
-            "Category": "Laboratory",
+            "Category": "Classroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 59.46,
+                "x": 53.8,
                 "y": 0.0,
-                "z": -77.08
+                "z": -77.37
             },
             "Rotation": {
                 "x": 90.0,
@@ -703,15 +703,15 @@
             }
         },
         {
-            "Name": "Small Classroom 6 (SCL) (Rm 229)",
+            "Name": "Small Classroom 6 (SC6) (Rm 229)",
             "Category": "Classroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 61.51,
+                "x": 67.69,
                 "y": 0.0,
-                "z": -77.08
+                "z": -77.24
             },
             "Rotation": {
                 "x": 90.0,
@@ -726,9 +726,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": 55.27,
+                "x": 54.73,
                 "y": 0.0,
-                "z": -46.48
+                "z": -46.2
             },
             "Rotation": {
                 "x": 90.0,

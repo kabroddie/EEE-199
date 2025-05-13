@@ -12,7 +12,6 @@ using System.Linq;
 public class NavigationController : MonoBehaviour
 {
     [SerializeField]
-    private ArrowPathVisualization arrowPathVis; // Reference to the ArrowPathVisualization script
     public Vector3 targetPosition { get; set; } = Vector3.zero;
 
     [SerializeField]
@@ -80,7 +79,7 @@ public class NavigationController : MonoBehaviour
             
             line.positionCount = path.corners.Length;
             line.SetPositions(path.corners);
-            UpdateLineVisibility();
+            // UpdateLineVisibility();
 
             // ✅ Update the pin position to the end of the line
             UpdatePinPosition();
