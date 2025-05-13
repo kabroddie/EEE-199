@@ -31,7 +31,10 @@ public class SearchBar : MonoBehaviour
         searchBar.onValueChanged.AddListener(UpdateSearchResults);
 
     }
-
+    public void CategoriesSection(string categoryName)
+    {
+        directoryText.DOFade(0f,0.3f).SetEase(Ease.OutQuad);
+    }
     // Update is called once per frame
     public void FocusSearchBar()
     {
