@@ -24,6 +24,9 @@ public class AltitudeDetector : MonoBehaviour
     [SerializeField]
     public GameObject confirmationPanel; // Reference to the confirmation panel
 
+    [SerializeField]
+    private FloorTransitionManager floorTransitionManager; // Reference to the FloorTransitionManager
+
     public bool altitudeHasChanged = false;
 
     private float lastY;
@@ -45,11 +48,14 @@ public class AltitudeDetector : MonoBehaviour
             bool crossedUp   = lastY <  thresholdY && currentY >=  thresholdY;
             bool crossedDown = lastY > -thresholdY && currentY <= -thresholdY;
 
-            if (crossedUp || crossedDown)
-            {
+            if ((crossedUp || crossedDown) && 
+                (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.Idle &&
+                 floorTransitionManager.GetCurrentState() != FloorTransitionManager.FloorState.NavigatingNewFloor))
+             {
                 ShowPrompt();
                 altitudeHasChanged = true;
             }
+           
         }
 
         lastY = currentY;

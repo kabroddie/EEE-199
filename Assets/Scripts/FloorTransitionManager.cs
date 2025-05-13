@@ -60,7 +60,6 @@ public class FloorTransitionManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI floortransitionText;
     [SerializeField] private GameObject confirmationPanel;
     [SerializeField] private Button proceedButton;
-    [SerializeField] private Button confirmButton;
 
     public enum FloorState
     {
@@ -179,6 +178,7 @@ public class FloorTransitionManager : MonoBehaviour
     /// </summary>
     public void OnUserConfirmedFloorChange()
     {
+        Debug.Log($"[FloorTransitionManager] User confirmed floor change to {targetTransitionPOI}");
         confirmationPanel.SetActive(false);
 
         qrCodeScanner.ToggleScanning();
@@ -194,12 +194,10 @@ public class FloorTransitionManager : MonoBehaviour
             // navigationController.HandleArrival();
             navigationController.ActivateNavigation(finalTarget.transform.position);
             targetTransitionPOI = string.Empty;
+            
         }
-        else
-        {
-            Debug.LogWarning($"[FloorTransitionManager] Final target not found: {pendingTargetName}");
-            currentState = FloorState.Idle;
-        }
+        
+        currentState = FloorState.Idle;
     }
 
     private Vector3 FindNearestTransitionPoint(int floor, string building)

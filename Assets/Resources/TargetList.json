@@ -2,13 +2,13 @@
     "TargetList": [
         {
             "Name": "Bldg 1 Entrance",
-            "Category": "Entrance",
+            "Category": "Exit",
             "Floor": 0,
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
                 "x": -11.15,
-                "y": 0.0,
+                "y": 0.0,   
                 "z": -10.89
             },
             "Rotation": {
@@ -119,8 +119,75 @@
                 "z": 0.0
             }
         },
+        {
+            "Name": "LC1 Exit",
+            "Category": "Exit",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": 5.93,
+                "y": 0.0,
+                "z": -10.52
+            },
+            "Rotation": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "LC2 Exit",
+            "Category": "Exit",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": 5.51,
+                "y": 0.0,
+                "z": 11.71
+            },
+            "Rotation": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "Bldg 1 Parking Area Exit",
+            "Category": "Exit",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": -12.16,
+                "y": 0.0,
+                "z": 11.42
+            },
+            "Rotation": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
 
-
+        {
+            "Name": "Bldg 2 Exit",
+            "Category": "Exit",
+            "Floor": 0,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": -11.52,
+                "y": 0.0,
+                "z": -15.93
+            },
+            "Rotation": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
         {
             "Name": "B2 1F Lobby",
             "Category": "Hallway",
@@ -156,6 +223,23 @@
             }
         },
         {
+            "Name": "1F Elevator",
+            "Category": "Elevator",
+            "Floor": 0,
+            "Building": "New",
+            "Purpose": "POI",
+            "Position": {
+                "x": -7.59,
+                "y": 0.0,
+                "z": -29.45
+            },
+            "Rotation": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
             "Name": "B2 1F Stairs 1",
             "Category": "Stair",
             "Floor": 0,
@@ -164,7 +248,7 @@
             "Position": {
                 "x": -10.7,
                 "y": 0.0,
-                "z": -33.69
+                "z": -31.69
             },
             "Rotation": {
                 "x": 90.0,
@@ -226,7 +310,7 @@
         },
         {
             "Name": "PEL Faculty (Rm 125)",
-            "Category": "Laboratory",
+            "Category": "Office",
             "Floor": 0,
             "Building": "New",
             "Purpose": "POI",
@@ -347,7 +431,7 @@
         
         {
             "Name": "Lecturers' Office (Rm 202)",
-            "Category": "Classroom",
+            "Category": "Office",
             "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
@@ -381,7 +465,7 @@
         },
         {
             "Name": "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
-            "Category": "Classroom",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
@@ -398,7 +482,7 @@
         },
         {
             "Name": "UCL Research Office (Rm 206)",
-            "Category": "Classroom",
+            "Category": "Office",
             "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
@@ -432,7 +516,7 @@
         },
         {
             "Name": "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
-            "Category": "Classroom",
+            "Category": "Laboratory",
             "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
@@ -449,7 +533,7 @@
         },
         {
             "Name": "CNL Faculty (Rm 209)",
-            "Category": "Classroom",
+            "Category": "Office",
             "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
@@ -466,7 +550,7 @@
         },
         {
             "Name": "UCL Faculty (Rm 210)",
-            "Category": "Classroom",
+            "Category": "Office",
             "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
@@ -474,6 +558,23 @@
                 "x": 80.72,
                 "y": 0.0,
                 "z": -19.89
+            },
+            "Rotation": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "Name": "B1 2F Fire Exit",
+            "Category": "Exit",
+            "Floor": 1,
+            "Building": "Old",
+            "Purpose": "POI",
+            "Position": {
+                "x": 84.16,
+                "y": 0.0,
+                "z": -19.27
             },
             "Rotation": {
                 "x": 90.0,
@@ -552,7 +653,7 @@
         },
         {
             "Name": "EEE Administrative Office",
-            "Category": "Admin",
+            "Category": "Office",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -569,7 +670,7 @@
         },
         {
             "Name": "UP NOKIA Engineering Laboratory (Rm 227)",
-            "Category": "Laboratory",
+            "Category": "Classroom",
             "Floor": 1,
             "Building": "New",
             "Purpose": "POI",
@@ -619,6 +720,23 @@
             }
         },
         {
+            "Name": "2F Elevator",
+            "Category": "Elevator",
+            "Floor": 1,
+            "Building": "New",
+            "Purpose": "POI",
+            "Position": {
+                "x": 55.27,
+                "y": 0.0,
+                "z": -46.48
+            },
+            "Rotation": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
             "Name": "B2 2F Stairs 1",
             "Category": "Stair",
             "Floor": 1,
@@ -627,7 +745,7 @@
             "Position": {
                 "x": 52.51,
                 "y": 0.0,
-                "z": -49.47
+                "z": -48.95
             },
             "Rotation": {
                 "x": 90.0,
