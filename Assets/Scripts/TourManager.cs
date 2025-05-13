@@ -162,7 +162,7 @@ public class TourManager : MonoBehaviour
         return currentState == TourState.TourActive;
     }
 
-    private void OnReadyForTour()
+    public void OnReadyForTour()
     {
         readyForTourButton.SetActive(false);
         map.SetActive(true);
