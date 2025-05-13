@@ -4,12 +4,11 @@ using DG.Tweening;
 
 public class onboardingManager : MonoBehaviour
 {
-    public RectTransform slideRoot;
-    public RectTransform viewport; 
-    public RectTransform[] pages;
-    public float slideDuration = 0.5f;
-
+    [Header("Onboarding Setup")]
     public GameObject onboardingPanel;
+    public RectTransform[] pages;
+    public float fadeDuration = 0.5f;
+
     public const string onboardingKey = "hasSeenOnboarding";
 
     private int currentPage = 0;
@@ -23,17 +22,26 @@ public class onboardingManager : MonoBehaviour
         else
         {
             onboardingPanel.SetActive(false);
+            return;
         }
 
-        GoToPage(0, true);
+        // Ensure all pages have CanvasGroup and initialize states
+        for (int i = 0; i < pages.Length; i++)
+        {
+            CanvasGroup group = EnsureCanvasGroup(pages[i]);
+            bool isActive = i == 0;
+            pages[i].gameObject.SetActive(isActive);
+            group.alpha = isActive ? 1f : 0f;
+            group.interactable = isActive;
+            group.blocksRaycasts = isActive;
+        }
     }
 
     public void NextPage()
     {
         if (currentPage < pages.Length - 1)
         {
-            currentPage++;
-            GoToPage(currentPage);
+            FadeToPage(currentPage + 1);
         }
         else
         {
@@ -41,25 +49,51 @@ public class onboardingManager : MonoBehaviour
         }
     }
 
-    private void GoToPage(int pageID, bool instant = false)
+    private void FadeToPage(int nextPage)
     {
-        float pageWidth = viewport.rect.width;
-        float targetX = -pageID * pageWidth;
+        RectTransform current = pages[currentPage];
+        RectTransform next = pages[nextPage];
 
-        if (instant)
+        CanvasGroup currentGroup = EnsureCanvasGroup(current);
+        CanvasGroup nextGroup = EnsureCanvasGroup(next);
+
+        // Prepare next page
+        next.gameObject.SetActive(true);
+        nextGroup.alpha = 0;
+        nextGroup.interactable = false;
+        nextGroup.blocksRaycasts = false;
+
+        // Sequence fade-out current, then fade-in next
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(currentGroup.DOFade(0f, fadeDuration));
+        sequence.AppendCallback(() =>
         {
-            slideRoot.anchoredPosition = new Vector2(targetX, slideRoot.anchoredPosition.y);
-        }
-        else
-        {
-            slideRoot.DOAnchorPosX(targetX, slideDuration).SetEase(Ease.OutCubic);
-        }
+            current.gameObject.SetActive(false);
+            currentGroup.interactable = false;
+            currentGroup.blocksRaycasts = false;
+
+            nextGroup.DOFade(1f, fadeDuration).OnComplete(() =>
+            {
+                nextGroup.interactable = true;
+                nextGroup.blocksRaycasts = true;
+            });
+        });
+
+        currentPage = nextPage;
     }
 
-    void FinishOnboarding()
+    private void FinishOnboarding()
     {
         PlayerPrefs.SetInt(onboardingKey, 1);
         PlayerPrefs.Save();
         onboardingPanel.SetActive(false);
+    }
+
+    private CanvasGroup EnsureCanvasGroup(RectTransform rect)
+    {
+        CanvasGroup group = rect.GetComponent<CanvasGroup>();
+        if (group == null)
+            group = rect.gameObject.AddComponent<CanvasGroup>();
+        return group;
     }
 }
