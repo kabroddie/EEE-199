@@ -391,4 +391,10 @@ public class TargetHandler : MonoBehaviour
             .ToList();
     }
 
+    public List<TargetFacade> CategoryPOIsNoFloorNo(string categoryName){
+        return currentTargetItems
+            .Where(x => x.Category == categoryName)
+            .ToList();
+    }
+
 }
