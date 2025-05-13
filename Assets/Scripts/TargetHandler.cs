@@ -351,7 +351,7 @@ public class TargetHandler : MonoBehaviour
         return tourStartingPoint;
     }
 
-    public void ShowPins(string categoryName)
+    public void ShowPins(string categoryName,int floorNumber)
     {
         // First hide all pins
 
@@ -361,7 +361,7 @@ public class TargetHandler : MonoBehaviour
         
         foreach (var target in currentTargetItems)
         {
-            if (target.Category == categoryName)
+            if (target.Category == categoryName && target.Floor == floorNumber)
             {
                 foundCategory = true;
                 Vector3 targetPosition = target.transform.position + Vector3.up * 0.5f;

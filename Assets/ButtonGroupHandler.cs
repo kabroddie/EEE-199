@@ -15,12 +15,20 @@ public class ButtonGroupHandler : MonoBehaviour
     public PullUpUI pullUp;
     private int floorNumber = 0;
 
-    // Start is called before the first frame update
+    private string catName; 
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SetFloorNumber(int floor)
+    {
+        floorNumber = floor;
+        ClearResults();
+        targetHandler.clearCatPins();
+        buttonClick(catName);
+        Debug.Log($"[ButtonGroupHandler] Floor number set to {floor}");
     }
 
     public void BackButton(){
@@ -30,10 +38,11 @@ public class ButtonGroupHandler : MonoBehaviour
     }
 
     public void buttonClick(string categoryName){
+        catName = categoryName;
         titleText.text = categoryName;
         Debug.Log(categoryName);
         canvas.SetActive(true);
-        targetHandler.ShowPins(categoryName);
+        targetHandler.ShowPins(categoryName,floorNumber);
 
         List<TargetFacade> matchingPOIs = targetHandler.CategoryPOIs(categoryName,floorNumber);
 
