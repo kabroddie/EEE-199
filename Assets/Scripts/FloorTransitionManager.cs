@@ -55,10 +55,13 @@ public class FloorTransitionManager : MonoBehaviour
 
     private TargetFacade recenterTarget;
 
+    public Button scanQRButton;
+
+    private bool isScanning = false;
+
     // UI Elements
     [SerializeField] private GameObject floorTransitionPanel;
     [SerializeField] private TextMeshProUGUI floortransitionText;
-    [SerializeField] private GameObject confirmationPanel;
     [SerializeField] private Button proceedButton;
 
     public enum FloorState
@@ -97,8 +100,18 @@ public class FloorTransitionManager : MonoBehaviour
 
         // Ensure UI is properly set up
         floorTransitionPanel.SetActive(false);
-        confirmationPanel.SetActive(false);
         // proceedButton.onClick.AddListener(OnUserConfirmedFloorChange);
+    }
+
+    void Update()
+    {
+        scanQRButton.onClick.RemoveAllListeners();
+        
+        if(!isScanning){
+            scanQRButton.onClick.AddListener(ConfirmationPrompt);
+        } else {
+            scanQRButton.onClick.AddListener(OnUserConfirmedFloorChange);
+        }
     }
 
 
@@ -169,8 +182,7 @@ public class FloorTransitionManager : MonoBehaviour
 
     public void ConfirmationPrompt()
     {
-        floorTransitionPanel.SetActive(false);
-        confirmationPanel.SetActive(true);
+        isScanning = true;
     }
 
     /// <summary>
@@ -179,7 +191,7 @@ public class FloorTransitionManager : MonoBehaviour
     public void OnUserConfirmedFloorChange()
     {
         Debug.Log($"[FloorTransitionManager] User confirmed floor change to {targetTransitionPOI}");
-        confirmationPanel.SetActive(false);
+        floorTransitionPanel.SetActive(false);
 
         qrCodeScanner.ToggleScanning();
 
@@ -231,7 +243,7 @@ public class FloorTransitionManager : MonoBehaviour
                 .FirstOrDefault();
         }
 
-        floortransitionText.text = $"[!!!PLEASE READ!!!]\n\n\nYou are about to move to Floor {pendingTarget.Floor + 1}.\n\nPlease be careful as you take the stairs.\n\nScan the designated QR code located near the stairs of Floor {pendingTarget.Floor + 1}.";
+        floortransitionText.text = $"Please scan the QR code near the stairs of Floor {pendingTarget.Floor + 1}";
 
         targetTransitionPOI = nearest != null ? nearest.Name : string.Empty;
 

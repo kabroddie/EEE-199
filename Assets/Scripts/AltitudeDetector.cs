@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;    // only if you’re using TextMeshPro for the prompt
 
 public class AltitudeDetector : MonoBehaviour
@@ -21,11 +22,13 @@ public class AltitudeDetector : MonoBehaviour
     [SerializeField]
     private QrCodeRecenter qrCodeScanner;
     
-    [SerializeField]
-    public GameObject confirmationPanel; // Reference to the confirmation panel
 
     [SerializeField]
     private FloorTransitionManager floorTransitionManager; // Reference to the FloorTransitionManager
+
+    public Button scanQRButton;
+
+    private bool isScanning = false;
 
     public bool altitudeHasChanged = false;
 
@@ -40,6 +43,14 @@ public class AltitudeDetector : MonoBehaviour
 
     void Update()
     {
+        scanQRButton.onClick.RemoveAllListeners();
+        
+        if(!isScanning){
+            scanQRButton.onClick.AddListener(ConfirmationPrompt);
+        } else {
+            scanQRButton.onClick.AddListener(OnQRCodeScanned);
+        }
+
         float currentY = trackedTransform.position.y;
 
         // Only fire the moment we cross up or down through the threshold:
@@ -65,20 +76,19 @@ public class AltitudeDetector : MonoBehaviour
     {
         map.SetActive(false); // Hide the map when the prompt is shown
         altitudeChangedPanel.SetActive(true);
-        altitudeChangedText.text = $"It seems you changed floors.\n\nKindly please scan the QR code near the staircase.\n\nThank you!"; // Update the prompt text
+        
+        
     }
 
     public void ConfirmationPrompt()
     {
-        // Hide the prompt when the user confirms the action
-        altitudeChangedPanel.SetActive(false);
-        confirmationPanel.SetActive(true); // Reset the flag
+        altitudeChangedText.text = "Are you next to the QR marker now?";
+        isScanning = true;
     }
 
     public void OnQRCodeScanned()
     {
         // Hide the prompt when the QR code is scanned
-        confirmationPanel.SetActive(false);
         altitudeChangedPanel.SetActive(false);
         altitudeHasChanged = false; // Reset the flag
         qrCodeScanner.ToggleScanning(); // Resume scanning
