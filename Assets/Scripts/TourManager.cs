@@ -41,7 +41,7 @@ public class TourManager : MonoBehaviour
     private Vector3 tourStartingPoint = Vector3.zero;
     private List<TargetFacade> selectedTourPOIs = new List<TargetFacade>();
 
-    private float arrivalThreshold = 1.0f;
+    private float arrivalThreshold = 2.0f;
     private int currentPOIIndex = 0;
 
     private void Start()
@@ -127,6 +127,7 @@ public class TourManager : MonoBehaviour
     private void ShowQRScanPrompt()
     {
         bottomBar.SetActive(false);
+        map.SetActive(false);
         qrScanPromptTextObject.SetActive(true);
     }
 
@@ -164,6 +165,7 @@ public class TourManager : MonoBehaviour
 
     public void OnReadyForTour()
     {
+        Debug.Log("clicked");
         readyForTourButton.SetActive(false);
         map.SetActive(true);
         StartTour();
