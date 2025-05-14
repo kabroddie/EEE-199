@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 using TMPro;
 
@@ -30,6 +31,37 @@ public class SearchBar : MonoBehaviour
         //searchBar.onDeselect.AddListener(_ => UnfocusedSearchBar());
         searchBar.onValueChanged.AddListener(UpdateSearchResults);
 
+    }
+    void Update()
+    {
+        if (isSearchActive && Input.GetMouseButtonDown(0))
+        {
+            // Perform UI raycast
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition
+            };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            bool clickedOnUI = false;
+
+            foreach (RaycastResult result in results)
+            {
+                // Allow interaction inside search bar or pull-up
+                if (result.gameObject == searchBar.gameObject || result.gameObject.transform.IsChildOf(pullUp.transform))
+                {
+                    clickedOnUI = true;
+                    break;
+                }
+            }
+
+            if (!clickedOnUI)
+            {
+                UnfocusedSearchBar();
+            }
+        }
     }
     public void CategoriesSection(string categoryName)
     {
@@ -112,4 +144,6 @@ public class SearchBar : MonoBehaviour
         UnfocusedSearchBar();
         pullUp.ClosePanel();
     }
+
+    
 }
