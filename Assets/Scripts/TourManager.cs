@@ -201,7 +201,7 @@ public class TourManager : MonoBehaviour
         if (currentState == TourState.TourActive)
         {
             tourPromptPanel.SetActive(true);
-            promptText.text = $"You have reached {selectedTourPOIs[currentPOIIndex - 1].Name}.\nPress 'Next' to continue or 'Exit' to leave the tour.";
+            promptText.text = selectedTourPOIs[currentPOIIndex - 1].Name;
         }
     }
 

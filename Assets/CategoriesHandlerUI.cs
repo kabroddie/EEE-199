@@ -12,6 +12,8 @@ public class CategoriesHandlerUI : MonoBehaviour
     [SerializeField] private Transform categoryListContent;
     [SerializeField] private TargetHandler targetHandler;
 
+    public PullUpUI pullUpUI;
+
     private void Start()
     {
         List<string> categories = new List<string> { "Laboratory", "Office", "Classroom" };
@@ -68,6 +70,7 @@ public class CategoriesHandlerUI : MonoBehaviour
                     button.GetComponent<Button>().onClick.AddListener(() =>
                     {
                         targetHandler.NavigateToPOI(poi.Name);
+                        pullUpUI.ClosePanel();
                     });
                 }
 
@@ -99,6 +102,7 @@ public class CategoriesHandlerUI : MonoBehaviour
             {
                 arrow.DORotate(new Vector3(0, 0, isExpanded ? 180 : 0), 0.3f).SetEase(Ease.OutExpo);
             }
+
         });
     }
 }
