@@ -269,11 +269,9 @@ public class TargetHandler : MonoBehaviour
         {
             "UP Meralco Innovation Hall (Rm 120)", "Lecture Room (Rm 123)",
             "Power Electronics Laboratory (PEL) (Rm 124)", "Electronics Laboratory (ELab) (Rm 126)",
-            "Electric Machines Instructional Laboratory (EMRL) (Rm 127)",
+            "Electric Machines Instructional Laboratory (Rm 127)",
             "Fabrications Laboratory (Rm 128)",
             "Motors Drive Instructional Laboratory (Rm 129)",
-
-            "Lc1Hallway", //For recentering the QR code
 
             "PLDT Multimedia Lecture Hall (VLC)", 
             "ASTEC Multimedia Lecture Hall (LC2)", 
@@ -290,13 +288,12 @@ public class TargetHandler : MonoBehaviour
     {
         string[] hardcodedOrder = new string[]
         {
-            "Lecturers' Office (Rm 202)", "Samsung Laboratory (Rm 204)",
+            "Samsung Laboratory (Rm 204)",
             "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
-            "UCL Research Office (Rm 206)", "Computer Networks Laboratory (CNL) (Rm 207)",
-            "Ubiquitous Computing Laboratory (UCL) (Rm 208)", "CNL Faculty (Rm 209)",
-            "UCL Faculty (Rm 210)",
+            "Computer Networks Laboratory (CNL) (Rm 207)",
+            "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
 
-            "EEE Administrative Office", "UP NOKIA Engineering Laboratory (Rm 227)",
+            "EEE Administrative Office", "UP OpenRAN Laboratory (Rm 227)",
             "PEL Instructional Laboratory (Rm 228)", "Small Classroom 6 (SCL) (Rm 229)"
         };
 
@@ -312,7 +309,7 @@ public class TargetHandler : MonoBehaviour
         {
             "UP Meralco Innovation Hall (Rm 120)", "Lecture Room (Rm 123)",
             "Power Electronics Laboratory (PEL) (Rm 124)", "Electronics Laboratory (ELab) (Rm 126)",
-            "Electric Machines Instructional Laboratory (EMRL) (Rm 127)",
+            "Electric Machines Instructional Laboratory (Rm 127)",
             "Fabrications Laboratory (Rm 128)",
             "Motors Drive Instructional Laboratory (Rm 129)",
 
@@ -320,13 +317,12 @@ public class TargetHandler : MonoBehaviour
             "ASTEC Multimedia Lecture Hall (LC2)", 
             "MERALCO Multimedia Lecture Hall (LC1)",
 
-            "Lecturers' Office (Rm 202)", "Samsung Laboratory (Rm 204)",
+            "Samsung Laboratory (Rm 204)",
             "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
-            "UCL Research Office (Rm 206)", "Computer Networks Laboratory (CNL) (Rm 207)",
-            "Ubiquitous Computing Laboratory (UCL) (Rm 208)", "CNL Faculty (Rm 209)",
-            "UCL Faculty (Rm 210)",
+            "Computer Networks Laboratory (CNL) (Rm 207)",
+            "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
 
-            "EEE Administrative Office", "UP NOKIA Engineering Laboratory (Rm 227)",
+            "EEE Administrative Office", "UP OpenRAN Laboratory (Rm 227)",
             "PEL Instructional Laboratory (Rm 228)", "Small Classroom 6 (SCL) (Rm 229)"
         };
 

@@ -42,7 +42,7 @@
             "Purpose": "POI",
             "Position": {
                 "x": 6.06,
-                "y": -1.79,
+                "y": -1.3,
                 "z": 10.83
             },
             "Rotation": {
@@ -59,7 +59,7 @@
             "Purpose": "POI",
             "Position": {
                 "x": 6.24,
-                "y": -1.79,
+                "y": -1.5,
                 "z": -10.04
             },
             "Rotation": {
@@ -127,7 +127,7 @@
             "Purpose": "POI",
             "Position": {
                 "x": 5.93,
-                "y": 0.0,
+                "y": -1.79,
                 "z": -10.52
             },
             "Rotation": {
@@ -144,7 +144,7 @@
             "Purpose": "POI",
             "Position": {
                 "x": 5.51,
-                "y": 0.0,
+                "y": -1.79,
                 "z": 11.71
             },
             "Rotation": {
@@ -281,9 +281,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": -12.15,
+                "x": -11.95,
                 "y": 0.0,
-                "z": -38.18
+                "z": -42.18
             },
             "Rotation": {
                 "x": 90.0,
@@ -298,9 +298,9 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": -12.15,
+                "x": -11.71,
                 "y": 0.0,
-                "z": -45.45
+                "z": -44.64
             },
             "Rotation": {
                 "x": 90.0,
@@ -315,7 +315,7 @@
             "Building": "New",
             "Purpose": "POI",
             "Position": {
-                "x": -12.15,
+                "x": -11.71,
                 "y": 0.0,
                 "z": -57.83
             },
@@ -343,7 +343,7 @@
             }
         },
         {
-            "Name": "Electric Machines Instructional Laboratory (EMRL) (Rm 127)",
+            "Name": "Electric Machines Instructional Laboratory (Rm 127)",
             "Category": "Laboratory",
             "Floor": 0,
             "Building": "New",
@@ -453,9 +453,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 69.13,
+                "x": 69.75,
                 "y": 0.0,
-                "z": -19.76
+                "z": -19.17
             },
             "Rotation": {
                 "x": 90.0,
@@ -521,9 +521,9 @@
             "Building": "Old",
             "Purpose": "POI",
             "Position": {
-                "x": 75.52,
+                "x": 78.69,
                 "y": 0.0,
-                "z": -19.89
+                "z": -19.03
             },
             "Rotation": {
                 "x": 90.0,
