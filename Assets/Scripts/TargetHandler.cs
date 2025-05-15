@@ -289,9 +289,9 @@ public class TargetHandler : MonoBehaviour
         string[] hardcodedOrder = new string[]
         {
             "Samsung Laboratory (Rm 204)",
+            "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
             "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
             "Computer Networks Laboratory (CNL) (Rm 207)",
-            "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
 
             "EEE Administrative Office", "UP OpenRAN Laboratory (Rm 227)",
             "PEL Instructional Laboratory (Rm 228)", "Small Classroom 6 (SCL) (Rm 229)"
@@ -318,9 +318,9 @@ public class TargetHandler : MonoBehaviour
             "MERALCO Multimedia Lecture Hall (LC1)",
 
             "Samsung Laboratory (Rm 204)",
+            "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
             "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
             "Computer Networks Laboratory (CNL) (Rm 207)",
-            "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
 
             "EEE Administrative Office", "UP OpenRAN Laboratory (Rm 227)",
             "PEL Instructional Laboratory (Rm 228)", "Small Classroom 6 (SCL) (Rm 229)"

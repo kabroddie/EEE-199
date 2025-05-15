@@ -183,6 +183,7 @@ public class FloorTransitionManager : MonoBehaviour
     public void ConfirmationPrompt()
     {
         isScanning = true;
+        floortransitionText.text = $"Are you next to the QR marker now?";
     }
 
     /// <summary>
@@ -192,6 +193,7 @@ public class FloorTransitionManager : MonoBehaviour
     {
         Debug.Log($"[FloorTransitionManager] User confirmed floor change to {targetTransitionPOI}");
         floorTransitionPanel.SetActive(false);
+
 
         qrCodeScanner.ToggleScanning();
 
