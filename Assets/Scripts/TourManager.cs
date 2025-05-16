@@ -44,10 +44,20 @@ public class TourManager : MonoBehaviour
     private float arrivalThreshold = 2.0f;
     private int currentPOIIndex = 0;
 
+    // Add this at the top of your TourManager class
+    private string lastTourType = "";
+
+    [SerializeField] private GameObject exitConfirmation;
+    [SerializeField] private TextMeshProUGUI exitConfirmationText;
+    [SerializeField] private TextMeshProUGUI exitConfirmationTextbf;
+
     private void Start()
     {
         qrScanPromptTextObject.SetActive(false);
         readyForTourButton.SetActive(false);
+        exitConfirmation.SetActive(false);
+
+        // LoadTourProgress(); // Try to resume if data exists
     }
 
     private void Update()
@@ -78,7 +88,10 @@ public class TourManager : MonoBehaviour
     {
         if (currentState != TourState.Inactive) return;
 
-        Debug.Log($"Switching to Tour Mode: {tourType}...");
+
+
+        lastTourType = tourType;
+        Debug.Log($"Switching to Tour Mode: {lastTourType}...");
 
         switch (tourType)
         {
@@ -121,7 +134,8 @@ public class TourManager : MonoBehaviour
 
         Debug.Log("Starting Tour...");
         currentState = TourState.HeadingToStart;
-        navigationController.ActivateNavigation(tourStartingPoint);
+        // navigationController.ActivateNavigation(tourStartingPoint);
+        StartTour();
     }
 
     private void ShowQRScanPrompt()
@@ -193,7 +207,6 @@ public class TourManager : MonoBehaviour
         }
 
         navigationController.ActivateNavigation(selectedTourPOIs[currentPOIIndex].transform.position);
-        currentPOIIndex++;  // ✅ Move to the next POI
     }
 
     public void OnArrivalAtPOI()
@@ -201,7 +214,7 @@ public class TourManager : MonoBehaviour
         if (currentState == TourState.TourActive)
         {
             tourPromptPanel.SetActive(true);
-            promptText.text = selectedTourPOIs[currentPOIIndex - 1].Name;
+            promptText.text = selectedTourPOIs[currentPOIIndex].Name;
         }
     }
 
@@ -210,6 +223,7 @@ public class TourManager : MonoBehaviour
         if (currentPOIIndex < selectedTourPOIs.Count)
         {
             tourPromptPanel.SetActive(false);
+            currentPOIIndex++;
             NavigateToNextPOI();
         }
         else
@@ -228,6 +242,7 @@ public class TourManager : MonoBehaviour
 
     public void ExitTourMode()
     {
+        SaveTourProgress(lastTourType); // Save before exiting
         Debug.Log("Exiting tour mode...");
         currentState = TourState.Inactive;
         navigationController.ToggleNavigation();
@@ -235,10 +250,94 @@ public class TourManager : MonoBehaviour
         tourPromptPanel.SetActive(false);
         qrScanPromptTextObject.SetActive(false);
         readyForTourButton.SetActive(false);
+        exitConfirmation.SetActive(false);
+        map.SetActive(true);
     }
 
     public TourState GetCurrentState()
     {
         return currentState;
+    }
+
+    public void SaveTourProgress(string tourType)
+    {
+        PlayerPrefs.SetString("TourType", tourType);
+        PlayerPrefs.SetInt("TourPOIIndex", currentPOIIndex);
+        PlayerPrefs.SetInt("TourState", (int)currentState);
+        PlayerPrefs.Save();
+    }
+
+    public bool LoadTourProgress()
+    {
+        if (!PlayerPrefs.HasKey("TourType")) return false;
+
+        string tourType = PlayerPrefs.GetString("TourType");
+        int poiIndex = PlayerPrefs.GetInt("TourPOIIndex");
+        TourState state = (TourState)PlayerPrefs.GetInt("TourState");
+
+        StartTourMode(tourType);
+        currentPOIIndex = poiIndex;
+        currentState = state;
+
+        // Resume navigation if tour is active
+        if (currentState == TourState.TourActive && currentPOIIndex < selectedTourPOIs.Count)
+            navigationController.ActivateNavigation(selectedTourPOIs[currentPOIIndex].transform.position);
+
+        return true;
+    }
+
+    // Add this to your TourManager class
+    public void ResumeTourFromButton()
+    {
+        bool loaded = LoadTourProgress();
+        if (!loaded)
+            Debug.Log("No saved tour progress found.");
+    }
+
+    public void ClearTourProgress()
+    {
+        PlayerPrefs.DeleteKey("TourType");
+        PlayerPrefs.DeleteKey("TourPOIIndex");
+        PlayerPrefs.DeleteKey("TourState");
+        PlayerPrefs.Save();
+    }
+
+    public void ExitConfirmationPanel(string action)
+    {
+        if (action == "exit")
+        {
+            exitConfirmation.SetActive(true);
+            exitConfirmationText.text = "Are you sure you want to exit the tour?";
+            exitConfirmationTextbf.text = "You're exiting tour mode...";
+            map.SetActive(false);
+        }
+        else if (action == "reset")
+        {
+            exitConfirmation.SetActive(true);
+            exitConfirmationText.text = "Are you sure you want to clear your tour progress?";
+            exitConfirmationTextbf.text = "You're resetting your tour progress...";
+            map.SetActive(false);
+        }
+    }
+
+    public void ConfirmExit()
+    {
+        if (exitConfirmationTextbf.text == "You're exiting tour mode...")
+        {
+            ExitTourMode();
+            exitConfirmation.SetActive(false);
+        }
+        else if (exitConfirmationTextbf.text == "You're resetting your tour progress...")
+        {
+            ClearTourProgress();
+            exitConfirmation.SetActive(false);
+        }
+        map.SetActive(true);
+    }
+
+    public void CancelExit()
+    {
+        exitConfirmation.SetActive(false);
+        map.SetActive(true);
     }
 }

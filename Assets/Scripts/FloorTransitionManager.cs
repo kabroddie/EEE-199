@@ -175,10 +175,19 @@ public class FloorTransitionManager : MonoBehaviour
     /// Displays a UI panel instructing the user to move floors.
     /// </summary>
     private void ShowFloorTransitionPrompt()
-    {    
+    {
         floorTransitionPanel.SetActive(true);
         map.SetActive(false);
+        
+        scanQRButton.gameObject.SetActive(false); // Hide the button initially
+        StartCoroutine(ShowProceedButtonAfterDelay(6f)); // 5 seconds delay
     }
+
+    private System.Collections.IEnumerator ShowProceedButtonAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        scanQRButton.gameObject.SetActive(true); // Show the button after delay
+    }  
 
     public void ConfirmationPrompt()
     {
@@ -245,7 +254,37 @@ public class FloorTransitionManager : MonoBehaviour
                 .FirstOrDefault();
         }
 
-        floortransitionText.text = $"Please scan the QR code near the stairs of Floor {pendingTarget.Floor + 1}";
+        if (pendingTarget.Floor == 0)
+        {
+            if (nearest.Name == "B1 2F Stairs")
+            {
+                floortransitionText.text = $"Kindly go downstairs to reach the first floor.\n\nPlease scan the QR marker posted on the glass enclosed bulletin board downstairs.";
+            }
+            else if (nearest.Name == "B2 2F Stairs 1")
+            {
+                floortransitionText.text = $"Kindly go downstairs to reach the first floor.\n\nPlease scan the QR marker posted on the wall facing the plaques.";
+            }
+            else
+            {
+                floortransitionText.text = $"Kindly go downstairs to reach the first floor.\n\nPlease scan the QR marker posted on foot of the staircase.";
+            }
+        }
+        else
+        {
+            if (nearest.Name == "B1 1F Stairs")
+            {
+                floortransitionText.text = $"Kindly go upstairs to reach the second floor.\n\nPlease scan the QR marker posted on the bulletin board upstairs.";
+            }
+            else if (nearest.Name == "B2 1F Stairs 1")
+            {
+                floortransitionText.text = $"Kindly go upstairs to reach the second floor.\n\nPlease scan the QR marker posted on the wall facing the other wall.";
+            }
+            else
+            {
+                floortransitionText.text = $"Kindly go upstairs to reach the second floor.\n\nPlease scan the QR marker posted on the wall upstairs.";
+            }
+        }
+            
 
         targetTransitionPOI = nearest != null ? nearest.Name : string.Empty;
 

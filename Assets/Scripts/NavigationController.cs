@@ -79,7 +79,6 @@ public class NavigationController : MonoBehaviour
             
             line.positionCount = path.corners.Length;
             line.SetPositions(path.corners);
-            // UpdateLineVisibility();
 
             // ✅ Update the pin position to the end of the line
             UpdatePinPosition();
@@ -108,32 +107,6 @@ public class NavigationController : MonoBehaviour
                 }
             }
         }
-    }
-
-//     /// <summary>
-//     /// Checks if any point is behind a wall, toggles line/pin visibility
-//     /// </summary>
-    private void UpdateLineVisibility()
-    {
-        for (int i = 0; i < line.positionCount; i++)
-        {
-            Vector3 point = line.GetPosition(i);
-            if (IsBehindWall(point))
-            {
-                line.enabled = false;
-                targetHandler.TogglePinVisibility(targetPosition, false);
-                
-                // ✅ Hide pin if line is hidden
-                if (dynamicPin != null) dynamicPin.SetActive(false);
-                return;
-            }
-        }
-
-        line.enabled = true;
-        targetHandler.TogglePinVisibility(targetPosition, true);
-        
-        // ✅ If navigation is active, ensure pin is visible
-        if (dynamicPin != null && navigationActive) dynamicPin.SetActive(true);
     }
 
     /// <summary>
@@ -249,7 +222,6 @@ public class NavigationController : MonoBehaviour
 
 
         targetHandler.TogglePinVisibility(targetPosition, true);
-        UpdateToggleButtonText();
 
         // ✅ Show pin if we have one
         if (dynamicPin != null) dynamicPin.SetActive(true);
@@ -280,16 +252,6 @@ public class NavigationController : MonoBehaviour
             // ✅ Show pin
             if (dynamicPin != null) dynamicPin.SetActive(true);
         }
-
-        UpdateToggleButtonText();
-    }
-
-    private void UpdateToggleButtonText() 
-    {
-        if (toggleButtonText != null)
-        {
-            toggleButtonText.text = navigationActive ? "Line: ON" : "Line: OFF";
-        }
     }
 
     public void HandleArrival()
@@ -298,7 +260,6 @@ public class NavigationController : MonoBehaviour
         hasTarget = false;
         navigationActive = false;
         targetHandler.HideAllPins();
-        UpdateToggleButtonText();
         arrivedText.gameObject.SetActive(true);
         arrivedText.color = new Color(arrivedText.color.r, arrivedText.color.g, arrivedText.color.b, 1f); // reset alpha
         StartCoroutine(FadeOutText(arrivedText, 4f)); // Fade out text after 2 seconds
@@ -357,8 +318,6 @@ public class NavigationController : MonoBehaviour
 
         if (arrivedText != null)
             arrivedText.gameObject.SetActive(false);
-
-        UpdateToggleButtonText();
 
         if (tourManager != null && tourManager.GetCurrentState() != TourManager.TourState.Inactive)
         {
