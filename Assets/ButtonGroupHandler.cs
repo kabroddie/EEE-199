@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 public class ButtonGroupHandler : MonoBehaviour
 {
+    public ARSessionOrigin sessionOrigin;
     public GameObject canvas;
     public TargetHandler targetHandler;
     public TextMeshProUGUI titleText;
@@ -66,6 +70,41 @@ public class ButtonGroupHandler : MonoBehaviour
         targetHandler.NavigateToPOI(poiName);
         pullUp.ClosePanel();
         
+    }
+
+    public void FindNearestAmenity()
+    {
+
+        List<TargetFacade> matchingPOIs = targetHandler.CategoryPOIs(catName, floorNumber);
+
+        Vector3 userPos = sessionOrigin.transform != null ? sessionOrigin.transform.position : Vector3.zero;
+
+        TargetFacade nearest = matchingPOIs
+            .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
+            .FirstOrDefault();
+
+        // if (currentFloor == 0)
+        // {
+        //     Debug.Log($"3");
+        //     nearest = matchingPOIs
+        //     .Where(tp => tp.Floor == floor)
+        //     .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
+        //     .FirstOrDefault();
+        // }
+        // else
+        // {
+        //     Debug.Log($"4");
+        //     nearest = transitionPoints
+        //         .Where(tp => (tp.Floor == floor) && (tp.Building == pendingTarget.Building))
+        //         .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
+        //         .FirstOrDefault();
+        // }
+
+        canvas.SetActive(false);
+        targetHandler.clearCatPins();
+        ClearResults();
+        targetHandler.NavigateToPOI(nearest.Name);
+        pullUp.ClosePanel();      
     }
 
     private void ClearResults()
