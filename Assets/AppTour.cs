@@ -12,6 +12,7 @@ public class AppTour : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI buttonText;
     public GameObject buttonBack;
+    public TextMeshProUGUI buttonBackText;
     public QrCodeRecenter scanQR;
     public SettingsEnabler enabler;
 
@@ -37,7 +38,7 @@ public class AppTour : MonoBehaviour
         if(counter == 0){
             desc.text = descriptions[counter];
             title.text = titles[counter];
-            buttonBack.SetActive(false); 
+            buttonBackText.text = "Skip"; 
         }
     }
     void Update()
@@ -47,10 +48,11 @@ public class AppTour : MonoBehaviour
             finish = true;
         } else {
             buttonText.text = "Next";
+            buttonBackText.text = "Back";
             finish = false;
         }
         if(counter == 0){
-            buttonBack.SetActive(false);
+            buttonBackText.text = "Skip"; 
         } else {
             buttonBack.SetActive(true);
         }
@@ -59,6 +61,10 @@ public class AppTour : MonoBehaviour
     public void buttonPress(bool next)
     {
         if(finish & next){
+            enabler.ScanFirst();
+            scanQR.ToggleScanning();
+        }
+        if(counter == 0 & !next){
             enabler.ScanFirst();
             scanQR.ToggleScanning();
         }
