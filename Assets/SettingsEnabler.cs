@@ -28,6 +28,7 @@ public class SettingsEnabler : MonoBehaviour
     public void ScanFirst()
     {
         reminderPanel.SetActive(false);
+        
     }
 
     public void openSettings()

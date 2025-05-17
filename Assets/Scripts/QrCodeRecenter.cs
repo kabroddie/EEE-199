@@ -242,6 +242,7 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField] private GameObject bottomBar;
     [SerializeField] private float requiredHoldTime;
     [SerializeField] private Image scanProgressCircle; // ✅ Radial progress circle
+    [SerializeField] private GameObject statusPanel; // 
 
     private Dictionary<string, ARAnchor> qrAnchors = new Dictionary<string, ARAnchor>();
 
@@ -426,6 +427,7 @@ public class QrCodeRecenter : MonoBehaviour
         qrCodeScanningPanel.SetActive(scanningEnabled);
         map.SetActive(!scanningEnabled);
         bottomBar.SetActive(!scanningEnabled);
+        statusPanel.SetActive(!scanningEnabled);
 
         // Reset UI
         if (scanProgressCircle) scanProgressCircle.fillAmount = 0;
