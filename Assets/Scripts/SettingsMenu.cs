@@ -17,7 +17,6 @@ public class SettingsMenu : MonoBehaviour
     {
         mainButton.onClick.AddListener(ToggleMenu);
         ResetPositions();
-        // ToggleMenu();
 
         // Add a listener to each menu button to collapse the menu when clicked
         foreach (var item in menuItems)
