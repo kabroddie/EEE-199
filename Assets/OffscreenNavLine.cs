@@ -7,217 +7,69 @@ using UnityEngine.UI;
 public class OffscreenNavLine : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject indicatorPrefab;    // The arrow UI prefab
-    [SerializeField] private Transform navigationTarget;    // Reference to the navigation line or target point
-    [SerializeField] private Camera arCamera;               // The AR camera (usually the main camera)
-    [SerializeField] private Canvas uiCanvas;               // Canvas where the indicator will be displayed
-    
+    public Camera arCamera;
+    public LineRenderer lineRenderer;
+
+    [Header("UI")]
+    public RectTransform indicatorUI;
+    public Canvas canvas;
+
     [Header("Settings")]
-    [SerializeField] private float indicatorOffset = 50f;   // Distance from screen edge
-    [SerializeField] private bool showOnlyWhenBehind = false; // If true, only shows when path is behind the user
-    [SerializeField] private float minimumDistance = 1f;    // Minimum distance to show the indicator
-    [SerializeField] private bool debugMode = true;         // Enable debug logs
-    [SerializeField] private Color indicatorColor = Color.white; // Color of the indicator
-    [SerializeField] private float indicatorScale = 1f;     // Scale of the indicator
-    
-    private RectTransform canvasRect;
-    private RectTransform indicatorRect;
-    private GameObject indicator;
-    private Image indicatorImage;
-    
-    private void Start()
-    {
-        if (arCamera == null) arCamera = Camera.main;
-        if (uiCanvas == null) uiCanvas = FindObjectOfType<Canvas>();
-        
-        canvasRect = uiCanvas.GetComponent<RectTransform>();
-        
-        // Create indicator
-        if (indicatorPrefab != null)
-        {
-            indicator = Instantiate(indicatorPrefab, uiCanvas.transform);
-            indicatorRect = indicator.GetComponent<RectTransform>();
-            
-            // Ensure the indicator has an Image component
-            indicatorImage = indicator.GetComponent<Image>();
-            if (indicatorImage == null)
-            {
-                indicatorImage = indicator.AddComponent<Image>();
-                Debug.LogWarning("Adding Image component to indicator as none was found");
-            }
-            
-            // Set initial properties
-            indicatorImage.color = indicatorColor;
-            indicatorRect.localScale = Vector3.one * indicatorScale;
-            
-            // Ensure it's at the top of the hierarchy for proper rendering
-            indicator.transform.SetAsLastSibling();
-            
-            // Make sure it starts inactive
-            indicator.SetActive(false);
-            
-            if (debugMode)
-            {
-                Debug.Log("Indicator created: " + indicator.name);
-            }
-        }
-        else
-        {
-            Debug.LogError("Indicator prefab is not assigned!");
-        }
-        
-        if (debugMode)
-        {
-            Debug.Log($"OffscreenNavLine initialized with showOnlyWhenBehind={showOnlyWhenBehind}");
-        }
-    }
-    
+    public float edgePadding = 100f;
+
     private void Update()
     {
-        if (navigationTarget == null || indicator == null) return;
-        
-        // Position check
-        Vector3 targetPositionViewport = arCamera.WorldToViewportPoint(navigationTarget.position);
-        float distanceToTarget = Vector3.Distance(arCamera.transform.position, navigationTarget.position);
-        
-        // Check if target is behind the camera
-        bool isBehind = targetPositionViewport.z < 0;
-        bool isOffScreen = !IsInScreen(targetPositionViewport);
-        
-        // Determine if indicator should be shown
-        bool shouldShow;
-        
-        if (showOnlyWhenBehind)
+        if (lineRenderer == null || arCamera == null || indicatorUI == null || canvas == null)
+            return;
+
+        int pointCount = lineRenderer.positionCount;
+        if (pointCount == 0)
+            return;
+
+        Vector3 targetWorldPos = lineRenderer.GetPosition(pointCount - 1);
+        Vector3 viewportPos = arCamera.WorldToViewportPoint(targetWorldPos);
+
+        // Flip behind-camera targets to front
+        if (viewportPos.z < 0)
         {
-            // Only show when behind the user
-            shouldShow = isBehind && distanceToTarget > minimumDistance;
+            viewportPos *= -1;
         }
-        else
+
+        bool isVisible = viewportPos.z > 0 &&
+                         viewportPos.x >= 0 && viewportPos.x <= 1 &&
+                         viewportPos.y >= 0 && viewportPos.y <= 1;
+
+        indicatorUI.gameObject.SetActive(!isVisible);
+
+        if (!isVisible)
         {
-            // Show when either behind or off-screen
-            shouldShow = (isBehind || isOffScreen) && distanceToTarget > minimumDistance;
-        }
-        
-        // Force update the indicator visibility
-        indicator.SetActive(shouldShow);
-        
-        if (shouldShow)
-        {
-            if (debugMode)
-            {
-                Debug.Log($"Showing indicator. IsBehind: {isBehind}, IsOffScreen: {isOffScreen}, Distance: {distanceToTarget}");
-            }
-            
-            // If behind, flip the coordinates and place at bottom center of screen for behind indicator
-            if (isBehind)
-            {
-                // For behind indicators, position at the bottom center of the screen
-                Vector2 screenPosition = new Vector2(canvasRect.sizeDelta.x * 0.5f, indicatorOffset);
-                indicatorRect.anchoredPosition = screenPosition;
-                
-                // Point downward
-                indicatorRect.rotation = Quaternion.Euler(0, 0, 270);
-                
-                // Make it stand out
-                if (indicatorImage != null)
-                {
-                    indicatorImage.color = Color.red; // Make behind indicators red
-                }
-                
-                return;
-            }
-            
-            // For regular off-screen indicators (not behind)
-            // Calculate screen position
-            Vector2 screenPosition = new Vector2(
-                targetPositionViewport.x * canvasRect.sizeDelta.x,
-                targetPositionViewport.y * canvasRect.sizeDelta.y);
-            
-            // Clamp position to screen bounds with offset
-            screenPosition = ClampToScreen(screenPosition);
-            
-            // Set indicator position
-            indicatorRect.anchoredPosition = screenPosition;
-            
-            // Calculate rotation to point towards target
-            Vector2 screenCenter = new Vector2(canvasRect.sizeDelta.x * 0.5f, canvasRect.sizeDelta.y * 0.5f);
-            float angle = Mathf.Atan2(screenPosition.y - screenCenter.y, screenPosition.x - screenCenter.x) * Mathf.Rad2Deg;
-            indicatorRect.rotation = Quaternion.Euler(0, 0, angle);
-            
-            // Reset color for regular indicators
-            if (indicatorImage != null)
-            {
-                indicatorImage.color = indicatorColor;
-            }
+            ShowIndicatorOnEdge(targetWorldPos);
         }
     }
-    
-    private bool IsInScreen(Vector3 viewportPos)
+
+    private void ShowIndicatorOnEdge(Vector3 worldPos)
     {
-        return viewportPos.x >= 0 && viewportPos.x <= 1 && 
-               viewportPos.y >= 0 && viewportPos.y <= 1 &&
-               viewportPos.z > 0; // Must be in front of camera
+        Vector3 screenPos = arCamera.WorldToScreenPoint(worldPos);
+
+        if (screenPos.z < 0) screenPos *= -1; // Behind camera, flip
+
+        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Vector2 fromCenter = (Vector2)screenPos - screenCenter;
+
+        float maxRadius = Mathf.Min(screenCenter.x, screenCenter.y) - edgePadding;
+        Vector2 clampedDirection = Vector2.ClampMagnitude(fromCenter, maxRadius);
+        Vector2 finalScreenPos = screenCenter + clampedDirection;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.transform as RectTransform,
+            finalScreenPos,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
+            out Vector2 canvasPos
+        );
+
+        indicatorUI.localPosition = canvasPos;
+
+        float angle = Mathf.Atan2(clampedDirection.y, clampedDirection.x) * Mathf.Rad2Deg;
+        indicatorUI.localRotation = Quaternion.Euler(0f, 0f, angle - 90f); // Arrow points up
     }
-    
-    private Vector2 ClampToScreen(Vector2 position)
-    {
-        // Get screen dimensions
-        float halfWidth = canvasRect.sizeDelta.x * 0.5f;
-        float halfHeight = canvasRect.sizeDelta.y * 0.5f;
-        
-        // Calculate center-based coordinates
-        float centerX = position.x - halfWidth;
-        float centerY = position.y - halfHeight;
-        
-        // Calculate angle from center to position
-        float angle = Mathf.Atan2(centerY, centerX);
-        
-        // Calculate max distance in that angle
-        float maxX = Mathf.Cos(angle) * (halfWidth - indicatorOffset);
-        float maxY = Mathf.Sin(angle) * (halfHeight - indicatorOffset);
-        
-        // If outside screen bounds, clamp to edge
-        if (Mathf.Abs(centerX) > Mathf.Abs(maxX) || Mathf.Abs(centerY) > Mathf.Abs(maxY))
-        {
-            centerX = maxX;
-            centerY = maxY;
-        }
-        
-        // Convert back to corner-based coordinates
-        return new Vector2(centerX + halfWidth, centerY + halfHeight);
-    }
-    
-    // Call this to update the navigation target
-    public void UpdateNavigationTarget(Transform target)
-    {
-        navigationTarget = target;
-    }
-    
-    // Use this to toggle debug mode
-    public void SetDebugMode(bool enabled)
-    {
-        debugMode = enabled;
-    }
-    
-    // Call this to toggle showing indicator only when behind
-    public void SetShowOnlyWhenBehind(bool onlyWhenBehind)
-    {
-        showOnlyWhenBehind = onlyWhenBehind;
-        if (debugMode)
-        {
-            Debug.Log($"ShowOnlyWhenBehind set to {showOnlyWhenBehind}");
-        }
-    }
-    
-#if UNITY_EDITOR
-    // For debugging in editor
-    private void OnDrawGizmos()
-    {
-        if (arCamera != null && navigationTarget != null)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(arCamera.transform.position, navigationTarget.position);
-        }
-    }
-#endif
 }
