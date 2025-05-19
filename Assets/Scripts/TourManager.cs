@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TourManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class TourManager : MonoBehaviour
 
     public TourState currentState = TourState.Inactive;
 
+    [SerializeField]
+    private PullUpUI pullupUI;
     [SerializeField]
     private NavigationController navigationController;
 
@@ -36,9 +39,13 @@ public class TourManager : MonoBehaviour
     private GameObject map;
 
     [SerializeField]
-    private GameObject tourOptions;
-
-    [SerializeField] GameObject bottomBar;
+    private GameObject binaryChoices;
+    [SerializeField]
+    private GameObject okayButton;
+    [SerializeField]
+    private GameObject bottomBar;
+    [SerializeField]
+    private Button resumeButton;
 
     public TargetFacade startingPoint;
     private Vector3 tourStartingPoint = Vector3.zero;
@@ -59,17 +66,19 @@ public class TourManager : MonoBehaviour
         qrScanPromptTextObject.SetActive(false);
         readyForTourButton.SetActive(false);
         exitConfirmation.SetActive(false);
-        tourOptions.SetActive(false);
+        binaryChoices.SetActive(false);
+        okayButton.SetActive(false);
+
+        ClearTourProgress(); // Clear progress on start
+
+        if (resumeButton != null)
+            resumeButton.onClick.AddListener(ResumeTourFromButton);
 
         // LoadTourProgress(); // Try to resume if data exists
     }
 
     private void Update()
     {
-
-        if (tourOptions != null)
-            tourOptions.SetActive(currentState == TourState.TourActive);
-
         if (currentState == TourState.HeadingToStart)
         {
             if (Vector3.Distance(navigationController.transform.position, tourStartingPoint) < arrivalThreshold)
@@ -78,7 +87,7 @@ public class TourManager : MonoBehaviour
                 ShowQRScanPrompt();
             }
         }
-        
+
     }
 
     public void ToggleTourMode(string tourType)
@@ -139,17 +148,18 @@ public class TourManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Starting Tour...");
         if (currentState != TourState.Inactive)
         {
             StartTour();
         }
         else
         {
+
             currentState = TourState.HeadingToStart;
             navigationController.ActivateNavigation(tourStartingPoint);
+            SaveTourProgress(tourType); // Save the tour type before starting
         }
-        
+
         // StartToffur();
     }
 
@@ -260,7 +270,7 @@ public class TourManager : MonoBehaviour
         SaveTourProgress(lastTourType); // Save before exiting
         Debug.Log("Exiting tour mode...");
         currentState = TourState.Inactive;
-        navigationController.ToggleNavigation();
+        navigationController.ResetNavigation();
         targetHandler.HideAllPins();
         tourPromptPanel.SetActive(false);
         qrScanPromptTextObject.SetActive(false);
@@ -297,16 +307,28 @@ public class TourManager : MonoBehaviour
         // Resume navigation if tour is active
         if (currentState == TourState.TourActive && currentPOIIndex < selectedTourPOIs.Count)
             navigationController.ActivateNavigation(selectedTourPOIs[currentPOIIndex].transform.position);
+        else if (currentState == TourState.HeadingToStart)
+            navigationController.ActivateNavigation(tourStartingPoint);
 
         return true;
+    }
+
+    public bool HasTourProgress()
+    {
+        return PlayerPrefs.HasKey("TourType") && PlayerPrefs.HasKey("TourPOIIndex") && PlayerPrefs.HasKey("TourState");
     }
 
     // Add this to your TourManager class
     public void ResumeTourFromButton()
     {
+        if (!HasTourProgress())
+        {
+            ExitConfirmationPanel("non-resume");
+            return;
+        }
+
+        pullupUI.ClosePanel();
         bool loaded = LoadTourProgress();
-        if (!loaded)
-            Debug.Log("No saved tour progress found.");
     }
 
     public void ClearTourProgress()
@@ -314,25 +336,62 @@ public class TourManager : MonoBehaviour
         PlayerPrefs.DeleteKey("TourType");
         PlayerPrefs.DeleteKey("TourPOIIndex");
         PlayerPrefs.DeleteKey("TourState");
+        currentState = TourState.Inactive;
         PlayerPrefs.Save();
+        // ExitTourMode();
     }
 
     public void ExitConfirmationPanel(string action)
     {
-        if (action == "exit")
+        binaryChoices.SetActive(false);
+        okayButton.SetActive(false);  
+        if (HasTourProgress())
         {
-            exitConfirmation.SetActive(true);
-            exitConfirmationText.text = "Are you sure you want to exit the tour?";
-            exitConfirmationTextbf.text = "You're exiting tour mode...";
-            map.SetActive(false);
+            if (action == "exit")
+            {
+                exitConfirmation.SetActive(true);
+                exitConfirmationText.text = "Are you sure you want to exit the tour?";
+                exitConfirmationTextbf.text = "You're exiting tour mode...";
+                map.SetActive(false);
+            }
+            else if (action == "reset")
+            {
+                exitConfirmation.SetActive(true);
+                exitConfirmationText.text = "Are you sure you want to clear your tour progress?";
+                exitConfirmationTextbf.text = "You're resetting your tour progress...";
+                map.SetActive(false);
+            }
+            binaryChoices.SetActive(true);
+
         }
-        else if (action == "reset")
+        else
         {
-            exitConfirmation.SetActive(true);
-            exitConfirmationText.text = "Are you sure you want to clear your tour progress?";
-            exitConfirmationTextbf.text = "You're resetting your tour progress...";
-            map.SetActive(false);
+            if (action == "exit")
+            {
+                exitConfirmation.SetActive(true);
+                exitConfirmationText.text = "You are not in tour mode.";
+                exitConfirmationTextbf.text = "Uh-oh...";
+                map.SetActive(false);
+            }
+            else if (action == "reset")
+            {
+                exitConfirmation.SetActive(true);
+                exitConfirmationText.text = "There is no tour progress to clear.";
+                exitConfirmationTextbf.text = "Uh-oh...";
+                map.SetActive(false);
+            }
+            else if (action == "non-resume")
+            {
+                exitConfirmation.SetActive(true);
+                exitConfirmationText.text = "You have not started a tour yet.";
+                exitConfirmationTextbf.text = "Uh-oh...";
+                map.SetActive(false);
+            }
+            okayButton.SetActive(true);
         }
+        
+        
+        
     }
 
     public void ConfirmExit()
@@ -347,12 +406,18 @@ public class TourManager : MonoBehaviour
             ClearTourProgress();
             exitConfirmation.SetActive(false);
         }
+        else if (exitConfirmationTextbf.text == "Uh-oh...")
+        {
+            exitConfirmation.SetActive(false);
+        }
+        Debug.Log("Tour progress cleared.");
         map.SetActive(true);
+ 
     }
 
     public void CancelExit()
     {
         exitConfirmation.SetActive(false);
         map.SetActive(true);
-    }
+    }   
 }

@@ -10,6 +10,7 @@ public class StatusController : MonoBehaviour
     [SerializeField] private FloorTransitionManager floorTransitionManager;
     [SerializeField] private TourManager tourManager;
     [SerializeField] private QrCodeRecenter qrCodeRecenter;
+    [SerializeField] private NavigationController navigationController; // Reference to the SettingsEnabler script
     // [SerializeField] private AppTour appTour; // Reference to the AppTour script
 
     [Header("UI Elements")]
@@ -76,9 +77,7 @@ public class StatusController : MonoBehaviour
             status = "Transitioning...";
             shouldBlink = true;
         }
-        else if (floorTransitionManager != null &&
-                 (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingSameFloor ||
-                  floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingToTransition))
+        else if (navigationController != null && navigationController.NavigationStatus())
         {
             status = "Navigating...";
             shouldBlink = true;

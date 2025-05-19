@@ -16,7 +16,7 @@ public class NavigationController : MonoBehaviour
 
     [SerializeField]
     private LineRenderer line;
-    
+
     public NavMeshPath path;
 
     [SerializeField]
@@ -75,11 +75,11 @@ public class NavigationController : MonoBehaviour
     private void Update()
     {
         if (navigationActive && hasTarget)
-        { 
+        {
 
             // Calculate the path
             NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path);
-            
+
             line.positionCount = path.corners.Length;
             line.SetPositions(path.corners);
 
@@ -117,7 +117,7 @@ public class NavigationController : MonoBehaviour
     /// </summary>
     private void UpdatePinPosition()
     {
-        if (!navigationActive || !line.enabled) 
+        if (!navigationActive || !line.enabled)
             return;
 
         if (line.positionCount > 0)
@@ -126,8 +126,8 @@ public class NavigationController : MonoBehaviour
             Vector3 lastCorner = line.GetPosition(line.positionCount - 1);
 
             // Offset it slightly above the line
-            dynamicPin.transform.position = lastCorner + Vector3.up * 0.5f; 
-            
+            dynamicPin.transform.position = lastCorner + Vector3.up * 0.5f;
+
             // Ensure pin is visible if the line is active
             dynamicPin.SetActive(true);
         }
@@ -209,11 +209,11 @@ public class NavigationController : MonoBehaviour
             return; // ✅ Do not continue normal navigation, FloorTransitionManager takes over
         }
 
-        
+
 
         if (targetPosition == newTarget && navigationActive)
         {
-            ToggleNavigation(); 
+            ToggleNavigation();
             return;
         }
 
@@ -251,7 +251,7 @@ public class NavigationController : MonoBehaviour
         {
             line.enabled = true;
             targetHandler.TogglePinVisibility(targetPosition, true);
-            
+
             // ✅ Show pin
             if (dynamicPin != null) dynamicPin.SetActive(true);
         }
@@ -322,20 +322,25 @@ public class NavigationController : MonoBehaviour
         if (arrivedText != null)
             arrivedText.gameObject.SetActive(false);
 
-        if (tourManager != null && tourManager.GetCurrentState() != TourManager.TourState.Inactive)
-        {
-            tourManager.ExitTourMode();
-        }
+        // if (tourManager != null && tourManager.GetCurrentState() != TourManager.TourState.Inactive)
+        // {
+        //     tourManager.ExitTourMode();
+        // }
 
         if (floorTransitionManager != null)
         {
             floorTransitionManager.ResetFloor();
         }
-        
+
         if (statusController != null)
         {
             statusController.HideStatusBar();
         }
+    }
+    
+    public bool NavigationStatus()
+    {
+        return navigationActive;
     }
 
 
