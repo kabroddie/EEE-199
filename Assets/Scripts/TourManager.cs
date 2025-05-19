@@ -337,6 +337,8 @@ public class TourManager : MonoBehaviour
         }
 
         pullupUI.ClosePanel();
+        StartTourButton.SetActive(false);
+        TourOptions.SetActive(true);
         bool loaded = LoadTourProgress();
     }
 
