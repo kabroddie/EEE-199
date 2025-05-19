@@ -25,6 +25,14 @@ public class SettingsEnabler : MonoBehaviour
         
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            confirmExit();
+        }
+    }
+
     public void ScanFirst()
     {
         reminderPanel.SetActive(false);

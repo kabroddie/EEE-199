@@ -47,6 +47,9 @@ public class TourManager : MonoBehaviour
     [SerializeField]
     private Button resumeButton;
 
+    public GameObject TourOptions;
+    public GameObject StartTourButton;
+
     public TargetFacade startingPoint;
     private Vector3 tourStartingPoint = Vector3.zero;
     private List<TargetFacade> selectedTourPOIs = new List<TargetFacade>();
@@ -95,10 +98,13 @@ public class TourManager : MonoBehaviour
         if (currentState == TourState.Inactive)
         {
             StartTourMode(tourType);
+            StartTourButton.SetActive(false);
+            TourOptions.SetActive(true);
         }
         else
         {
             ExitTourMode();
+            
         }
     }
 
@@ -276,6 +282,9 @@ public class TourManager : MonoBehaviour
         qrScanPromptTextObject.SetActive(false);
         readyForTourButton.SetActive(false);
         exitConfirmation.SetActive(false);
+        StartTourButton.SetActive(true);
+        pullupUI.ExpandPanel();
+        TourOptions.SetActive(false);
         map.SetActive(true);
     }
 
@@ -337,6 +346,10 @@ public class TourManager : MonoBehaviour
         PlayerPrefs.DeleteKey("TourPOIIndex");
         PlayerPrefs.DeleteKey("TourState");
         currentState = TourState.Inactive;
+        pullupUI.ExpandPanel();
+        StartTourButton.SetActive(true);
+        TourOptions.SetActive(false);
+
         PlayerPrefs.Save();
         // ExitTourMode();
     }
@@ -349,6 +362,7 @@ public class TourManager : MonoBehaviour
         {
             if (action == "exit")
             {
+                pullupUI.ClosePanel();
                 exitConfirmation.SetActive(true);
                 exitConfirmationText.text = "Are you sure you want to exit the tour?";
                 exitConfirmationTextbf.text = "You're exiting tour mode...";
@@ -356,6 +370,7 @@ public class TourManager : MonoBehaviour
             }
             else if (action == "reset")
             {
+                pullupUI.ClosePanel();
                 exitConfirmation.SetActive(true);
                 exitConfirmationText.text = "Are you sure you want to clear your tour progress?";
                 exitConfirmationTextbf.text = "You're resetting your tour progress...";
@@ -368,6 +383,7 @@ public class TourManager : MonoBehaviour
         {
             if (action == "exit")
             {
+                
                 exitConfirmation.SetActive(true);
                 exitConfirmationText.text = "You are not in tour mode.";
                 exitConfirmationTextbf.text = "Uh-oh...";
