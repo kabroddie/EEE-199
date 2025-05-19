@@ -38,6 +38,8 @@ public class NavigationController : MonoBehaviour
 
     private FloorTransitionManager floorTransitionManager;
 
+    private StatusController statusController;
+
     public bool navigationActive = false;
     public bool hasTarget = false;
     private float arrivalThreshold = 2.0f; // Distance threshold for arrival
@@ -55,6 +57,7 @@ public class NavigationController : MonoBehaviour
 
         tourManager = FindObjectOfType<TourManager>();
         floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
+        statusController = FindObjectOfType<StatusController>();
 
         if (floorTransitionManager == null)
         {
@@ -299,7 +302,7 @@ public class NavigationController : MonoBehaviour
         // Stop movement updates
         navigationActive = false;
         hasTarget = false;
-        
+
         // Clear stored target
         targetPosition = Vector3.zero;
 
@@ -313,7 +316,7 @@ public class NavigationController : MonoBehaviour
         // Hide all pins
         if (dynamicPin != null)
             dynamicPin.SetActive(false);
-        
+
         targetHandler?.HideAllPins();
 
         if (arrivedText != null)
@@ -322,6 +325,16 @@ public class NavigationController : MonoBehaviour
         if (tourManager != null && tourManager.GetCurrentState() != TourManager.TourState.Inactive)
         {
             tourManager.ExitTourMode();
+        }
+
+        if (floorTransitionManager != null)
+        {
+            floorTransitionManager.ResetFloor();
+        }
+        
+        if (statusController != null)
+        {
+            statusController.HideStatusBar();
         }
     }
 

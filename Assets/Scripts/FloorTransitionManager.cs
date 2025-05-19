@@ -11,7 +11,7 @@ using UnityEngine.XR.ARSubsystems;
 /// </summary>
 public class FloorTransitionManager : MonoBehaviour
 {
-    [SerializeField]    
+    [SerializeField]
     private ARSession session;
 
     [SerializeField]
@@ -106,10 +106,13 @@ public class FloorTransitionManager : MonoBehaviour
     void Update()
     {
         scanQRButton.onClick.RemoveAllListeners();
-        
-        if(!isScanning){
+
+        if (!isScanning)
+        {
             scanQRButton.onClick.AddListener(ConfirmationPrompt);
-        } else {
+        }
+        else
+        {
             scanQRButton.onClick.AddListener(OnUserConfirmedFloorChange);
         }
     }
@@ -178,7 +181,7 @@ public class FloorTransitionManager : MonoBehaviour
     {
         floorTransitionPanel.SetActive(true);
         map.SetActive(false);
-        
+
         scanQRButton.gameObject.SetActive(false); // Hide the button initially
         StartCoroutine(ShowProceedButtonAfterDelay(6f)); // 5 seconds delay
     }
@@ -187,7 +190,7 @@ public class FloorTransitionManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         scanQRButton.gameObject.SetActive(true); // Show the button after delay
-    }  
+    }
 
     public void ConfirmationPrompt()
     {
@@ -213,21 +216,21 @@ public class FloorTransitionManager : MonoBehaviour
     {
         TargetFacade finalTarget = targetHandler.GetCurrentTargetByTargetText(pendingTargetName);
         if (finalTarget != null)
-        {   
+        {
             // navigationController.HandleArrival();
             navigationController.ActivateNavigation(finalTarget.transform.position);
             targetTransitionPOI = string.Empty;
-            
+
         }
-        
+
         currentState = FloorState.Idle;
     }
 
     private Vector3 FindNearestTransitionPoint(int floor, string building)
     {
-        
+
         List<TargetFacade> transitionPoints = targetHandler.GetTransitionPOIs();
-        
+
         if (transitionPoints.Count == 0)
             return Vector3.zero;
 
@@ -240,12 +243,12 @@ public class FloorTransitionManager : MonoBehaviour
         if (currentFloor == 0)
         {
             Debug.Log($"3");
-                nearest = transitionPoints
-                .Where(tp => tp.Floor == floor)
-                .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
-                .FirstOrDefault();
-        } 
-        else 
+            nearest = transitionPoints
+            .Where(tp => tp.Floor == floor)
+            .OrderBy(tp => Vector3.Distance(userPos, tp.transform.position))
+            .FirstOrDefault();
+        }
+        else
         {
             Debug.Log($"4");
             nearest = transitionPoints
@@ -284,14 +287,14 @@ public class FloorTransitionManager : MonoBehaviour
                 floortransitionText.text = $"Kindly go upstairs to reach the second floor.\n\nPlease scan the QR marker posted on the wall upstairs.";
             }
         }
-            
+
 
         targetTransitionPOI = nearest != null ? nearest.Name : string.Empty;
 
         return nearest != null ? nearest.transform.position : Vector3.zero;
     }
 
-        /// <summary>
+    /// <summary>
     /// Checks if a given POI is a transition point.
     /// </summary>
     public bool IsTransitionPOI(string poiName)
@@ -313,6 +316,11 @@ public class FloorTransitionManager : MonoBehaviour
     {
         currentFloor = newFloor;
         currentBuilding = buildingName;
+    }
+    
+    public void ResetFloor()
+    {
+        currentState = FloorState.Idle;
     }
     
 

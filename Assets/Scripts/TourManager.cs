@@ -10,7 +10,7 @@ public class TourManager : MonoBehaviour
         HeadingToStart,  // User is navigating to the starting point
         WaitingForScan,  // Waiting for QR scan confirmation at the starting point
         ReadyForTour,    // User clicked "Ready for Tour" → Tour starts
-        TourActive       // Actively navigating through POIs
+        TourActive,       // Actively navigating through POIs
     }
 
     public TourState currentState = TourState.Inactive;
@@ -35,6 +35,9 @@ public class TourManager : MonoBehaviour
     [SerializeField]
     private GameObject map;
 
+    [SerializeField]
+    private GameObject tourOptions;
+
     [SerializeField] GameObject bottomBar;
 
     public TargetFacade startingPoint;
@@ -56,12 +59,17 @@ public class TourManager : MonoBehaviour
         qrScanPromptTextObject.SetActive(false);
         readyForTourButton.SetActive(false);
         exitConfirmation.SetActive(false);
+        tourOptions.SetActive(false);
 
         // LoadTourProgress(); // Try to resume if data exists
     }
 
     private void Update()
     {
+
+        if (tourOptions != null)
+            tourOptions.SetActive(currentState == TourState.TourActive);
+
         if (currentState == TourState.HeadingToStart)
         {
             if (Vector3.Distance(navigationController.transform.position, tourStartingPoint) < arrivalThreshold)
@@ -70,6 +78,7 @@ public class TourManager : MonoBehaviour
                 ShowQRScanPrompt();
             }
         }
+        
     }
 
     public void ToggleTourMode(string tourType)
@@ -87,8 +96,6 @@ public class TourManager : MonoBehaviour
     private void StartTourMode(string tourType)
     {
         if (currentState != TourState.Inactive) return;
-
-
 
         lastTourType = tourType;
         Debug.Log($"Switching to Tour Mode: {lastTourType}...");
@@ -133,9 +140,17 @@ public class TourManager : MonoBehaviour
         }
 
         Debug.Log("Starting Tour...");
-        currentState = TourState.HeadingToStart;
-        // navigationController.ActivateNavigation(tourStartingPoint);
-        StartTour();
+        if (currentState != TourState.Inactive)
+        {
+            StartTour();
+        }
+        else
+        {
+            currentState = TourState.HeadingToStart;
+            navigationController.ActivateNavigation(tourStartingPoint);
+        }
+        
+        // StartToffur();
     }
 
     private void ShowQRScanPrompt()
@@ -275,9 +290,9 @@ public class TourManager : MonoBehaviour
         int poiIndex = PlayerPrefs.GetInt("TourPOIIndex");
         TourState state = (TourState)PlayerPrefs.GetInt("TourState");
 
-        StartTourMode(tourType);
         currentPOIIndex = poiIndex;
         currentState = state;
+        StartTourMode(tourType);
 
         // Resume navigation if tour is active
         if (currentState == TourState.TourActive && currentPOIIndex < selectedTourPOIs.Count)
