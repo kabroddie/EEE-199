@@ -72,7 +72,7 @@ public class SettingsMenu : MonoBehaviour
     }
 
 
-    void CollapseMenu()
+    public void CollapseMenu()
     {
         isExpanded = false; // Make sure the state is updated
         gradient.DOFade(0f, 0.3f).SetEase(Ease.OutQuad); 

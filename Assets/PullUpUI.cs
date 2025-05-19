@@ -5,6 +5,7 @@ using DG.Tweening; // Import DOTween
 public class PullUpUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public RectTransform panel;  // Assign UI Panel in Inspector
+    public SettingsMenu settingsMenu; // Reference to SettingsMenu script
     public float openY = 0f;  // Y position when fully opened
     public float closedY = -400f; // Y position when closed
     public float tweenTime = 0.35f; // Animation speed (adjust for mobile smoothness)
@@ -14,6 +15,7 @@ public class PullUpUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private float dragStartTime;
     private bool isExpanded = false;
     private bool isAnimating = false;
+
 
     private void Start()
     {
@@ -71,6 +73,8 @@ public class PullUpUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                  .OnComplete(() => isAnimating = false);
             isExpanded = true;
         }
+
+        settingsMenu.CollapseMenu();
     }
 
     public void ClosePanel()

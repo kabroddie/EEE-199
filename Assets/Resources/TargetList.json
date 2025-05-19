@@ -618,7 +618,7 @@
         },
         {
             "Name": "B1 2F Female CR",
-            "Category": "Stair",
+            "Category": "Restroom",
             "Floor": 1,
             "Building": "Old",
             "Purpose": "POI",
