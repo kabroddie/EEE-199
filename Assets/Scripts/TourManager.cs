@@ -113,7 +113,7 @@ public class TourManager : MonoBehaviour
 
     private void StartTourMode(string tourType)
     {
-        if (currentState != TourState.Inactive) return;
+        // if (currentState != TourState.Inactive) return;
 
         lastTourType = tourType;
         Debug.Log($"Switching to Tour Mode: {lastTourType}...");
@@ -163,7 +163,6 @@ public class TourManager : MonoBehaviour
         }
         else
         {
-
             currentState = TourState.HeadingToStart;
             StartCoroutine(audioManager.PlayHeadingToStart());
             navigationController.ActivateNavigation(tourStartingPoint);
