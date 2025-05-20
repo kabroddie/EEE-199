@@ -46,6 +46,7 @@ public class TourManager : MonoBehaviour
     private GameObject bottomBar;
     [SerializeField]
     private Button resumeButton;
+    private AudioManager audioManager;
 
     public GameObject TourOptions;
     public GameObject StartTourButton;
@@ -66,6 +67,8 @@ public class TourManager : MonoBehaviour
 
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+
         qrScanPromptTextObject.SetActive(false);
         readyForTourButton.SetActive(false);
         exitConfirmation.SetActive(false);
@@ -162,6 +165,7 @@ public class TourManager : MonoBehaviour
         {
 
             currentState = TourState.HeadingToStart;
+            StartCoroutine(audioManager.PlayHeadingToStart());
             navigationController.ActivateNavigation(tourStartingPoint);
             SaveTourProgress(tourType); // Save the tour type before starting
         }
@@ -210,7 +214,7 @@ public class TourManager : MonoBehaviour
 
     public void OnReadyForTour()
     {
-        Debug.Log("clicked");
+        StartCoroutine(audioManager.PlayTouring());
         readyForTourButton.SetActive(false);
         map.SetActive(true);
         StartTour();
@@ -353,7 +357,7 @@ public class TourManager : MonoBehaviour
         TourOptions.SetActive(false);
 
         PlayerPrefs.Save();
-        // ExitTourMode();
+        navigationController.ResetNavigation();
     }
 
     public void ExitConfirmationPanel(string action)

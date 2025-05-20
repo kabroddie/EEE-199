@@ -49,7 +49,7 @@ public class FloorTransitionManager : MonoBehaviour
     /// <summary>
     /// The floor of the final destination POI.
     /// </summary>
-    private int targetFloor;
+    public int targetFloor;
 
     private string targetTransitionPOI;
 
@@ -63,6 +63,8 @@ public class FloorTransitionManager : MonoBehaviour
     [SerializeField] private GameObject floorTransitionPanel;
     [SerializeField] private TextMeshProUGUI floortransitionText;
     [SerializeField] private Button proceedButton;
+
+    private AudioManager audioManager;
 
     public enum FloorState
     {
@@ -97,6 +99,7 @@ public class FloorTransitionManager : MonoBehaviour
     private void Start()
     {
         currentState = FloorState.Idle;
+        audioManager = FindObjectOfType<AudioManager>();
 
         // Ensure UI is properly set up
         floorTransitionPanel.SetActive(false);
@@ -181,6 +184,8 @@ public class FloorTransitionManager : MonoBehaviour
     {
         floorTransitionPanel.SetActive(true);
         map.SetActive(false);
+
+        StartTransitionAudio();
 
         scanQRButton.gameObject.SetActive(false); // Hide the button initially
         StartCoroutine(ShowProceedButtonAfterDelay(6f)); // 5 seconds delay
@@ -317,11 +322,22 @@ public class FloorTransitionManager : MonoBehaviour
         currentFloor = newFloor;
         currentBuilding = buildingName;
     }
-    
+
     public void ResetFloor()
     {
         currentState = FloorState.Idle;
     }
     
-
+    void StartTransitionAudio()
+    {
+        if (targetFloor == 0)
+        {
+            StartCoroutine(audioManager.PlayTransitionDown());
+        }
+        else
+        {
+            StartCoroutine(audioManager.PlayTransitionUp());
+        }
+    }
+    
 }

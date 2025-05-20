@@ -21,9 +21,10 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField] private float requiredHoldTime;
     [SerializeField] private Image scanProgressCircle; // ✅ Radial progress circle
     [SerializeField] private GameObject statusPanel; // 
-    [SerializeField] private GameObject progressBarContainer; 
-    [SerializeField] private Slider progressBarSlider;     
+    [SerializeField] private GameObject progressBarContainer;
+    [SerializeField] private Slider progressBarSlider;
     [SerializeField] private float stabilizationDuration = 1.5f;
+    private AudioManager audioManager;
 
     private bool isStabilizing = false;
     private float stabilizationTimer = 0f;
@@ -50,6 +51,7 @@ public class QrCodeRecenter : MonoBehaviour
         tourManager = FindObjectOfType<TourManager>();
         floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
         altitudeDetector = FindObjectOfType<AltitudeDetector>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void Update()
@@ -66,6 +68,7 @@ public class QrCodeRecenter : MonoBehaviour
                 bottomBar.SetActive(true);
                 statusPanel.SetActive(true);
                 isStabilizing = false;
+                StartRecenterAudio();
             }
         }
     }
@@ -131,6 +134,8 @@ public class QrCodeRecenter : MonoBehaviour
 
                     ToggleScanning();
                     SetQrCodeRecenterTarget(result.Text);
+
+
 
                     // RecentertoQR(result.Text);
 
@@ -254,5 +259,12 @@ public class QrCodeRecenter : MonoBehaviour
         map.SetActive(false);
         bottomBar.SetActive(false);
         statusPanel.SetActive(false);
+
     }
+
+    void StartRecenterAudio()
+    {
+        StartCoroutine(audioManager.PlayRecenter());
+    }
+    
 }

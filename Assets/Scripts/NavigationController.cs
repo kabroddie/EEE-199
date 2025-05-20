@@ -39,13 +39,12 @@ public class NavigationController : MonoBehaviour
     private FloorTransitionManager floorTransitionManager;
 
     private StatusController statusController;
+    private AudioManager audioManager;
 
     public bool navigationActive = false;
     public bool hasTarget = false;
     private float arrivalThreshold = 2.0f; // Distance threshold for arrival
 
-
-    // ✅ NEW: Pin prefab for the end of the line
     [SerializeField] private GameObject pinPrefab;
     private GameObject dynamicPin; // Holds the instantiated pin
 
@@ -58,6 +57,7 @@ public class NavigationController : MonoBehaviour
         tourManager = FindObjectOfType<TourManager>();
         floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
         statusController = FindObjectOfType<StatusController>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         if (floorTransitionManager == null)
         {
@@ -266,6 +266,20 @@ public class NavigationController : MonoBehaviour
         arrivedText.gameObject.SetActive(true);
         arrivedText.color = new Color(arrivedText.color.r, arrivedText.color.g, arrivedText.color.b, 1f); // reset alpha
         StartCoroutine(FadeOutText(arrivedText, 4f)); // Fade out text after 2 seconds
+        if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingToTransition &&
+            floorTransitionManager.targetFloor == 0)
+        {
+            StartCoroutine(audioManager.PlayTransitionDown());
+        }
+        else if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingToTransition &&
+            floorTransitionManager.targetFloor == 1)
+        {
+            StartCoroutine(audioManager.PlayTransitionUp());
+        }
+        else
+        {
+            StartCoroutine(audioManager.PlayArrival());
+        }
 
         if (dynamicPin != null) dynamicPin.SetActive(false);
 

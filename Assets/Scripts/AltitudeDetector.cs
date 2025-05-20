@@ -76,6 +76,7 @@ public class AltitudeDetector : MonoBehaviour
     {
         map.SetActive(false); // Hide the map when the prompt is shown
         altitudeChangedPanel.SetActive(true);
+        Handheld.Vibrate();
         
         
     }
