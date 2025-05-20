@@ -102,9 +102,8 @@ public class DriftMonitor : MonoBehaviour
 
     private bool IsUserOnNavMesh()
     {
-
         Vector3 position = userTransform.position;
-        position.y = -1; // or set to the expected NavMesh Y level
+        position.y -= 1; // or set to the expected NavMesh Y level
         NavMeshHit hit;
         return NavMesh.SamplePosition(position, out hit, sampleDistance, NavMesh.AllAreas);
     }
