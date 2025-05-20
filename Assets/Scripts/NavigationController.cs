@@ -34,6 +34,7 @@ public class NavigationController : MonoBehaviour
     [SerializeField]
     private ARRaycastManager raycastManager; // Attach AR Raycast Manager
 
+
     private TourManager tourManager;
 
     private FloorTransitionManager floorTransitionManager;
@@ -49,6 +50,8 @@ public class NavigationController : MonoBehaviour
     private GameObject dynamicPin; // Holds the instantiated pin
 
     [SerializeField] private TextMeshProUGUI arrivedText; // Text to show when the user arrives at a POI
+    [SerializeField] private Image aRBar; // Text to show AR info overlay available
+    [SerializeField] private TextMeshProUGUI aRBarText; // Text to show AR info overlay available
     private void Start()
     {
         path = new NavMeshPath();
@@ -263,23 +266,10 @@ public class NavigationController : MonoBehaviour
         hasTarget = false;
         navigationActive = false;
         targetHandler.HideAllPins();
-        arrivedText.gameObject.SetActive(true);
-        arrivedText.color = new Color(arrivedText.color.r, arrivedText.color.g, arrivedText.color.b, 1f); // reset alpha
-        StartCoroutine(FadeOutText(arrivedText, 4f)); // Fade out text after 2 seconds
-        if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingToTransition &&
-            floorTransitionManager.targetFloor == 0)
-        {
-            StartCoroutine(audioManager.PlayTransitionDown());
-        }
-        else if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingToTransition &&
-            floorTransitionManager.targetFloor == 1)
-        {
-            StartCoroutine(audioManager.PlayTransitionUp());
-        }
-        else
-        {
-            StartCoroutine(audioManager.PlayArrival());
-        }
+
+        ArrivalPopUps();
+
+        ArrivalSounds();
 
         if (dynamicPin != null) dynamicPin.SetActive(false);
 
@@ -287,6 +277,7 @@ public class NavigationController : MonoBehaviour
         {
             tourManager.OnArrivalAtPOI();
         }
+
     }
 
     private IEnumerator FadeOutText(TextMeshProUGUI text, float duration)
@@ -304,6 +295,30 @@ public class NavigationController : MonoBehaviour
 
         text.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
         text.gameObject.SetActive(false);
+    }
+
+    private IEnumerator FadeOutBar(Image image, TextMeshProUGUI text, float delayThenFade)
+    {
+        // Stay fully visible for the delay
+        yield return new WaitForSeconds(delayThenFade);
+
+        Color originalColor = image.color;
+        Color originalTextColor = text.color;
+        float fadeDuration = 1.5f; // You can adjust the fade duration here
+        float elapsed = 0f;
+
+        while (elapsed < fadeDuration)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+            image.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            text.color = new Color(originalTextColor.r, originalTextColor.g, originalTextColor.b, alpha);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        image.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        text.color = new Color(originalTextColor.r, originalTextColor.g, originalTextColor.b, 0f);
+        image.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -351,11 +366,51 @@ public class NavigationController : MonoBehaviour
             statusController.HideStatusBar();
         }
     }
-    
+
     public bool NavigationStatus()
     {
         return navigationActive;
     }
+
+    void ArrivalPopUps()
+    {
+        TargetFacade arrivedTarget = targetHandler.GetCurrentTargetByPosition(targetPosition);
+        if (arrivedTarget != null && targetHandler.ScannablePlaques().Any(x => x.Name == arrivedTarget.Name))
+        {
+            if (aRBar != null)
+            {
+                aRBar.gameObject.SetActive(true);
+                aRBar.color = new Color(aRBar.color.r, aRBar.color.g, aRBar.color.b, 1f);
+                aRBarText.gameObject.SetActive(true);
+                aRBarText.color = new Color(aRBarText.color.r, aRBarText.color.g, aRBarText.color.b, 1f);
+                StartCoroutine(FadeOutBar(aRBar, aRBarText, 4f));
+            }
+        }
+
+        arrivedText.gameObject.SetActive(true);
+        arrivedText.color = new Color(arrivedText.color.r, arrivedText.color.g, arrivedText.color.b, 1f);
+        StartCoroutine(FadeOutText(arrivedText, 4f)); // Fade out text after 2 seconds
+    }
+
+    void ArrivalSounds()
+    {
+        if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingToTransition &&
+                floorTransitionManager.targetFloor == 0)
+        {
+            StartCoroutine(audioManager.PlayTransitionDown());
+        }
+        else if (floorTransitionManager.GetCurrentState() == FloorTransitionManager.FloorState.NavigatingToTransition &&
+            floorTransitionManager.targetFloor == 1)
+        {
+            StartCoroutine(audioManager.PlayTransitionUp());
+        }
+        else
+        {
+            StartCoroutine(audioManager.PlayArrival());
+        }
+    }
+    
+        
 
 
 }

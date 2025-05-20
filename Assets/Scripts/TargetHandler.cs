@@ -331,13 +331,46 @@ public class TargetHandler : MonoBehaviour
             .OrderBy(x => System.Array.IndexOf(hardcodedOrder, x.Name))
             .ToList();
     }
+    
+    public List<TargetFacade> ScannablePlaques()
+    {
+        string[] plaques = new string[]
+        {
+            "PLDT Multimedia Lecture Hall (VLC)", 
+            "ASTEC Multimedia Lecture Hall (LC2)", 
+            "MERALCO Multimedia Lecture Hall (LC1)",
+
+            "Power Electronics Laboratory (PEL) (Rm 124)",
+
+            "Electronics Laboratory (ELab) (Rm 126)",
+
+            "Electric Machines Instructional Laboratory (Rm 127)",
+
+            "Motors Drive Instructional Laboratory (Rm 129)",
+
+            "Samsung Laboratory (Rm 204)",
+
+            "Communications Electronics and Embedded Systems Laboratory (CEESL) (Rm 205)",
+
+            "Ubiquitous Computing Laboratory (UCL) (Rm 208)",
+
+            "EEE Administrative Office",
+            "UP OpenRAN Laboratory (Rm 227)",
+            "PEL Instructional Laboratory (Rm 228)",
+        };
+
+        return currentTargetItems
+            .Where(x => x.Purpose == "POI" && System.Array.Exists(plaques, poi => poi == x.Name))
+            .OrderBy(x => System.Array.IndexOf(plaques, x.Name))
+            .ToList();
+    }
 
     
 
     public List<TargetFacade> GetTransitionPOIs()
     {
         return currentTargetItems
-            .Where(x => x.Purpose == "POI" && 
+            .Where(x => x.Purpose == "POI" &&
                         (x.Name.ToLower().Contains("stairs")))
             .ToList();
     }

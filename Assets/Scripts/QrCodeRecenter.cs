@@ -18,16 +18,19 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField] private ARAnchorManager anchorManager;
     [SerializeField] private GameObject map;
     [SerializeField] private GameObject bottomBar;
-    [SerializeField] private float requiredHoldTime;
+    [SerializeField] private float requiredHoldTime;    
     [SerializeField] private Image scanProgressCircle; // ✅ Radial progress circle
     [SerializeField] private GameObject statusPanel; // 
     [SerializeField] private GameObject progressBarContainer;
     [SerializeField] private Slider progressBarSlider;
     [SerializeField] private float stabilizationDuration = 1.5f;
+    
     private AudioManager audioManager;
 
     private bool isStabilizing = false;
     private float stabilizationTimer = 0f;
+
+    public bool IsStabilizationFinished => !isStabilizing;
 
 
     private Dictionary<string, ARAnchor> qrAnchors = new Dictionary<string, ARAnchor>();
@@ -35,6 +38,7 @@ public class QrCodeRecenter : MonoBehaviour
     private TourManager tourManager;
     private FloorTransitionManager floorTransitionManager;
     private AltitudeDetector altitudeDetector;
+    private DriftMonitor driftMonitor;
 
     private Texture2D cameraImageTexture;
     private IBarcodeReader reader = new BarcodeReader();
@@ -52,6 +56,7 @@ public class QrCodeRecenter : MonoBehaviour
         floorTransitionManager = FindObjectOfType<FloorTransitionManager>();
         altitudeDetector = FindObjectOfType<AltitudeDetector>();
         audioManager = FindObjectOfType<AudioManager>();
+        driftMonitor = FindObjectOfType<DriftMonitor>();
     }
 
     private void Update()
@@ -69,6 +74,10 @@ public class QrCodeRecenter : MonoBehaviour
                 statusPanel.SetActive(true);
                 isStabilizing = false;
                 StartRecenterAudio();
+
+                // Hide heavy drift prompt after recenter
+                if (driftMonitor != null)
+                    driftMonitor.HeavyDriftPromptReset();
             }
         }
     }
@@ -174,6 +183,8 @@ public class QrCodeRecenter : MonoBehaviour
 
             CreateAnchor(targetText, currentTarget.transform.position, currentTarget.transform.rotation);
 
+            driftMonitor.HidePrompt();
+
             StartStabilizationProgressBar();
 
             if (floorTransitionManager != null)
@@ -234,11 +245,13 @@ public class QrCodeRecenter : MonoBehaviour
     public void ToggleScanning()
     {
         Debug.Log($"[QrCodeRecenter] Toggle Scanning: {scanningEnabled}");
+        
         scanningEnabled = !scanningEnabled;
         qrCodeScanningPanel.SetActive(scanningEnabled);
         map.SetActive(!scanningEnabled);
         bottomBar.SetActive(!scanningEnabled);
         statusPanel.SetActive(!scanningEnabled);
+
 
         // Reset UI
         if (scanProgressCircle) scanProgressCircle.fillAmount = 0;
