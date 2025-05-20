@@ -9,6 +9,11 @@ public class SettingsEnabler : MonoBehaviour
     public GameObject settings;
     public GameObject reminderPanel;
     public RectTransform confirmExitPanel;
+    public QrCodeRecenter scanQR;
+    public StatusController statusController;
+    public GameObject bottomBar;
+    [SerializeField]
+    private PullUpUI pullupUI;
     
 
     public Button backButton;
@@ -19,7 +24,26 @@ public class SettingsEnabler : MonoBehaviour
 
     private void Start()
     {
-        reminderPanel.SetActive(true);
+        bottomBar.SetActive(false);
+        Debug.Log("Selected option: " + DataScene.SelectedOption);
+
+        switch (DataScene.SelectedOption)
+        {
+            case "Navigation":
+                scanQR.ToggleScanning();
+                statusController.ShowStatusUI();
+                break;
+            case "Tour":
+                openSettings();
+                statusController.ShowStatusUI();
+                pullupUI.ClosePanel();
+                break;
+            default:
+                Debug.LogWarning("No option selected!");
+                scanQR.ToggleScanning();
+                break;
+        }
+        
         ResetPositions();
         backButton.onClick.AddListener(confirmExit);
         
@@ -47,6 +71,7 @@ public class SettingsEnabler : MonoBehaviour
     public void closeSettings()
     {
         settings.SetActive(false);
+        bottomBar.SetActive(true);
     }
 
     private void confirmExit(){

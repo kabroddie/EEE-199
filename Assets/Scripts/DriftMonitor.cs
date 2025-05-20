@@ -55,7 +55,7 @@ public class DriftMonitor : MonoBehaviour
         if (!IsUserOnNavMesh())
         {
             offNavMeshTimer += Time.deltaTime;
-            Debug.Log($"Off NavMesh Timer: {offNavMeshTimer}");
+            //Debug.Log($"Off NavMesh Timer: {offNavMeshTimer}");
 
             if (offNavMeshTimer > strongPromptTime)
             {

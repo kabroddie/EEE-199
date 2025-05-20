@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] Animator transitionAnim;
     public string sceneName;
+    
     public void changeScene()
     {
         StartCoroutine(loadTheScene());
@@ -19,6 +20,24 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
         transitionAnim.SetTrigger("Start");
 
+    }
+
+    public void OnStartNavigationClicked()
+    {
+        DataScene.SelectedOption = "Navigation";
+        changeScene();
+    }
+
+    public void OnStartTourClicked()
+    {
+        DataScene.SelectedOption = "Tour";
+        changeScene();
+    }
+
+    public void OnTutorialClicked()
+    {
+        DataScene.SelectedOption = "Tutorial";
+        changeScene();
     }
 
 }

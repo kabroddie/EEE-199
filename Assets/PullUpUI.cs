@@ -6,8 +6,8 @@ public class PullUpUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 {
     public RectTransform panel;  // Assign UI Panel in Inspector
     public SettingsMenu settingsMenu; // Reference to SettingsMenu script
-    public float openY = 0f;  // Y position when fully opened
-    public float closedY = -400f; // Y position when closed
+    public float openY;  // Y position when fully opened
+    public float closedY; // Y position when closed
     public float tweenTime = 0.35f; // Animation speed (adjust for mobile smoothness)
     public float swipeThreshold = 50f; // Minimum swipe speed to trigger open/close
 
@@ -21,6 +21,7 @@ public class PullUpUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         // Set initial position (closed)
         panel.anchoredPosition = new Vector2(panel.anchoredPosition.x, closedY);
+        
     }
 
     public void OnBeginDrag(PointerEventData eventData)
