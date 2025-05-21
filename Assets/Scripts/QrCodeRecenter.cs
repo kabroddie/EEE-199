@@ -252,8 +252,10 @@ public class QrCodeRecenter : MonoBehaviour
         map.SetActive(!scanningEnabled);
         bottomBar.SetActive(!scanningEnabled);
         statusPanel.SetActive(!scanningEnabled);
+
         if (DataScene.SelectedOption == "Tour"){
             settings.SetActive(!scanningEnabled);
+            DataScene.SelectedOption = "";
         }
 
 
