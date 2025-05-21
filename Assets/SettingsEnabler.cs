@@ -34,7 +34,7 @@ public class SettingsEnabler : MonoBehaviour
                 statusController.ShowStatusUI();
                 break;
             case "Tour":
-                openSettings();
+                scanQR.ToggleScanning();
                 statusController.ShowStatusUI();
                 pullupUI.ClosePanel();
                 break;

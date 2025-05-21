@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using UnityEngine.UI;
 using Unity.Collections;
 using UnityEngine.XR.ARFoundation;
@@ -24,6 +24,7 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField] private GameObject progressBarContainer;
     [SerializeField] private Slider progressBarSlider;
     [SerializeField] private float stabilizationDuration = 1.5f;
+    [SerializeField] private GameObject settings;
     
     private AudioManager audioManager;
 
@@ -251,6 +252,9 @@ public class QrCodeRecenter : MonoBehaviour
         map.SetActive(!scanningEnabled);
         bottomBar.SetActive(!scanningEnabled);
         statusPanel.SetActive(!scanningEnabled);
+        if (DataScene.SelectedOption == "Tour"){
+            settings.SetActive(!scanningEnabled);
+        }
 
 
         // Reset UI
@@ -274,6 +278,7 @@ public class QrCodeRecenter : MonoBehaviour
         statusPanel.SetActive(false);
 
     }
+    
 
     void StartRecenterAudio()
     {
