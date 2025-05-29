@@ -1,4 +1,4 @@
-    using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using Unity.Collections;
 using UnityEngine.XR.ARFoundation;
@@ -75,6 +75,11 @@ public class QrCodeRecenter : MonoBehaviour
                 statusPanel.SetActive(true);
                 isStabilizing = false;
                 StartRecenterAudio();
+                if (DataScene.SelectedOption == "Tour")
+                {
+                    settings.SetActive(!scanningEnabled);
+                    DataScene.SelectedOption = "";
+                }
 
                 // Hide heavy drift prompt after recenter
                 if (driftMonitor != null)
@@ -252,12 +257,6 @@ public class QrCodeRecenter : MonoBehaviour
         map.SetActive(!scanningEnabled);
         bottomBar.SetActive(!scanningEnabled);
         statusPanel.SetActive(!scanningEnabled);
-
-        if (DataScene.SelectedOption == "Tour"){
-            settings.SetActive(!scanningEnabled);
-            DataScene.SelectedOption = "";
-        }
-
 
         // Reset UI
         if (scanProgressCircle) scanProgressCircle.fillAmount = 0;
