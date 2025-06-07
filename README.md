@@ -4,4 +4,4 @@ Hello! This is the official GitHub repository of EEEzGuide as part of our requir
 
 UPDATE: Pumasa na kami! (We passed!)
 
-You can download EEEzGuide on Releases.
+You can download EEEzGuide in Releases _For Demo_.
